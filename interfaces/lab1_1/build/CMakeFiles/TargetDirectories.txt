@@ -1,0 +1,6 @@
+C:/Users/Tim/Desktop/labs/interfaces/lab1_1/build/CMakeFiles/battery_diagnostics.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_1/build/CMakeFiles/battery_diagnostics_qmlimportscan.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_1/build/CMakeFiles/edit_cache.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_1/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_1/build/CMakeFiles/battery_diagnostics_autogen_timestamp_deps.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_1/build/CMakeFiles/battery_diagnostics_autogen.dir

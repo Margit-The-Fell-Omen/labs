@@ -1,0 +1,25 @@
+# ninja log v7
+66	319	8105678146320780	.qt/qml_imports/power_schemes_build.cmake	9fc5548f9e1c04e
+66	319	8105678146320780	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/.qt/qml_imports/power_schemes_build.cmake	9fc5548f9e1c04e
+320	5715	8105678198850450	power_schemes_autogen/timestamp	16bbcdba0ad17fbd
+320	5715	8105678198850450	power_schemes_autogen/mocs_compilation.cpp	16bbcdba0ad17fbd
+320	5715	8105678198850450	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/timestamp	16bbcdba0ad17fbd
+320	5715	8105678198850450	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/mocs_compilation.cpp	16bbcdba0ad17fbd
+5734	5997	8105678202992890	power_schemes_autogen/EWIEGA46WW/qrc_qml.cpp	1b3f5b33948c128
+5734	5997	8105678202992890	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/EWIEGA46WW/qrc_qml.cpp	1b3f5b33948c128
+6077	6278	8105678204067539	CMakeFiles/power_schemes.dir/power_schemes_autogen/EWIEGA46WW/qrc_qml.cpp.obj	101c6cf983d014db
+6062	10986	8105678203914218	CMakeFiles/power_schemes.dir/batterymonitor.cpp.obj	4b73fd05d3e4f45e
+6039	11379	8105678203699890	CMakeFiles/power_schemes.dir/powerschememanager.cpp.obj	18616453b41bfc94
+5997	11913	8105678203275375	CMakeFiles/power_schemes.dir/power_schemes_autogen/mocs_compilation.cpp.obj	189fdf4e47cc97ea
+6019	13493	8105678203492893	CMakeFiles/power_schemes.dir/main.cpp.obj	942153e80b521e80
+13495	13905	8105678278253886	power_schemes.exe	7ae3ae010878d04c
+42	226	8105713306551008	power_schemes_autogen/timestamp	16bbcdba0ad17fbd
+42	226	8105713306551008	power_schemes_autogen/mocs_compilation.cpp	16bbcdba0ad17fbd
+42	226	8105713306551008	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/timestamp	16bbcdba0ad17fbd
+42	226	8105713306551008	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/mocs_compilation.cpp	16bbcdba0ad17fbd
+66	538	8105761447919790	power_schemes_autogen/timestamp	16bbcdba0ad17fbd
+66	538	8105761447919790	power_schemes_autogen/mocs_compilation.cpp	16bbcdba0ad17fbd
+66	538	8105761447919790	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/timestamp	16bbcdba0ad17fbd
+66	538	8105761447919790	C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/power_schemes_autogen/mocs_compilation.cpp	16bbcdba0ad17fbd
+542	8965	8105761452681853	CMakeFiles/power_schemes.dir/batterymonitor.cpp.obj	4b73fd05d3e4f45e
+8966	9537	8105761536903496	power_schemes.exe	7ae3ae010878d04c

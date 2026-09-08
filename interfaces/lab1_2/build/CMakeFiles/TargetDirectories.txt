@@ -1,0 +1,6 @@
+C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/CMakeFiles/power_schemes.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/CMakeFiles/power_schemes_qmlimportscan.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/CMakeFiles/edit_cache.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/CMakeFiles/power_schemes_autogen_timestamp_deps.dir
+C:/Users/Tim/Desktop/labs/interfaces/lab1_2/build/CMakeFiles/power_schemes_autogen.dir
