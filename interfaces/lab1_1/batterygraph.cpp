@@ -37,7 +37,7 @@ void BatteryGraph::paint(QPainter *painter)
         Gdiplus::Graphics g(&bitmap);
         g.SetSmoothingMode(Gdiplus::SmoothingModeAntiAlias);
         g.SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAlias);
-        g.Clear(Gdiplus::Color(255, 24, 24, 27));
+        g.Clear(Gdiplus::Color(255, 60, 56, 54));
 
         const int left = 46;
         const int top = 16;
@@ -46,9 +46,9 @@ void BatteryGraph::paint(QPainter *painter)
         const int plotW = w - left - right;
         const int plotH = h - top - bottom;
 
-        Gdiplus::Pen gridPen(Gdiplus::Color(255, 60, 60, 66), 1.0f);
-        Gdiplus::Pen axisPen(Gdiplus::Color(255, 150, 150, 156), 1.2f);
-        Gdiplus::SolidBrush labelBrush(Gdiplus::Color(255, 200, 200, 206));
+        Gdiplus::Pen gridPen(Gdiplus::Color(255, 102, 92, 84), 1.0f);
+        Gdiplus::Pen axisPen(Gdiplus::Color(255, 124, 111, 100), 1.2f);
+        Gdiplus::SolidBrush labelBrush(Gdiplus::Color(255, 189, 174, 147));
         Gdiplus::FontFamily family(L"Segoe UI");
         Gdiplus::Font font(&family, 9.0f);
 
@@ -85,13 +85,13 @@ void BatteryGraph::paint(QPainter *painter)
             std::vector<Gdiplus::PointF> area = pts;
             area.push_back(Gdiplus::PointF(pts.back().X, static_cast<float>(top + plotH)));
             area.push_back(Gdiplus::PointF(pts.front().X, static_cast<float>(top + plotH)));
-            Gdiplus::SolidBrush fillBrush(Gdiplus::Color(40, 0, 190, 120));
+            Gdiplus::SolidBrush fillBrush(Gdiplus::Color(40, 184, 187, 38));
             g.FillPolygon(&fillBrush, area.data(), static_cast<INT>(area.size()));
 
-            Gdiplus::Pen linePen(Gdiplus::Color(255, 0, 190, 120), 2.0f);
+            Gdiplus::Pen linePen(Gdiplus::Color(255, 184, 187, 38), 2.0f);
             g.DrawLines(&linePen, pts.data(), static_cast<INT>(pts.size()));
         } else {
-            Gdiplus::SolidBrush emptyBrush(Gdiplus::Color(255, 120, 120, 126));
+            Gdiplus::SolidBrush emptyBrush(Gdiplus::Color(255, 168, 153, 132));
             Gdiplus::FontFamily f2(L"Segoe UI");
             Gdiplus::Font fnt(&f2, 11.0f);
             g.DrawString(L"No data", -1, &fnt,
