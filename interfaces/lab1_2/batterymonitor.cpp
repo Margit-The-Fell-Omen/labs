@@ -70,15 +70,33 @@ void BatteryMonitor::refresh()
         return;
     }
 
+    DWORD bytes = 0;
+
+    BATTERY_INFORMATION info = {};
+    BATTERY_QUERY_INFORMATION q = {};
+    q.BatteryTag = tag;
+    q.InformationLevel = BatteryInformation;
+    ULONG fullCharge = 0;
+    if (DeviceIoControl(hBattery, IOCTL_BATTERY_QUERY_INFORMATION, &q, sizeof(q),
+                        &info, sizeof(info), &bytes, nullptr))
+        fullCharge = info.FullChargedCapacity;
+
     BATTERY_STATUS status = {};
     BATTERY_WAIT_STATUS wait = {};
     wait.BatteryTag = tag;
-    DWORD bytes = 0;
     if (DeviceIoControl(hBattery, IOCTL_BATTERY_QUERY_STATUS, &wait, sizeof(wait),
                         &status, sizeof(status), &bytes, nullptr)) {
-        m_chargeLevel = static_cast<int>(status.Capacity);
         m_acOnline = (status.PowerState & BATTERY_POWER_ON_LINE) != 0;
         m_available = true;
+        if (fullCharge > 0) {
+            m_chargeLevel = static_cast<int>(status.Capacity * 100u / fullCharge);
+            if (m_chargeLevel < 0)
+                m_chargeLevel = 0;
+            if (m_chargeLevel > 100)
+                m_chargeLevel = 100;
+        } else {
+            m_chargeLevel = 0;
+        }
     }
 
     CloseHandle(hBattery);
