@@ -1,0 +1,15 @@
+# ninja log v7
+27	180	8105528552072034	.qt/qml_imports/battery_diagnostics_build.cmake	3cfafba51b92ac77
+27	180	8105528552072034	C:/Users/Тимофей/Desktop/labs/labs/interfaces/build/.qt/qml_imports/battery_diagnostics_build.cmake	3cfafba51b92ac77
+181	937	8105528558867207	battery_diagnostics_autogen/timestamp	c0712e024ae3f3fb
+181	937	8105528558867207	battery_diagnostics_autogen/mocs_compilation.cpp	c0712e024ae3f3fb
+181	937	8105528558867207	C:/Users/Тимофей/Desktop/labs/labs/interfaces/build/battery_diagnostics_autogen/timestamp	c0712e024ae3f3fb
+181	937	8105528558867207	C:/Users/Тимофей/Desktop/labs/labs/interfaces/build/battery_diagnostics_autogen/mocs_compilation.cpp	c0712e024ae3f3fb
+945	1009	8105528560348531	battery_diagnostics_autogen/EWIEGA46WW/qrc_qml.cpp	b451dbd493f97aca
+945	1009	8105528560348531	C:/Users/Тимофей/Desktop/labs/labs/interfaces/build/battery_diagnostics_autogen/EWIEGA46WW/qrc_qml.cpp	b451dbd493f97aca
+1024	1125	8105528560573746	CMakeFiles/battery_diagnostics.dir/battery_diagnostics_autogen/EWIEGA46WW/qrc_qml.cpp.obj	2ae0246f245e7b67
+1009	3323	8105528560418543	CMakeFiles/battery_diagnostics.dir/battery_diagnostics_autogen/mocs_compilation.cpp.obj	931a4e51c317c2ef
+1016	3819	8105528560498549	CMakeFiles/battery_diagnostics.dir/batteryinfo.cpp.obj	b4800a0d778ce8a5
+1021	4929	8105528560538550	CMakeFiles/battery_diagnostics.dir/batterygraph.cpp.obj	e26734a998ae8567
+1013	6033	8105528560458541	CMakeFiles/battery_diagnostics.dir/main.cpp.obj	5776be90ce624bfb
+6035	6217	8105528610682979	battery_diagnostics.exe	e5dfab8ec1a6ed61

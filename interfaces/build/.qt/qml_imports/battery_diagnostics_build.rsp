@@ -1,0 +1,9 @@
+-rootPath
+C:/Users/Тимофей/Desktop/labs/labs/interfaces
+-cmake-output
+-output-file
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/build/.qt/qml_imports/battery_diagnostics_build.cmake
+-importPath
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/build
+-importPath
+C:/msys64/ucrt64/share/qt6/qml
