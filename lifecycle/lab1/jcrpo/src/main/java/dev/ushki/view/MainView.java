@@ -13,11 +13,6 @@ import java.awt.Insets;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-/**
- * Представление: главное окно приложения.
- * Реализует PropertyChangeListener и обновляет элементы интерфейса
- * при получении уведомления от активной модели.
- */
 public class MainView extends JFrame implements PropertyChangeListener {
 
     private final JLabel ageLabel = new JLabel("Возраст: не введён");

@@ -3,15 +3,8 @@ package dev.ushki.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-/**
- * Активная модель приложения.
- * Хранит данные и бизнес-логику, самостоятельно уведомляет
- * зарегистрированных наблюдателей об изменении состояния.
- */
 public class LaterModel {
 
-    // Усреднённая статистика: человек начинает осознанно откладывать дела
-    // примерно с 5 лет и в среднем говорит «потом» около 5 раз в день.
     private static final int START_AGE = 5;
     private static final int TIMES_PER_DAY = 5;
     private static final int DAYS_PER_YEAR = 365;
@@ -41,7 +34,6 @@ public class LaterModel {
         int oldAge = this.age;
         this.age = newAge;
         this.timesSaidLater = calculate(newAge);
-        // Активная модель: оповещаем представление об изменении состояния.
         support.firePropertyChange("result", oldAge, newAge);
     }
 

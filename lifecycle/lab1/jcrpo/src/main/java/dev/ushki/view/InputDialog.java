@@ -12,10 +12,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 
-/**
- * Дополнительное окно для ввода возраста.
- * При повторном открытии восстанавливает последнее введённое значение.
- */
 public class InputDialog extends JDialog {
 
     private final JTextField ageField = new JTextField(10);
@@ -25,7 +21,6 @@ public class InputDialog extends JDialog {
         super(owner, "Ввод данных", true);
         setLayout(new GridBagLayout());
 
-        // Восстановление последнего введённого значения
         if (lastAge != null && lastAge >= 0) {
             ageField.setText(String.valueOf(lastAge));
             ageField.selectAll();
