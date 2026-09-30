@@ -1,0 +1,26 @@
+# ninja log v7
+12	1141	8124864824230463	pci_registers_autogen/timestamp	1340f3e08d7c8a13
+12	1141	8124864824230463	pci_registers_autogen/mocs_compilation.cpp	1340f3e08d7c8a13
+12	1141	8124864824230463	C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/pci_registers_autogen/timestamp	1340f3e08d7c8a13
+12	1141	8124864824230463	C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/pci_registers_autogen/mocs_compilation.cpp	1340f3e08d7c8a13
+648	2259	8124837389741901	CMakeFiles/pci_registers.dir/registerinfo.cpp.obj	f6a422561fe5a69
+640	2778	8124837389671877	CMakeFiles/pci_registers.dir/main.cpp.obj	c8d589ea604e8c86
+1142	2910	8124864824720488	CMakeFiles/pci_registers.dir/pci_registers_autogen/mocs_compilation.cpp.obj	8406ec979d0cde96
+1147	3389	8124864824770460	CMakeFiles/pci_registers.dir/hexdumpview.cpp.obj	59f40cf892927a71
+1151	4250	8124864824810449	CMakeFiles/pci_registers.dir/mainwindow.cpp.obj	b520fd6b5b85eb06
+212	4823	8124852276172131	CMakeFiles/pci_registers.dir/pcibackend.cpp.obj	5109de20ff35aacc
+21	177	8124865872865703	pci_registers.exe	1c05e30af4cb0e27
+6	41	8124837382706443	CMakeFiles/clean.additional	c588d8aa8b50ec63
+41	53	8124837383061450	clean	7cad43144eea5c8
+42	1950	8125102695421314	build.ninja	c5dfaad046dd37df
+42	1950	8125102695421314	C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/cmake_install.cmake	c5dfaad046dd37df
+51	2903	8125102724430442	pci_registers_autogen/timestamp	1340f3e08d7c8a13
+51	2903	8125102724430442	pci_registers_autogen/mocs_compilation.cpp	1340f3e08d7c8a13
+51	2903	8125102724430442	C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/pci_registers_autogen/timestamp	1340f3e08d7c8a13
+51	2903	8125102724430442	C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/pci_registers_autogen/mocs_compilation.cpp	1340f3e08d7c8a13
+2916	4927	8125102724945918	CMakeFiles/pci_registers.dir/pcidb.cpp.obj	c3e8a99e827cac2b
+2908	5548	8125102724856221	CMakeFiles/pci_registers.dir/main.cpp.obj	c8d589ea604e8c86
+2904	5673	8125102724825908	CMakeFiles/pci_registers.dir/pci_registers_autogen/mocs_compilation.cpp.obj	8406ec979d0cde96
+2920	7530	8125102724981093	CMakeFiles/pci_registers.dir/mainwindow.cpp.obj	b520fd6b5b85eb06
+2912	8012	8125102724895941	CMakeFiles/pci_registers.dir/pcibackend.cpp.obj	5109de20ff35aacc
+8012	8329	8125102775898953	pci_registers.exe	20e477e6d35c9cd5

@@ -1,0 +1,32 @@
+;
+; pcidriver.inf - legacy (non-PnP) driver install
+;
+
+[Version]
+Signature="$WINDOWS NT$"
+Class=System
+ClassGuid={4D36E97D-E325-11CE-BFC1-08002BE10318}
+Provider=%ProviderName%
+DriverVer=09/30/2026,1.0.0.0
+
+[DestinationDirs]
+DefaultDestDir = 12
+
+[DefaultInstall]
+CopyFiles = CopyFilesSection
+
+[DefaultUninstall]
+DelFiles = CopyFilesSection
+
+[CopyFilesSection]
+pcidriver.sys
+
+[SourceDisksNames]
+1 = %DiskName%
+
+[SourceDisksFiles]
+pcidriver.sys = 1
+
+[Strings]
+ProviderName="Lab2 PCI Driver"
+DiskName="PCI Config Reader Driver"

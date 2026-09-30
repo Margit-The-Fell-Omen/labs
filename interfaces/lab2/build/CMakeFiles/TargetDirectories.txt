@@ -1,0 +1,5 @@
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/CMakeFiles/pci_registers.dir
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/CMakeFiles/edit_cache.dir
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/CMakeFiles/pci_registers_autogen_timestamp_deps.dir
+C:/Users/Тимофей/Desktop/labs/labs/interfaces/lab2/build/CMakeFiles/pci_registers_autogen.dir
