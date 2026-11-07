@@ -1,0 +1,1162 @@
+
+---
+events:
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:12 (find_program)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_UNAME"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "uname"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/uname"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/uname"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/uname"
+      - "/run/wrappers/bin/uname"
+      - "/home/ushki/.nix-profile/bin/uname"
+      - "/nix/profile/bin/uname"
+      - "/home/ushki/.local/state/nix/profile/bin/uname"
+      - "/etc/profiles/per-user/ushki/bin/uname"
+      - "/nix/var/nix/profiles/default/bin/uname"
+    found: "/run/current-system/sw/bin/uname"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineSystem.cmake:207 (message)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      The target system is: Windows -  - i686
+      The host system is: Linux - 6.12.68 - x86_64
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompiler.cmake:54 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:61 (_cmake_find_compiler)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_ASM_NASM_COMPILER"
+    description: "ASM_NASM compiler"
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: true
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nasm"
+      - "yasm"
+    candidate_directories:
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+    searched_directories:
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/nasm"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/yasm"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is GNU using "--version" did not match "(GNU assembler)|(GCC)|(Free Software Foundation)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is AppleClang using "--version" did not match "(Apple (clang|LLVM) version)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is Clang using "--version" did not match "(clang version)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is ARMClang using "--version" did not match "armclang":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is OrangeC using "--version" did not match "occ \\(OrangeC\\) Version":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is HP using "-V" did not match "HP C":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is Intel using "--version" did not match "(ICC)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is IntelLLVM using "--version" did not match "(Intel[^
+      ]+oneAPI)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is SunPro using "-V" did not match "Sun C":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is XL using "-qversion" did not match "XL C":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is MSVC using "-?" did not match "Microsoft.*Macro Assembler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is TI using "-h" did not match "Texas Instruments":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is TIClang using "--version" did not match "(TI (.*) Clang Compiler)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is IAR using "" did not match "IAR Assembler":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is Diab using "-V" did not match "Wind River Systems":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is ARMCC using "" did not match "(ARM Compiler)|(ARM Assembler)|(Arm Compiler)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is NASM using "-v" did not match "(NASM version)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is YASM using "--version" did not match "(yasm)":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is ADSP using "-version" did not match "Analog Devices":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is QCC using "-V" did not match "gcc_nto":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is Tasking using "--version" did not match "TASKING":
+  -
+    kind: "message-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineCompilerId.cmake:1303 (message)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:170 (CMAKE_DETERMINE_COMPILER_ID_VENDOR)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    message: |
+      Checking whether the ASM_NASM compiler is Renesas using "-v" did not match "(RX Family C/C\\+\\+ Compiler)|(RL78 Family Compiler)|(RH850 Family Compiler)":
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_AR"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ar"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/ar"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/ar"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/ar"
+      - "/run/wrappers/bin/ar"
+      - "/home/ushki/.nix-profile/bin/ar"
+      - "/nix/profile/bin/ar"
+      - "/home/ushki/.local/state/nix/profile/bin/ar"
+      - "/etc/profiles/per-user/ushki/bin/ar"
+      - "/nix/var/nix/profiles/default/bin/ar"
+    found: "/run/current-system/sw/bin/ar"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_RANLIB"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ranlib"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/ranlib"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/ranlib"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/ranlib"
+      - "/run/wrappers/bin/ranlib"
+      - "/home/ushki/.nix-profile/bin/ranlib"
+      - "/nix/profile/bin/ranlib"
+      - "/home/ushki/.local/state/nix/profile/bin/ranlib"
+      - "/etc/profiles/per-user/ushki/bin/ranlib"
+      - "/nix/var/nix/profiles/default/bin/ranlib"
+    found: "/run/current-system/sw/bin/ranlib"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_STRIP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "strip"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/strip"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/strip"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/strip"
+      - "/run/wrappers/bin/strip"
+      - "/home/ushki/.nix-profile/bin/strip"
+      - "/nix/profile/bin/strip"
+      - "/home/ushki/.local/state/nix/profile/bin/strip"
+      - "/etc/profiles/per-user/ushki/bin/strip"
+      - "/nix/var/nix/profiles/default/bin/strip"
+    found: "/run/current-system/sw/bin/strip"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_LINKER"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "ld"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/ld"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/ld"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/ld"
+      - "/run/wrappers/bin/ld"
+      - "/home/ushki/.nix-profile/bin/ld"
+      - "/nix/profile/bin/ld"
+      - "/home/ushki/.local/state/nix/profile/bin/ld"
+      - "/etc/profiles/per-user/ushki/bin/ld"
+      - "/nix/var/nix/profiles/default/bin/ld"
+    found: "/run/current-system/sw/bin/ld"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_NM"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "nm"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/nm"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/nm"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/nm"
+      - "/run/wrappers/bin/nm"
+      - "/home/ushki/.nix-profile/bin/nm"
+      - "/nix/profile/bin/nm"
+      - "/home/ushki/.local/state/nix/profile/bin/nm"
+      - "/etc/profiles/per-user/ushki/bin/nm"
+      - "/nix/var/nix/profiles/default/bin/nm"
+    found: "/run/current-system/sw/bin/nm"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJDUMP"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objdump"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/objdump"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/objdump"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/objdump"
+      - "/run/wrappers/bin/objdump"
+      - "/home/ushki/.nix-profile/bin/objdump"
+      - "/nix/profile/bin/objdump"
+      - "/home/ushki/.local/state/nix/profile/bin/objdump"
+      - "/etc/profiles/per-user/ushki/bin/objdump"
+      - "/nix/var/nix/profiles/default/bin/objdump"
+    found: "/run/current-system/sw/bin/objdump"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_OBJCOPY"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "objcopy"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/objcopy"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/objcopy"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/objcopy"
+      - "/run/wrappers/bin/objcopy"
+      - "/home/ushki/.nix-profile/bin/objcopy"
+      - "/nix/profile/bin/objcopy"
+      - "/home/ushki/.local/state/nix/profile/bin/objcopy"
+      - "/etc/profiles/per-user/ushki/bin/objcopy"
+      - "/nix/var/nix/profiles/default/bin/objcopy"
+    found: "/run/current-system/sw/bin/objcopy"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_READELF"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "readelf"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/readelf"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/readelf"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/readelf"
+      - "/run/wrappers/bin/readelf"
+      - "/home/ushki/.nix-profile/bin/readelf"
+      - "/nix/profile/bin/readelf"
+      - "/home/ushki/.local/state/nix/profile/bin/readelf"
+      - "/etc/profiles/per-user/ushki/bin/readelf"
+      - "/nix/var/nix/profiles/default/bin/readelf"
+    found: "/run/current-system/sw/bin/readelf"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_DLLTOOL"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "dlltool"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/dlltool"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/dlltool"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/dlltool"
+      - "/run/wrappers/bin/dlltool"
+      - "/home/ushki/.nix-profile/bin/dlltool"
+      - "/nix/profile/bin/dlltool"
+      - "/home/ushki/.local/state/nix/profile/bin/dlltool"
+      - "/etc/profiles/per-user/ushki/bin/dlltool"
+      - "/nix/var/nix/profiles/default/bin/dlltool"
+      - "/run/current-system/sw/bin/dlltool"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/dlltool"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/dlltool"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/dlltool"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/dlltool"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/dlltool"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/dlltool"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/dlltool"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/dlltool"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/dlltool"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/dlltool"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_ADDR2LINE"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "addr2line"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/addr2line"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/addr2line"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/addr2line"
+      - "/run/wrappers/bin/addr2line"
+      - "/home/ushki/.nix-profile/bin/addr2line"
+      - "/nix/profile/bin/addr2line"
+      - "/home/ushki/.local/state/nix/profile/bin/addr2line"
+      - "/etc/profiles/per-user/ushki/bin/addr2line"
+      - "/nix/var/nix/profiles/default/bin/addr2line"
+    found: "/run/current-system/sw/bin/addr2line"
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+  -
+    kind: "find-v1"
+    backtrace:
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeFindBinUtils.cmake:238 (find_program)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASMCompiler.cmake:267 (include)"
+      - "/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/share/cmake-4.1/Modules/CMakeDetermineASM_NASMCompiler.cmake:22 (include)"
+      - "CMakeLists.txt:17 (project)"
+    mode: "program"
+    variable: "CMAKE_TAPI"
+    description: "Path to a program."
+    settings:
+      SearchFramework: "NEVER"
+      SearchAppBundle: "NEVER"
+      CMAKE_FIND_USE_CMAKE_PATH: false
+      CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH: false
+      CMAKE_FIND_USE_SYSTEM_ENVIRONMENT_PATH: true
+      CMAKE_FIND_USE_CMAKE_SYSTEM_PATH: true
+      CMAKE_FIND_USE_INSTALL_PREFIX: true
+    names:
+      - "tapi"
+    candidate_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/"
+      - "/run/wrappers/bin/"
+      - "/home/ushki/.nix-profile/bin/"
+      - "/nix/profile/bin/"
+      - "/home/ushki/.local/state/nix/profile/bin/"
+      - "/etc/profiles/per-user/ushki/bin/"
+      - "/nix/var/nix/profiles/default/bin/"
+      - "/run/current-system/sw/bin/"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/"
+    searched_directories:
+      - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/tapi"
+      - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/tapi"
+      - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin/tapi"
+      - "/run/wrappers/bin/tapi"
+      - "/home/ushki/.nix-profile/bin/tapi"
+      - "/nix/profile/bin/tapi"
+      - "/home/ushki/.local/state/nix/profile/bin/tapi"
+      - "/etc/profiles/per-user/ushki/bin/tapi"
+      - "/nix/var/nix/profiles/default/bin/tapi"
+      - "/run/current-system/sw/bin/tapi"
+      - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin/tapi"
+      - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin/tapi"
+      - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin/tapi"
+      - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin/tapi"
+      - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin/tapi"
+      - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin/tapi"
+      - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin/tapi"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/bin/tapi"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/sbin/tapi"
+      - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/tapi"
+    found: false
+    search_context:
+      ENV{PATH}:
+        - "/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin"
+        - "/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin"
+        - "/nix/store/5ij40vzd46x6psvdv5yg5gr6igrpwyd4-ripgrep-15.1.0/bin"
+        - "/run/wrappers/bin"
+        - "/home/ushki/.nix-profile/bin"
+        - "/nix/profile/bin"
+        - "/home/ushki/.local/state/nix/profile/bin"
+        - "/etc/profiles/per-user/ushki/bin"
+        - "/nix/var/nix/profiles/default/bin"
+        - "/run/current-system/sw/bin"
+        - "/nix/store/i6ppbrlpp6yki8qvka7nyv091xa8dchx-binutils-wrapper-2.44/bin"
+        - "/nix/store/gcky3s6ya5z31lxzzvvj0l43g8yv50dp-hyprland-qtutils-0.1.5/bin"
+        - "/nix/store/sxffphd8apxrladk3i8fl0g366001vx8-pciutils-3.14.0/bin"
+        - "/nix/store/bblm9zmf9ylcf7w5mb3swa9lfrs1plh9-pkgconf-wrapper-2.4.3/bin"
+        - "/nix/store/qdasxfq8h98a834hva8hkvrynpamwa0z-kitty-0.45.0/bin"
+        - "/nix/store/x60ccfr9gd8dqm91aqz8x5s8dhsdvr69-imagemagick-7.1.2-12/bin"
+        - "/nix/store/n7iyqawbhv90ikx7casy5sapwpqj870b-ncurses-6.6-dev/bin"
+      CMAKE_SYSTEM_PREFIX_PATH:
+        - "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0"
+      CMAKE_FIND_ROOT_PATH: "/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0;/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0;/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev"
+...

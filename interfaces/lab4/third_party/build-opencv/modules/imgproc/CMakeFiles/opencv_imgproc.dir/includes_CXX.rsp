@@ -1,0 +1,1 @@
+-I"/home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/modules/imgproc/include" -I"/home/ushki/labs/interfaces/lab4/third_party/build-opencv/modules/imgproc" -I"/home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/modules/core/include" -isystem "/home/ushki/labs/interfaces/lab4/third_party/build-opencv"

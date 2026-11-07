@@ -1,0 +1,35 @@
+3rdparty/libjpeg-turbo/CMakeFiles/libjpeg-turbo.dir/src/jcparam.c.obj: \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jcparam.c \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jinclude.h \
+ /home/ushki/labs/interfaces/lab4/third_party/build-opencv/3rdparty/libjpeg-turbo/jconfig.h \
+ /home/ushki/labs/interfaces/lab4/third_party/build-opencv/3rdparty/libjpeg-turbo/jconfigint.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/lib/gcc/i686-w64-mingw32/15.2.0/include/stddef.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/stddef.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/crtdefs.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/corecrt.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/_mingw.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/_mingw_mac.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/_mingw_secapi.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/vadefs.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/sdks/_mingw_ddk.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/stdlib.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/corecrt_wstdlib.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/lib/gcc/i686-w64-mingw32/15.2.0/include/limits.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/lib/gcc/i686-w64-mingw32/15.2.0/include/syslimits.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/limits.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/sec_api/stdlib_s.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/malloc.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/lib/gcc/i686-w64-mingw32/15.2.0/include/mm_malloc.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/errno.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/stdio.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/corecrt_stdio_config.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/_mingw_off_t.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/swprintf.inl \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/sec_api/stdio_s.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/string.h \
+ /nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/i686-w64-mingw32/sys-include/sec_api/string_s.h \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jpeglib.h \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jmorecfg.h \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jpegint.h \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jerror.h \
+ /home/ushki/labs/interfaces/lab4/third_party/opencv-4.10.0/3rdparty/libjpeg-turbo/src/jstdhuff.c

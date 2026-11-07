@@ -1,0 +1,486 @@
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C'
+    Output line: 'cc1: warning: command-line option ‘-Wnon-virtual-dtor’ is valid for C++/ObjC++ but not for C'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type  -Wnon-virtual-dtor'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_d9a51/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_d9a51.dir/build.make CMakeFiles/cmTC_d9a51.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d9a51.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=gnu11    -fsigned-char -W -Wall -Wreturn-type  -Wnon-virtual-dtor -o CMakeFiles/cmTC_d9a51.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+cc1: warning: command-line option ‘-Wnon-virtual-dtor’ is valid for C++/ObjC++ but not for C
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking C executable cmTC_d9a51.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9a51.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_d9a51.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_d9a51.dir/objects.a @CMakeFiles/cmTC_d9a51.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_d9a51.dir/objects.a -Wl,--no-whole-archive -o cmTC_d9a51.exe -Wl,--out-implib,libcmTC_d9a51.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_d9a51.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C\+\+'
+    Output line: 'cc1plus: warning: command-line option ‘-Wmissing-prototypes’ is valid for C/ObjC but not for C++'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations  -Wmissing-prototypes'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_9db3c/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_9db3c.dir/build.make CMakeFiles/cmTC_9db3c.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9db3c.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=c++17    -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations  -Wmissing-prototypes -o CMakeFiles/cmTC_9db3c.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+cc1plus: warning: command-line option ‘-Wmissing-prototypes’ is valid for C/ObjC but not for C++
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking CXX executable cmTC_9db3c.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9db3c.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_9db3c.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_9db3c.dir/objects.a @CMakeFiles/cmTC_9db3c.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_9db3c.dir/objects.a -Wl,--no-whole-archive -o cmTC_9db3c.exe -Wl,--out-implib,libcmTC_9db3c.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_9db3c.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C\+\+'
+    Output line: 'cc1plus: warning: command-line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations  -Wstrict-prototypes'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_1458d/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_1458d.dir/build.make CMakeFiles/cmTC_1458d.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1458d.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=c++17    -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations  -Wstrict-prototypes -o CMakeFiles/cmTC_1458d.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+cc1plus: warning: command-line option ‘-Wstrict-prototypes’ is valid for C/ObjC but not for C++
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking CXX executable cmTC_1458d.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1458d.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_1458d.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_1458d.dir/objects.a @CMakeFiles/cmTC_1458d.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_1458d.dir/objects.a -Wl,--no-whole-archive -o cmTC_1458d.exe -Wl,--out-implib,libcmTC_1458d.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_1458d.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C'
+    Output line: 'cc1: warning: command-line option ‘-Wsign-promo’ is valid for C++/ObjC++ but not for C'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow  -Wsign-promo'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_1cbeb/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_1cbeb.dir/build.make CMakeFiles/cmTC_1cbeb.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1cbeb.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=gnu11    -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow  -Wsign-promo -o CMakeFiles/cmTC_1cbeb.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+cc1: warning: command-line option ‘-Wsign-promo’ is valid for C++/ObjC++ but not for C
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking C executable cmTC_1cbeb.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1cbeb.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_1cbeb.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_1cbeb.dir/objects.a @CMakeFiles/cmTC_1cbeb.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_1cbeb.dir/objects.a -Wl,--no-whole-archive -o cmTC_1cbeb.exe -Wl,--out-implib,libcmTC_1cbeb.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_1cbeb.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C'
+    Output line: 'cc1: warning: command-line option ‘-Wsuggest-override’ is valid for C++/ObjC++ but not for C'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized  -Wsuggest-override'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_ca566/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_ca566.dir/build.make CMakeFiles/cmTC_ca566.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ca566.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=gnu11    -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized  -Wsuggest-override -o CMakeFiles/cmTC_ca566.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+cc1: warning: command-line option ‘-Wsuggest-override’ is valid for C++/ObjC++ but not for C
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking C executable cmTC_ca566.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ca566.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_ca566.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_ca566.dir/objects.a @CMakeFiles/cmTC_ca566.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_ca566.dir/objects.a -Wl,--no-whole-archive -o cmTC_ca566.exe -Wl,--out-implib,libcmTC_ca566.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_ca566.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C'
+    Output line: 'cc1: warning: command-line option ‘-Wno-delete-non-virtual-dtor’ is valid for C++/ObjC++ but not for C'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized  -Wno-delete-non-virtual-dtor'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_d9845/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_d9845.dir/build.make CMakeFiles/cmTC_d9845.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d9845.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=gnu11    -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized  -Wno-delete-non-virtual-dtor -o CMakeFiles/cmTC_d9845.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+cc1: warning: command-line option ‘-Wno-delete-non-virtual-dtor’ is valid for C++/ObjC++ but not for C
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking C executable cmTC_d9845.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d9845.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_d9845.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_d9845.dir/objects.a @CMakeFiles/cmTC_d9845.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_d9845.dir/objects.a -Wl,--no-whole-archive -o cmTC_d9845.exe -Wl,--out-implib,libcmTC_d9845.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_d9845.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1plus: note: unrecognized command-line option ‘-Wno-unnamed-type-template-args’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor  -Wno-unnamed-type-template-args'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_0c415/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_0c415.dir/build.make CMakeFiles/cmTC_0c415.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0c415.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=c++17    -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor  -Wno-unnamed-type-template-args -o CMakeFiles/cmTC_0c415.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1plus: note: unrecognized command-line option ‘-Wno-unnamed-type-template-args’ may have been intended to silence earlier diagnostics
+Linking CXX executable cmTC_0c415.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0c415.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_0c415.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_0c415.dir/objects.a @CMakeFiles/cmTC_0c415.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_0c415.dir/objects.a -Wl,--no-whole-archive -o cmTC_0c415.exe -Wl,--out-implib,libcmTC_0c415.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_0c415.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1: note: unrecognized command-line option ‘-Wno-unnamed-type-template-args’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized  -Wno-unnamed-type-template-args'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_0e89d/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_0e89d.dir/build.make CMakeFiles/cmTC_0e89d.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_0e89d.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=gnu11    -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized  -Wno-unnamed-type-template-args -o CMakeFiles/cmTC_0e89d.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1: note: unrecognized command-line option ‘-Wno-unnamed-type-template-args’ may have been intended to silence earlier diagnostics
+Linking C executable cmTC_0e89d.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0e89d.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_0e89d.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_0e89d.dir/objects.a @CMakeFiles/cmTC_0e89d.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_0e89d.dir/objects.a -Wl,--no-whole-archive -o cmTC_0e89d.exe -Wl,--out-implib,libcmTC_0e89d.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_0e89d.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C'
+    Output line: 'cc1: warning: command-line option ‘-fvisibility-inlines-hidden’ is valid for C++/ObjC++ but not for C'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden  -fvisibility-inlines-hidden'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_39e54/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_39e54.dir/build.make CMakeFiles/cmTC_39e54.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_39e54.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -std=gnu11    -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden  -fvisibility-inlines-hidden -o CMakeFiles/cmTC_39e54.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+cc1: warning: command-line option ‘-fvisibility-inlines-hidden’ is valid for C++/ObjC++ but not for C
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking C executable cmTC_39e54.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_39e54.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_39e54.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_39e54.dir/objects.a @CMakeFiles/cmTC_39e54.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include  -O3 -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--whole-archive CMakeFiles/cmTC_39e54.dir/objects.a -Wl,--no-whole-archive -o cmTC_39e54.exe -Wl,--out-implib,libcmTC_39e54.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_39e54.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1: note: unrecognized command-line option ‘-Wno-shorten-64-to-32’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -Wno-shorten-64-to-32'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_e2528/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_e2528.dir/build.make CMakeFiles/cmTC_e2528.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e2528.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden  -O3 -DNDEBUG  -DNDEBUG -std=gnu11    -Wno-shorten-64-to-32 -o CMakeFiles/cmTC_e2528.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1: note: unrecognized command-line option ‘-Wno-shorten-64-to-32’ may have been intended to silence earlier diagnostics
+Linking C executable cmTC_e2528.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e2528.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_e2528.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_e2528.dir/objects.a @CMakeFiles/cmTC_e2528.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_e2528.dir/objects.a -Wl,--no-whole-archive -o cmTC_e2528.exe -Wl,--out-implib,libcmTC_e2528.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_e2528.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1: note: unrecognized command-line option ‘-Wno-implicit-const-int-float-conversion’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -Wno-implicit-const-int-float-conversion'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_985bb/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_985bb.dir/build.make CMakeFiles/cmTC_985bb.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_985bb.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden  -O3 -DNDEBUG  -DNDEBUG -std=gnu11    -Wno-implicit-const-int-float-conversion -o CMakeFiles/cmTC_985bb.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1: note: unrecognized command-line option ‘-Wno-implicit-const-int-float-conversion’ may have been intended to silence earlier diagnostics
+Linking C executable cmTC_985bb.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_985bb.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_985bb.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_985bb.dir/objects.a @CMakeFiles/cmTC_985bb.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wmissing-prototypes -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_985bb.dir/objects.a -Wl,--no-whole-archive -o cmTC_985bb.exe -Wl,--out-implib,libcmTC_985bb.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_985bb.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1: note: unrecognized command-line option ‘-Wno-documentation’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c'
+    check option: ' -Wno-documentation'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_1faaa/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_1faaa.dir/build.make CMakeFiles/cmTC_1faaa.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_1faaa.dir/src.c.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -Wno-unused-but-set-variable -Wno-missing-prototypes -Wno-missing-declarations  -O3 -DNDEBUG  -DNDEBUG -std=gnu11    -Wno-documentation -o CMakeFiles/cmTC_1faaa.dir/src.c.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.c:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1: note: unrecognized command-line option ‘-Wno-documentation’ may have been intended to silence earlier diagnostics
+Linking C executable cmTC_1faaa.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1faaa.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_1faaa.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_1faaa.dir/objects.a @CMakeFiles/cmTC_1faaa.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-gcc -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Waddress -Wsequence-point -Wformat -Wformat-security -Wstrict-prototypes -Wundef -Winit-self -Wpointer-arith -Wshadow -Wuninitialized -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -Wno-unused-but-set-variable -Wno-missing-prototypes -Wno-missing-declarations  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_1faaa.dir/objects.a -Wl,--no-whole-archive -o cmTC_1faaa.exe -Wl,--out-implib,libcmTC_1faaa.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_1faaa.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'command[- ]line option .* is valid for .* but not for C\+\+'
+    Output line: 'cc1plus: warning: command-line option ‘-Wno-missing-prototypes’ is valid for C/ObjC but not for C++'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-missing-prototypes'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_68a99/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_68a99.dir/build.make CMakeFiles/cmTC_68a99.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_68a99.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated  -O3 -DNDEBUG  -DNDEBUG -std=c++17    -Wno-missing-prototypes -o CMakeFiles/cmTC_68a99.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+cc1plus: warning: command-line option ‘-Wno-missing-prototypes’ is valid for C/ObjC but not for C++
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+Linking CXX executable cmTC_68a99.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_68a99.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_68a99.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_68a99.dir/objects.a @CMakeFiles/cmTC_68a99.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Wmissing-declarations -Wundef -Winit-self -Wpointer-arith -Wshadow -Wsign-promo -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_68a99.dir/objects.a -Wl,--no-whole-archive -o cmTC_68a99.exe -Wl,--out-implib,libcmTC_68a99.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_68a99.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1plus: note: unrecognized command-line option ‘-Wno-tautological-undefined-compare’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-tautological-undefined-compare'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_a8b86/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_a8b86.dir/build.make CMakeFiles/cmTC_a8b86.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a8b86.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef  -O3 -DNDEBUG  -DNDEBUG -std=c++17    -Wno-tautological-undefined-compare -o CMakeFiles/cmTC_a8b86.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1plus: note: unrecognized command-line option ‘-Wno-tautological-undefined-compare’ may have been intended to silence earlier diagnostics
+Linking CXX executable cmTC_a8b86.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a8b86.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_a8b86.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_a8b86.dir/objects.a @CMakeFiles/cmTC_a8b86.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_a8b86.dir/objects.a -Wl,--no-whole-archive -o cmTC_a8b86.exe -Wl,--out-implib,libcmTC_a8b86.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_a8b86.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1plus: note: unrecognized command-line option ‘-Wno-shorten-64-to-32’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-shorten-64-to-32'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_d7df5/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_d7df5.dir/build.make CMakeFiles/cmTC_d7df5.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d7df5.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable  -O3 -DNDEBUG  -DNDEBUG -std=c++17    -Wno-shorten-64-to-32 -o CMakeFiles/cmTC_d7df5.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1plus: note: unrecognized command-line option ‘-Wno-shorten-64-to-32’ may have been intended to silence earlier diagnostics
+Linking CXX executable cmTC_d7df5.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d7df5.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_d7df5.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_d7df5.dir/objects.a @CMakeFiles/cmTC_d7df5.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_d7df5.dir/objects.a -Wl,--no-whole-archive -o cmTC_d7df5.exe -Wl,--out-implib,libcmTC_d7df5.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_d7df5.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1plus: note: unrecognized command-line option ‘-Wno-enum-compare-switch’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-enum-compare-switch'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_9ff80/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_9ff80.dir/build.make CMakeFiles/cmTC_9ff80.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9ff80.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-invalid-offsetof  -O3 -DNDEBUG  -DNDEBUG -std=c++17    -Wno-enum-compare-switch -o CMakeFiles/cmTC_9ff80.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1plus: note: unrecognized command-line option ‘-Wno-enum-compare-switch’ may have been intended to silence earlier diagnostics
+Linking CXX executable cmTC_9ff80.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9ff80.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_9ff80.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_9ff80.dir/objects.a @CMakeFiles/cmTC_9ff80.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wsuggest-override -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-invalid-offsetof  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_9ff80.dir/objects.a -Wl,--no-whole-archive -o cmTC_9ff80.exe -Wl,--out-implib,libcmTC_9ff80.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_9ff80.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1plus: note: unrecognized command-line option ‘-Wno-inconsistent-missing-override’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-inconsistent-missing-override'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_ad7b6/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_ad7b6.dir/build.make CMakeFiles/cmTC_ad7b6.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ad7b6.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-invalid-offsetof -Wno-suggest-override  -O3 -DNDEBUG  -DNDEBUG -std=c++17    -Wno-inconsistent-missing-override -o CMakeFiles/cmTC_ad7b6.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1plus: note: unrecognized command-line option ‘-Wno-inconsistent-missing-override’ may have been intended to silence earlier diagnostics
+Linking CXX executable cmTC_ad7b6.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ad7b6.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_ad7b6.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_ad7b6.dir/objects.a @CMakeFiles/cmTC_ad7b6.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-comment -Wimplicit-fallthrough=3 -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-invalid-offsetof -Wno-suggest-override  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_ad7b6.dir/objects.a -Wl,--no-whole-archive -o cmTC_ad7b6.exe -Wl,--out-implib,libcmTC_ad7b6.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_ad7b6.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
+Build output check failed:
+    Regex: 'unrecognized .*option'
+    Output line: 'cc1plus: note: unrecognized command-line option ‘-Wno-comma’ may have been intended to silence earlier diagnostics'
+Compilation failed:
+    source file: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx'
+    check option: ' -Wno-comma'
+===== BUILD LOG =====
+Change Dir: '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+Run Build Command(s): /nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E env VERBOSE=1 /nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make -f Makefile cmTC_4bf00/fast
+/nix/store/5lyy21zm97pj8l67r2xapdkxpxb6v6y0-gnumake-4.4.1/bin/make  -f CMakeFiles/cmTC_4bf00.dir/build.make CMakeFiles/cmTC_4bf00.dir/build
+make[1]: Entering directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_4bf00.dir/src.cxx.obj
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++   -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-comment -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-invalid-offsetof -Wno-suggest-override -Wno-implicit-fallthrough -Wno-array-bounds -Wno-stringop-overflow -Wno-stringop-overread -Wno-extra-semi  -O3 -DNDEBUG  -DNDEBUG -std=c++17    -Wno-comma -o CMakeFiles/cmTC_4bf00.dir/src.cxx.obj -c /home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx
+/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp/src.cxx:1: warning: ignoring ‘#pragma  ’ [-Wunknown-pragmas]
+    1 | #pragma
+cc1plus: note: unrecognized command-line option ‘-Wno-comma’ may have been intended to silence earlier diagnostics
+Linking CXX executable cmTC_4bf00.exe
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E cmake_link_script CMakeFiles/cmTC_4bf00.dir/link.txt --verbose=1
+/nix/store/lxkvigfj5xy6w2bs7h4xwr3d7wb7piqb-cmake-4.1.2/bin/cmake -E rm -f CMakeFiles/cmTC_4bf00.dir/objects.a
+/nix/store/6zigdbx74ya8b85aj4vswpbgazpkfaxv-i686-w64-mingw32-binutils-wrapper-2.44/bin/i686-w64-mingw32-ar qc CMakeFiles/cmTC_4bf00.dir/objects.a @CMakeFiles/cmTC_4bf00.dir/objects1.rsp
+/nix/store/3fr3xdg8jwyzr5a5y13fzvv9g47yw926-i686-w64-mingw32-gcc-15.2.0/bin/i686-w64-mingw32-g++ -I/nix/store/l7xspmfvr51mj9g44qdj2cpq6cs403iw-mcfgthread-i686-w64-mingw32-2.3.1-dev/include   -fsigned-char -W -Wall -Wreturn-type -Wnon-virtual-dtor -Waddress -Wsequence-point -Wformat -Wformat-security -Winit-self -Wpointer-arith -Wuninitialized -Wno-delete-non-virtual-dtor -Wno-comment -Wno-strict-overflow -fdiagnostics-show-option -fomit-frame-pointer -ffunction-sections -fdata-sections  -msse -msse2 -mfpmath=sse -fvisibility=hidden -fvisibility-inlines-hidden -Wno-deprecated -Wno-missing-declarations -Wno-shadow -Wno-unused-parameter -Wno-unused-local-typedefs -Wno-sign-compare -Wno-sign-promo -Wno-undef -Wno-ignored-qualifiers -Wno-extra -Wno-unused-function -Wno-unused-const-variable -Wno-invalid-offsetof -Wno-suggest-override -Wno-implicit-fallthrough -Wno-array-bounds -Wno-stringop-overflow -Wno-stringop-overread -Wno-extra-semi  -O3 -DNDEBUG  -DNDEBUG -static -B/nix/store/2m5s2w1hc3kf56i0mryri2fnkyvy5pa5-mingw-w64-i686-w64-mingw32-13.0.0/lib -L/nix/store/qic29l8an3j0p18s5ywnblnzsah2havf-mcfgthread-i686-w64-mingw32-2.3.1/lib -lmcfgthread  -Wl,--gc-sections  -Wl,--whole-archive CMakeFiles/cmTC_4bf00.dir/objects.a -Wl,--no-whole-archive -o cmTC_4bf00.exe -Wl,--out-implib,libcmTC_4bf00.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles/cmTC_4bf00.dir/linkLibs.rsp
+make[1]: Leaving directory '/home/ushki/labs/interfaces/lab4/third_party/build-opencv/CMakeFiles/CMakeTmp'
+
+
+===== END =====
+
