@@ -1,0 +1,7 @@
+# USB HID lab — доступ к /dev/bus/usb для обычного пользователя (usbfs).
+# Разрешает чтение/запись в файлы устройств шины USB, чтобы libusb мог
+# читать строковые дескрипторы без root.
+# Установка:
+#   sudo cp 50-hid.rules /etc/udev/rules.d/
+#   sudo udevadm control --reload-rules && sudo udevadm trigger
+SUBSYSTEM=="usb", RUN+="/bin/chmod 0666 /dev/bus/usb/%k", OPTIONS+="last_rule"
