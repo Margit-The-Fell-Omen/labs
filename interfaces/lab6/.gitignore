@@ -1,0 +1,6 @@
+.direnv/
+build/
+build-*/
+*.user
+*.part
+*.part.json
