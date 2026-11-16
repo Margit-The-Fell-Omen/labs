@@ -4,7 +4,6 @@
 #include <QColor>
 #include <QHeaderView>
 #include <QLabel>
-#include <QMessageBox>
 #include <QSplitter>
 #include <QStatusBar>
 #include <QTableWidget>
@@ -15,16 +14,19 @@
 
 #include <iterator>
 
+#include <chrono>
+#include <cstdio>
+#include <cstdlib>
+
 #include "usbmonitor.h"
 
 namespace {
-// Заголовки колонок таблицы.
 const char* kColumns[] = {
     "Bus:Addr", "VID", "PID", "Класс", "Протокол",
     "Endpoint'ы", "HID", "Производитель", "Продукт", "Серийный №",
 };
 
-// Палитра Gruvbox (dark). Пиксельные цвета приведены к #RRGGBB.
+// Палитра Gruvbox (dark).
 const char* kGruvboxStyle = R"QSS(
 * {
     background-color: #282828;   /* bg0 */
@@ -71,31 +73,29 @@ MainWindow::MainWindow(int intervalMs, QWidget* parent)
     setWindowTitle("USB HID — пробник на libusb + sysfs (Qt)");
     resize(1000, 500);
 
-    // Создаём фоновый монитор и переносим его в отдельный поток.
     monitor_ = new UsbMonitor(intervalMs_);
     workerThread_ = new QThread(this);
 
-    // Соединения между рабочим потоком и GUI (queued — автоматически).
     connect(workerThread_, &QThread::started, monitor_, &UsbMonitor::start);
     connect(monitor_, &UsbMonitor::snapshotReady, this, &MainWindow::onSnapshot);
     connect(monitor_, &UsbMonitor::failed, this, &MainWindow::onFailed);
-    // После остановки потока удаляем монитор в его потоке.
-    connect(workerThread_, &QThread::finished, monitor_, &QObject::deleteLater);
 
     monitor_->moveToThread(workerThread_);
-    workerThread_->setParent(this);
     workerThread_->start();
 
-    statusBar()->showMessage(QString("Опрос каждые %1 мс. Права на usbfs: "
-                                     "sudo или 50-hid.rules.").arg(intervalMs_));
+    statusBar()->showMessage(QString("События: libudev, резервный опрос %1 мс. "
+                                     "Права на usbfs: sudo или 50-hid.rules.")
+                                 .arg(intervalMs_));
 }
 
 MainWindow::~MainWindow() {
-    // Запрашиваем остановку рабочего потока и ждём его завершения.
     if (workerThread_ && workerThread_->isRunning()) {
+        QMetaObject::invokeMethod(monitor_, "stop", Qt::BlockingQueuedConnection);
         workerThread_->quit();
         workerThread_->wait(2000);
     }
+    delete monitor_;
+    monitor_ = nullptr;
 }
 
 void MainWindow::setupUi() {
@@ -131,24 +131,22 @@ void MainWindow::setupUi() {
 
     status_->setObjectName("status");
 
-    // Применяем палитру Gruvbox (dark) ко всему окну.
     setStyleSheet(QString::fromUtf8(kGruvboxStyle));
     table_->setAlternatingRowColors(true);
 }
 
 void MainWindow::applyGruvboxCell(QTableWidgetItem* item, int col) {
-    // Подкраска отдельных элементов в стиле Gruvbox.
-    const QColor fg("#ebdbb2");   // основной текст (fg)
-    const QColor dim("#a89984");  // приглушённый (fg4)
-    const QColor green("#b8bb26"); // яркий зелёный (HID)
-    const QColor red("#fb4934");   // яркий красный
+    const QColor fg("#ebdbb2");
+    const QColor dim("#a89984");
+    const QColor green("#b8bb26");
+    const QColor red("#fb4934");
 
     switch (col) {
-    case 6:  // колонка HID
+    case 6:
         item->setForeground(item->text() == QLatin1String("HID") ? QBrush(green)
                                                                  : QBrush(dim));
         break;
-    case 0:  // Bus:Addr
+    case 0:
         item->setForeground(QBrush(red));
         break;
     default:
@@ -188,7 +186,6 @@ void MainWindow::rebuildTable(const devtable::Snapshot& snap) {
 }
 
 void MainWindow::logEvent(const QString& line, const QString& color) {
-    // Журнал событий горячего подключения (Gruvbox green/red для + / -).
     const QString ts = QTime::currentTime().toString("hh:mm:ss");
     if (color.isEmpty()) {
         log_->append(QString("[%1] %2").arg(ts, line));
@@ -201,22 +198,33 @@ void MainWindow::logEvent(const QString& line, const QString& color) {
 
 void MainWindow::onSnapshot(const devtable::Snapshot& snap,
                             const devtable::Diff& diff) {
-    // Обновляем таблицу и выдаём события подключения/отключения.
     rebuildTable(snap);
 
     for (const auto& add : diff.added)
         logEvent(QString("(+) Подключено: %1").arg(
                      QString::fromUtf8(add.summaryLine().c_str())),
-                 "#b8bb26");  // Gruvbox ярко-зелёный
+                 "#b8bb26");
     for (const auto& rm : diff.removed)
         logEvent(QString("(-) Отключено: %1").arg(
                      QString::fromUtf8(rm.summaryLine().c_str())),
-                 "#fb4934");  // Gruvbox ярко-красный
+                 "#fb4934");
 
     status_->setText(QString("Устройств на шине: %1").arg(snap.size()));
+
+    if (std::getenv("USBHIDPROBE_DEBUG")) {
+        using namespace std::chrono;
+        static auto t0 = steady_clock::now();
+        auto ms = duration_cast<milliseconds>(steady_clock::now() - t0).count();
+        std::fprintf(stderr, "[gui] t=%lldms devices=%zu added=%zu removed=%zu\n",
+                     static_cast<long long>(ms), snap.size(),
+                     diff.added.size(), diff.removed.size());
+    }
 }
 
 void MainWindow::onFailed(const QString& message) {
-    status_->setText(message);
-    QMessageBox::warning(this, tr("USB"), message);
+    if (message == lastError_)
+        return; 
+    lastError_ = message;
+    status_->setText(QString("Ошибка опроса: %1").arg(message));
+    logEvent(QString("Ошибка опроса: %1").arg(message), "#fb4934");
 }

@@ -1,6 +1,5 @@
 #pragma once
-// Главное окно: таблица USB-устройств + журнал событий горячего подключения.
-// Связывает фоновый UsbMonitor (в отдельном QThread) с виджетами Qt.
+// Главное окно: таблица USB-устройств + журнал событий.
 
 #include <QMainWindow>
 
@@ -36,4 +35,5 @@ private:
 
     QThread* workerThread_ = nullptr;
     UsbMonitor* monitor_ = nullptr;
+    QString lastError_;
 };

@@ -19,6 +19,9 @@ endif()
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBUSB REQUIRED libusb-1.0)
 
+# libudev (мониторинг горячего подключения через netlink-события ядра).
+pkg_check_modules(UDEV REQUIRED libudev)
+
 # Qt6 Widgets (GUI).
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
@@ -33,14 +36,19 @@ add_executable(usbhidprobe
 
 target_include_directories(usbhidprobe PRIVATE
     ${LIBUSB_INCLUDE_DIRS}
+    ${UDEV_INCLUDE_DIRS}
     src
 )
 
-target_link_directories(usbhidprobe PRIVATE ${LIBUSB_LIBRARY_DIRS})
+target_link_directories(usbhidprobe PRIVATE
+    ${LIBUSB_LIBRARY_DIRS}
+    ${UDEV_LIBRARY_DIRS}
+)
 
 target_link_libraries(usbhidprobe PRIVATE
     Qt6::Widgets
     ${LIBUSB_LIBRARIES}
+    ${UDEV_LIBRARIES}
 )
 
 target_compile_options(usbhidprobe PRIVATE -Wall -Wextra -Wpedantic)

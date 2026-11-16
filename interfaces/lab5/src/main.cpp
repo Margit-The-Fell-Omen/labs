@@ -1,5 +1,4 @@
-// Точка входа Qt GUI-приложения. Разбирает аргументы (интервал опроса),
-// создаёт главное окно и запускает цикл событий Qt.
+// Точка входа Qt GUI.
 
 #include <QApplication>
 
@@ -23,15 +22,13 @@ void usage(const char* prog) {
 }  // namespace
 
 namespace {
-// Есть ли переменные окружения графической сессии (X11/Wayland)?
+// Есть ли окружение графической сессии (X11/Wayland)?
 bool hasDisplayEnv() {
-    // Qt, не найдя их, падает с abort(); здесь мы гасим такой краш заранее.
     if (std::getenv("DISPLAY") != nullptr && std::getenv("DISPLAY")[0] != '\0')
         return true;
     if (std::getenv("WAYLAND_DISPLAY") != nullptr &&
         std::getenv("WAYLAND_DISPLAY")[0] != '\0')
         return true;
-    // Если платформа задана вручную (offscreen/minimal) — даём Qt работать.
     if (std::getenv("QT_QPA_PLATFORM") != nullptr)
         return true;
     return false;
@@ -39,7 +36,6 @@ bool hasDisplayEnv() {
 }  // namespace
 
 int main(int argc, char** argv) {
-    // Интервал опроса USB-шины (мс).
     int intervalMs = 1000;
 
     for (int i = 1; i < argc; ++i) {
@@ -55,7 +51,7 @@ int main(int argc, char** argv) {
             }
             intervalMs = std::atoi(argv[++i]);
             if (intervalMs < 50)
-                intervalMs = 50;  // защита от слишком частого опроса
+                intervalMs = 50;
         } else {
             std::fprintf(stderr, "%s: неизвестный аргумент: %s\n", argv[0], a.c_str());
             usage(argv[0]);
@@ -63,9 +59,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    // Защита от жёсткого падения: если графической сессии не видно
-    // (например, sudo обрезал DISPLAY/XAUTHORITY), сообщаем и выходим
-    // аккуратно, а не даём Qt вызвать abort().
     if (!hasDisplayEnv()) {
         std::fprintf(stderr,
                      "Графическая сессия не обнаружена (DISPLAY/WAYLAND_DISPLAY "
@@ -83,8 +76,6 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    // Qt-приложение. Передаём аргументы как есть; QApplication может понимать
-    // часть своих ключей (например, --platform), остальные мы разобрали выше.
     QApplication app(argc, argv);
     app.setApplicationName("usbhidprobe");
     app.setApplicationDisplayName("USB HID probe (libusb + sysfs)");

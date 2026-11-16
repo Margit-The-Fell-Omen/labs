@@ -21,6 +21,8 @@
               gcc
               pkg-config
               libusb1
+              # libudev (мониторинг горячего подключения) — входит в systemd.
+              systemd
               # Qt6 Widgets (GUI). Даёт и заголовки, и библиотеки, и плагины.
               qt6.qtbase
             ];

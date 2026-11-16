@@ -1,7 +1,5 @@
 #pragma once
-// Фоновый опрос USB-шины в отдельном потоке Qt (QThread + QTimer).
-// Периодически делает снимок через libusb, сравнивает с предыдущим и
-// эмитит сигнал snapshotReady с новой таблицей и разницей (горячее подключение).
+// Монитор шины в отдельном потоке: события libudev + резервный опрос QTimer.
 
 #include <QObject>
 #include <QString>
@@ -10,20 +8,22 @@
 #include "usbprobe.h"
 
 class QTimer;
+class QSocketNotifier;
+struct udev;
+struct udev_monitor;
 
 class UsbMonitor : public QObject {
     Q_OBJECT
 public:
-    // intervalMs — период опроса (мс). Создаётся в главном потоке, затем
-    // переносится в рабочий QThread через moveToThread.
     explicit UsbMonitor(int intervalMs, QObject* parent = nullptr);
+    ~UsbMonitor() override;
 
     bool ok() const { return prober_.ok(); }
     QString errorText() const { return QString::fromUtf8(prober_.errorText()); }
 
 public slots:
-    void start();  // запустить таймер опроса (вызывается из рабочего потока)
-    void stop();   // остановить (вызывается перед завершением потока)
+    void start();
+    void stop();
 
 signals:
     void snapshotReady(const devtable::Snapshot& snap, const devtable::Diff& diff);
@@ -31,10 +31,18 @@ signals:
 
 private slots:
     void poll();
+    void onUdevEvent();
 
 private:
+    void setupUdev();
+    void teardownUdev();
+
     usbprobe::Prober prober_;
     devtable::Snapshot last_;
     int intervalMs_ = 1000;
     QTimer* timer_ = nullptr;
+
+    udev* udev_ = nullptr;
+    udev_monitor* udevMon_ = nullptr;
+    QSocketNotifier* udevNotifier_ = nullptr;
 };
