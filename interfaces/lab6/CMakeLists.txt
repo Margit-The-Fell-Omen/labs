@@ -41,6 +41,7 @@ add_executable(lab6ble
     src/main.cpp
     src/appconfig.cpp
     src/logging.cpp
+    src/gruvbox.cpp
     src/mainwindow.cpp
     src/ble/dbusutil.cpp
     src/ble/gattserver.cpp

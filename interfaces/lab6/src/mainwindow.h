@@ -9,7 +9,7 @@
 class QCheckBox;
 class QLabel;
 class QLineEdit;
-class QPlainTextEdit;
+class QTextEdit;
 class QProgressBar;
 class QPushButton;
 class QTableWidget;
@@ -38,12 +38,18 @@ private slots:
     void onCancel();
     void onBrowseFile();
     void onBrowseOut();
+    void onCentralBrowseOut();
+    void onPeripheralBrowseFile();
+    void onPeripheralSend();
+    void onPeripheralCancel();
     void onToggleAdvertising();
     void onDevicesChanged(const QList<BleDeviceInfo>& devices);
     void onTransportReady(quint16 mtu);
     void onCentralDisconnected();
     void onSenderFinished(bool ok, const QString& message);
     void onReceiverFinished(bool ok, const QString& message);
+    void onCentralReceiverFinished(bool ok, const QString& message);
+    void onPeripheralSenderFinished(bool ok, const QString& message);
     void onTick();
     void appendLog(int level, const QString& line);
 
@@ -53,16 +59,22 @@ private:
     void logInfo(const QString& text);
     void logError(const QString& text);
     void pumpSender();
+    void pumpPeripheralSender();
+    void maybeStartPeripheralSend();
     void updateSenderStats();
     void updateReceiverStats();
+    void updateCentralReceiverStats();
+    void updatePeripheralSenderStats();
     void updateButtons();
     void startAdvertising();
     void stopAdvertising();
     QString selectedDevicePath() const;
 
     AppConfig cfg_;
-    Sender* sender_ = nullptr;
-    Receiver* receiver_ = nullptr;
+    Sender* sender_ = nullptr;              // central -> peripheral
+    Receiver* receiver_ = nullptr;          // peripheral <- central
+    Receiver* centralReceiver_ = nullptr;   // central <- peripheral
+    Sender* peripheralSender_ = nullptr;    // peripheral -> central
     BleCentral* central_ = nullptr;
     GattServer* gattServer_ = nullptr;
 
@@ -73,6 +85,7 @@ private:
     QPushButton* connectBtn_ = nullptr;
     QCheckBox* autoReconnectBox_ = nullptr;
 
+    // Central: отправка файла на peripheral.
     QLineEdit* fileEdit_ = nullptr;
     QPushButton* browseFileBtn_ = nullptr;
     QPushButton* sendBtn_ = nullptr;
@@ -81,6 +94,14 @@ private:
     QLabel* txState_ = nullptr;
     QLabel* txStats_ = nullptr;
 
+    // Central: приём файла от peripheral.
+    QLineEdit* centralOutDirEdit_ = nullptr;
+    QPushButton* centralBrowseOutBtn_ = nullptr;
+    QProgressBar* centralRxProgress_ = nullptr;
+    QLabel* centralRxState_ = nullptr;
+    QLabel* centralRxStats_ = nullptr;
+
+    // Peripheral: приём файла от central.
     QPushButton* advBtn_ = nullptr;
     QLineEdit* outDirEdit_ = nullptr;
     QPushButton* browseOutBtn_ = nullptr;
@@ -88,7 +109,16 @@ private:
     QLabel* rxState_ = nullptr;
     QLabel* rxStats_ = nullptr;
 
-    QPlainTextEdit* log_ = nullptr;
+    // Peripheral: отправка файла на central.
+    QLineEdit* pFileEdit_ = nullptr;
+    QPushButton* pBrowseFileBtn_ = nullptr;
+    QPushButton* pSendBtn_ = nullptr;
+    QPushButton* pCancelBtn_ = nullptr;
+    QProgressBar* pTxProgress_ = nullptr;
+    QLabel* pTxState_ = nullptr;
+    QLabel* pTxStats_ = nullptr;
+
+    QTextEdit* log_ = nullptr;
     QLabel* statusLabel_ = nullptr;
     QTimer tick_;
     QTimer reconnectTimer_;
@@ -97,5 +127,7 @@ private:
     QString pendingPeerAddress_;
     bool pendingAutoConnect_ = false;
     bool pendingSend_ = false;
+    bool pendingPeripheralSend_ = false;
+    bool peripheralWaitLogged_ = false;
     bool autoReconnect_ = true;
 };

@@ -11,16 +11,18 @@
 //   /org/lab6/ble/advert                — LEAdvertisement1
 
 #include <QDBusVirtualObject>
+#include <QPointer>
 #include <QObject>
 
 #include "ble/dbusutil.h"
 
 class Receiver;
+class Sender;
 
 class GattServer : public QDBusVirtualObject {
     Q_OBJECT
 public:
-    explicit GattServer(Receiver* receiver, QObject* parent = nullptr);
+    explicit GattServer(Receiver* receiver, Sender* sender, QObject* parent = nullptr);
     ~GattServer() override;
 
     void setAdapter(const QString& adapterName) { adapterName_ = adapterName; }
@@ -31,6 +33,10 @@ public:
     QString stateText() const;
 
     void sendControlNotification(const QByteArray& value);
+    void sendDataNotification(const QByteArray& value);
+    bool isDataNotifying() const { return dataNotifying_; }
+    quint16 peerMtu() const { return peerMtu_; }
+    bool hasPeerMtu() const { return peerMtuKnown_; }
 
 private:
     void registerAdvertisementAsync();
@@ -43,6 +49,9 @@ signals:
     void advertisingChanged(bool on);
     void clientSeen();
     void clientGone();
+    void mtuChanged(quint16 mtu);
+    void dataNotifyChanged(bool on);
+    void controlActivity();
 
 private:
     BluezPropertyMap serviceProperties() const;
@@ -62,7 +71,8 @@ private:
     void handleWriteValue(const QDBusMessage& message, const QDBusConnection& conn);
     QString introspectObject(const QString& path) const;
 
-    Receiver* receiver_ = nullptr;
+    QPointer<Receiver> receiver_;
+    QPointer<Sender> sender_;
     QString adapterName_;
     QString adapterPath_;
     bool exported_ = false;
@@ -70,6 +80,10 @@ private:
     bool starting_ = false;
     bool advertising_ = false;
     bool controlNotifying_ = false;
+    bool dataNotifying_ = false;
     bool clientSeen_ = false;
     QByteArray controlValue_;
+    QByteArray dataValue_;
+    quint16 peerMtu_ = 23;
+    bool peerMtuKnown_ = false;
 };

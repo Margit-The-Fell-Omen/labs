@@ -29,6 +29,9 @@
               dbus
               # busctl (systemd) — удобно для интроспекции BlueZ.
               systemd
+              openssl
+              python3
+              qrencode
             ];
             shellHook = ''
               export CMAKE_PREFIX_PATH="${pkgs.qt6.qtbase}:$CMAKE_PREFIX_PATH"

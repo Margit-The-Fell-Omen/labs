@@ -4,10 +4,14 @@
 двумя BLE-устройствами через **собственный GATT-профиль** и **прямой BlueZ
 D-Bus API** (без Qt Bluetooth).
 
-- **Central** — отправитель: сканирует, подключается, пишет чанки в Data
-  через `AcquireWrite` (`write-without-response`).
-- **Peripheral** — приёмник: публикует GATT-сервис через `GattManager1`,
-  запускает LE-advertising и принимает чанки.
+- **Central** и **Peripheral** могут быть и отправителем, и приёмником.
+  Central→Peripheral: Central пишет чанки в Data через `AcquireWrite`
+  (`write-without-response`).
+- Peripheral→Central: Peripheral отправляет чанки через **Data notifications**,
+  Central подтверждает их через Control write (ACK).
+- Phone: в `phone/web-bluetooth.html` есть Web Bluetooth-клиент для
+  Chrome Android — телефон подключается к ноутбуку как Central и умеет
+  отправлять/принимать файлы без установки Android-приложения.
 - **CRC32** каждого чанка и всего файла.
 - **ACK** от приёмника, окно неподтверждённых байт, повторная отправка.
 - **Прогресс, скорость, ETA** в GUI.
@@ -52,7 +56,7 @@ ctest --test-dir build --output-on-failure
 
 ## Быстрый запуск на двух ноутбуках
 
-### Ноутбук A — приёмник (Peripheral)
+### Ноутбук A — Peripheral (реклама; приём/отправка)
 
 ```bash
 ./build/lab6ble --role peripheral
@@ -68,14 +72,14 @@ Headless-вариант:
 ./build/lab6ble --role peripheral --headless --auto --out ~/Downloads/lab6
 ```
 
-### Ноутбук B — отправитель (Central)
+### Ноутбук B — Central (сканирование; отправка/приём)
 
 ```bash
 ./build/lab6ble --role central
 ```
 
 1. Нажмите **«Сканировать»**.
-2. Выберите устройство с именем `lab6-ble` (колонка «Наш сервис» = «да»).
+2. Выберите устройство с именем `lab6` (колонка «Наш сервис» = «да»).
 3. Нажмите **«Подключиться к выбранному»**.
 4. Выберите файл и нажмите **«Отправить»**.
 
@@ -89,12 +93,70 @@ Headless-вариант (адрес — BD_ADDR периферии):
 Если `--peer` не указан, central автоматически подключится к первому
 устройству с нашим сервисом.
 
+### Обратное направление (Peripheral → Central)
+
+1. Central подключается к Peripheral (как выше).
+2. На Peripheral откройте вкладку **Peripheral**, выберите файл в блоке
+   **«Отправить на central»** и нажмите **«Отправить»**.
+3. Central покажет прогресс в блоке **«Принять от peripheral»**.
+
+Peripheral использует Data notifications, Central отвечает ACK через
+Control write. Кнопка отправки на Peripheral активируется после того, как
+Central подпишется на Data и пришлёт `HELLO` (становится известен MTU).
+
+## Phone (Web Bluetooth)
+
+Ноутбук должен быть в роли Peripheral с включённой рекламой. На телефоне:
+
+1. Запустите `./phone/serve-phone.sh` и откройте выданный HTTPS-URL в
+   **Chrome/Edge for Android** (или откройте `phone/web-bluetooth.html`
+   как `file://`).
+2. Нажмите **«Подключиться к lab6»** и выберите устройство.
+3. **Телефон → ноутбук**: выберите файл и нажмите **«Отправить»**.
+4. **Ноутбук → телефон**: на ноутбуке во вкладке Peripheral нажмите
+   **«Отправить на central»**; телефон покажет прогресс и скачает файл.
+
+Web Bluetooth требует secure context. Самый простой способ:
+
+```bash
+./phone/serve-phone.sh
+# Телефон: https://<ip-ноутбука>:8443/web-bluetooth.html
+```
+
+Скрипт печатает LAN-IP ноутбука (в текущей сети — `10.0.0.105`), URL и QR-код,
+создаёт self-signed cert (примите предупреждение в Chrome) и отдаёт страницу
+по HTTPS. Публичный `80.249.84.61` — это адрес роутера/провайдера, а не
+ноутбука; по нему телефон в той же Wi-Fi не подключится без port forwarding.
+
+Если телефон не открывает IP:
+
+- проверьте, что телефон в той же Wi-Fi/подсети (`10.0.0.0/24`), а не в
+  мобильном интернете или гостевой сети;
+- не используйте `80.249.84.61`;
+- если порт занят старым сервером: `./phone/stop-phone.sh`;
+- если включён firewall: откройте TCP 8443;
+- сеть вообще не нужна для BLE: скопируйте `phone/web-bluetooth.html` на
+  телефон и откройте как `file://` — Web Bluetooth работает без IP
+  (если Chrome разрешает secure context для `file://`).
+
+Альтернативы:
+
+- открыть HTML как `file://` (Chrome Android обычно считает это
+  безопасным контекстом);
+- для HTTP-origin ноутбука включить `chrome://flags/#unsafely-treat-insecure-origin-as-secure`.
+
+iOS Safari Web Bluetooth не поддерживает. Для iPhone можно подключиться к
+`lab6` через **nRF Connect**, чтобы проверить GATT-профиль, но передача
+файлов с iPhone без нативного приложения недоступна. Android-телефон
+работает как BLE Central: подписывается на Data/Control notifications,
+шлёт `HELLO`, затем использует тот же протокол START/ACK/FIN/CRC32.
+
 ## GATT-профиль
 
 | Объект | UUID | Свойства |
 |---|---|---|
 | Service | `6c1f0001-5a3e-4b7a-9c2d-7e8f9a0b1c2d` | Primary |
-| Data characteristic | `6c1f0002-5a3e-4b7a-9c2d-7e8f9a0b1c2d` | `write-without-response`, `write` |
+| Data characteristic | `6c1f0002-5a3e-4b7a-9c2d-7e8f9a0b1c2d` | `write-without-response`, `write`, `notify` |
 | Control characteristic | `6c1f0003-5a3e-4b7a-9c2d-7e8f9a0b1c2d` | `read`, `write`, `notify` |
 
 D-Bus объекты приложения:
@@ -111,7 +173,7 @@ D-Bus объекты приложения:
 
 Все числа — little-endian.
 
-### Data: один GATT-write = один чанк
+### Data: один GATT-write или notification = один чанк
 
 ```
 [u64 offset][u32 crc32(payload)][payload]
@@ -137,14 +199,26 @@ D-Bus объекты приложения:
 | `4 FIN` | конец данных | `transferId[16]`, `u64 size`, `u32 fileCrc32` |
 | `5 FIN_ACK` | результат CRC | `transferId[16]`, `u8 status`, `u32 fileCrc32` |
 | `6 ABORT` | отмена | `transferId[16]`, `u8 status`, `u16 reasonLen`, `reason` |
+| `7 HELLO` | central готов, сообщает peripheral MTU | `transferId[16]` (нули) |
 
 Статусы: `OK`, `RESUME`, `COMPLETE`, `CRC_MISMATCH`, `SIZE_MISMATCH`,
 `ERROR`, `ABORTED`.
 
+`HELLO` отправляется Central после подключения и `StartNotify` на Data/Control.
+BlueZ передаёт фактический MTU в options `WriteValue`; Peripheral запоминает
+его и использует для исходящих Data notifications. Если MTU в options нет,
+используется безопасный 23.
+
+Для Peripheral→Central Data-характеристика должна иметь `notify`:
+Peripheral отправляет чанки как notifications, Central подписывается на них и
+шлёт ACK/START_ACK/FIN_ACK через Control write. Скорость ниже, чем у
+`AcquireWrite`, потому что нотификации идут через D-Bus/GATT notify.
+
 ### Надёжность и скорость
 
-- `AcquireWrite` на Data: BlueZ отдаёт fd и MTU; запись идёт через
-  `send(..., MSG_NOSIGNAL)`, по одному GATT-фрейму.
+- Central→Peripheral: `AcquireWrite` на Data, BlueZ отдаёт fd и MTU; запись
+  идёт через `send(..., MSG_NOSIGNAL)`, по одному GATT-фрейму.
+- Peripheral→Central: Data notifications + ACK через Control write.
 - Payload чанка = `MTU - 3 - 12` (12 байт заголовка), но не больше 4096.
 - Если `AcquireWrite` недоступен, используется `WriteValue` с
   `type=command` (Write Without Response).
@@ -182,18 +256,27 @@ D-Bus объекты приложения:
 
 - **Central**: таблица устройств (имя, адрес, RSSI, наличие сервиса),
   подключение, выбор файла, отправка/отмена, прогресс, скорость, ETA,
-  журнал.
+  журнал. Повторный клик по «Сканировать» (кнопка меняется на
+  «Остановить поиск») останавливает поиск.
 - **Peripheral**: запуск/остановка рекламы, каталог сохранения, прогресс
-  приёма, скорость, ETA, журнал.
+  приёма; блок **«Отправить на central»** с выбором файла и прогрессом
+  обратной передачи; журнал.
+- **Central**: кроме отправки, блок **«Принять от peripheral»** с каталогом
+  сохранения и прогрессом входящей передачи.
 - Авто-переподключение включено по умолчанию; отключается чекбоксом или
   `--no-reconnect`.
+- Тёмная тема **Gruvbox** (Fusion + палитра + QSS); журнал окрашен по
+  уровню (info/warn/error).
+- `Ctrl+C`/`SIGTERM`/`SIGHUP` завершают приложение штатно через self-pipe
+  и `QSocketNotifier`, с остановкой GATT/advertising и disconnect, без
+  segfault.
 
 ## CLI
 
 ```
 --role central|peripheral
 --adapter hciN
---send FILE
+--send FILE               # для peripheral: файл, который отправить central
 --out DIR
 --peer BD_ADDR|/org/bluez/hciN/dev_...
 --window BYTES
@@ -237,10 +320,10 @@ ctest --test-dir build --output-on-failure
 | Тест | Что проверяет |
 |---|---|
 | `test_crc32` | эталонный вектор `"123456789"` → `0xCBF43926`, пустые данные, инкрементальность |
-| `test_frame` | кодирование/декодирование чанков и control, битые/обрезанные кадры, transferId |
+| `test_frame` | кодирование/декодирование чанков и control (включая HELLO), битые/обрезанные кадры, transferId |
 | `test_ratemeter` | скорость и ETA |
 | `test_dbusmeta` | сигнатуры `a{sa{sv}}`, `a{oa{sa{sv}}}`, `ao` и round-trip ObjectManager |
-| `test_transfer` | полная передача, обрыв+resume, повтор после битого чанка, финальный CRC mismatch, пустой файл |
+| `test_transfer` | полная передача central→peripheral, обратная peripheral→central, обрыв+resume, повтор после битого чанка, финальный CRC mismatch, пустой файл |
 
 Loopback-тесты не требуют Bluetooth-адаптера.
 
@@ -253,15 +336,51 @@ Loopback-тесты не требуют Bluetooth-адаптера.
    повторная отправка, итоговый файл корректен.
 4. Проверить ошибки: адаптер выключен, устройство не найдено, нет прав,
    диск переполнен.
+5. Проверить Peripheral→Central: на Peripheral выбрать файл и отправить
+   на Central; на Central должен появиться прогресс приёма.
+6. Проверить телефон: Peripheral advertising + `./phone/serve-phone.sh`,
+   подключиться из Chrome Android, отправить и принять файл.
 5. Убедиться, что прогресс/скорость/ETA обновляются.
 
 ## Troubleshooting
+
+**Телефон не открывает IP ноутбука**
+- В текущей сети LAN-IP ноутбука — `10.0.0.105`, а `80.249.84.61` —
+  публичный IP роутера. Используйте URL, который печатает
+  `./phone/serve-phone.sh`.
+- Телефон и ноутбук должны быть в одной Wi-Fi-подсети; мобильный интернет
+  и гостевая сеть с изоляцией клиентов не подойдут.
+- Порт 8443 занят: `./phone/stop-phone.sh`, затем снова
+  `./phone/serve-phone.sh`.
+- Firewall: `networking.firewall.allowedTCPPorts = [ 8443 ];`.
+- Если сеть недоступна, скопируйте `phone/web-bluetooth.html` на телефон
+  и откройте `file://` — для BLE IP не нужен.
+
+**Телефон не видит lab6 в списке Web Bluetooth**
+- Перезапустите приложение после обновления. В журнале должно быть:
+  `LE advertising запущен: name=lab6, type=peripheral, ... activeInstances=1`.
+  Если приложение пишет `lab6ble уже запущен` — закройте старый экземпляр.
+- На Android включите **Bluetooth** и **Геолокацию**; Chrome должен иметь
+  разрешение **«Устройства поблизости»** (Android 12+). Без Location
+  сканирование BLE в Chrome часто возвращает пустой список.
+- Обновите страницу без кэша (или откройте в инкогнито). В журнале страницы
+  должна быть строка `UI lab6-phone-v5`, кнопка — «Подключиться к lab6».
+  Если видите старую страницу с `lab6-ble` — это кэш.
+- Проверьте через **nRF Connect**: если `lab6` там виден, а в Chrome нет —
+  проблема в разрешениях Chrome/Location. Если не виден и в nRF Connect —
+  реклама не доходит: перезапустите Bluetooth
+  (`sudo systemctl restart bluetooth`), передёрните адаптер, подойдите ближе,
+  убедитесь, что не запущен второй экземпляр приложения.
+- Системное меню Bluetooth на телефоне может не показывать BLE-only
+  устройства; используйте Web Bluetooth-страницу или nRF Connect.
+- Если сеть/IP недоступны, скопируйте `phone/web-bluetooth.html` на телефон
+  и откройте как `file://` — для BLE IP не нужен.
 
 **Устройство не видно**
 - Убедитесь, что на периферии нажата «Начать рекламу».
 - `bluetoothctl show` — адаптер `Powered: yes`.
 - `rfkill list` — нет soft/hard block.
-- Имя в рекламе — `lab6-ble`; 128-битный UUID занимает большую часть
+- Имя в рекламе — `lab6`; 128-битный UUID занимает большую часть
   пакета, поэтому остальные поля сокращены.
 
 **`RegisterApplication: ... NotAuthorized` / `AccessDenied`**
@@ -289,6 +408,9 @@ bluetoothctl remove AA:BB:CC:DD:EE:FF
 ## Ограничения
 
 - Только Linux/BlueZ (D-Bus); Windows/macOS не поддерживаются.
+- Phone-клиент — Web Bluetooth в Chrome/Edge for Android (iOS Safari не умеет).
+- Peripheral→Central идёт через notifications + D-Bus PropertiesChanged и
+  медленнее, чем Central→Peripheral через `AcquireWrite`.
 - Одна передача за раз.
 - Нет шифрования/бонинга: протокол рассчитан на лабораторный стенд.
 - CRC32 — контроль целостности, не криптографическая подпись.
@@ -306,6 +428,7 @@ lab6/
 ├── src/
 │   ├── main.cpp
 │   ├── appconfig.*
+│   ├── gruvbox.*
 │   ├── logging.*
 │   ├── mainwindow.*
 │   ├── ble/
@@ -321,6 +444,10 @@ lab6/
 │       ├── receiver.*
 │       ├── resumestore.*
 │       └── ratemeter.*
+├── phone/
+│   ├── web-bluetooth.html   # Chrome Android Web Bluetooth client
+│   ├── serve-phone.sh       # HTTPS-сервер для secure context
+│   └── serve.py
 └── tests/
     ├── test_crc32.cpp
     ├── test_frame.cpp

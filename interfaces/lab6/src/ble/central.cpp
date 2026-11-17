@@ -2,6 +2,7 @@
 
 #include "ble/bluezconst.h"
 #include "ble/dbusutil.h"
+#include "protocol/frame.h"
 
 #include <QDBusArgument>
 #include <QDBusConnection>
@@ -133,6 +134,7 @@ void BleCentral::stopScan()
         return;
     scanning_ = false;
     scanTimer_.stop();
+    setState(QStringLiteral("поиск остановлен"));
     if (!adapterPath_.isEmpty()) {
         dbusutil::callVoid(QStringLiteral("org.bluez"), adapterPath_,
                            QStringLiteral("org.bluez.Adapter1"),
@@ -220,6 +222,7 @@ void BleCentral::connectToDevice(const QString& path)
     if (path.isEmpty())
         return;
     stopScan();
+    unregisterSignals();
     closeWrite();
     connectPollTimer_.stop();
     connectTimeoutTimer_.stop();
@@ -355,7 +358,8 @@ void BleCentral::setupGatt()
     emit logMessage(QStringLiteral("GATT: control=%1").arg(controlPath_));
 
     registerControlSignal();
-    startNotify();
+    registerDataSignal();
+    startNotifications();
 }
 
 void BleCentral::registerControlSignal()
@@ -373,6 +377,21 @@ void BleCentral::registerControlSignal()
         emit logMessage(QStringLiteral("не удалось подписаться на PropertiesChanged Control"));
 }
 
+void BleCentral::registerDataSignal()
+{
+    if (dataSignalConnected_)
+        return;
+    dataSignalConnected_ = QDBusConnection::systemBus().connect(
+        QStringLiteral("org.bluez"),
+        dataPath_,
+        QStringLiteral("org.freedesktop.DBus.Properties"),
+        QStringLiteral("PropertiesChanged"),
+        this,
+        SLOT(onDataPropertiesChanged(QString,QVariantMap,QStringList)));
+    if (!dataSignalConnected_)
+        emit logMessage(QStringLiteral("не удалось подписаться на PropertiesChanged Data"));
+}
+
 void BleCentral::onControlPropertiesChanged(const QString& iface,
                                             const QVariantMap& changed,
                                             const QStringList& /*invalidated*/)
@@ -386,23 +405,68 @@ void BleCentral::onControlPropertiesChanged(const QString& iface,
         emit controlReceived(value);
 }
 
-void BleCentral::startNotify()
+void BleCentral::onDataPropertiesChanged(const QString& iface,
+                                         const QVariantMap& changed,
+                                         const QStringList& /*invalidated*/)
+{
+    if (iface != QStringLiteral("org.bluez.GattCharacteristic1"))
+        return;
+    if (!changed.contains(QStringLiteral("Value")))
+        return;
+    const QByteArray value = dbusutil::toByteArray(changed.value(QStringLiteral("Value")));
+    if (!value.isEmpty())
+        emit dataReceived(value);
+}
+
+void BleCentral::startNotifications()
+{
+    pendingNotify_ = 2;
+    controlNotifyOk_ = false;
+    dataNotifyOk_ = false;
+    startNotifyFor(controlPath_, true);
+    startNotifyFor(dataPath_, false);
+}
+
+void BleCentral::startNotifyFor(const QString& path, bool isControl)
 {
     QDBusMessage msg = QDBusMessage::createMethodCall(
-        QStringLiteral("org.bluez"), controlPath_,
+        QStringLiteral("org.bluez"), path,
         QStringLiteral("org.bluez.GattCharacteristic1"), QStringLiteral("StartNotify"));
     QDBusPendingCall call = QDBusConnection::systemBus().asyncCall(msg);
     auto* watcher = new QDBusPendingCallWatcher(call, this);
-    connect(watcher, &QDBusPendingCallWatcher::finished, this, [this](QDBusPendingCallWatcher* w) {
-        if (w->isError()) {
-            emit errorOccurred(QStringLiteral("StartNotify: %1").arg(w->error().message()));
-            emit logMessage(QStringLiteral("продолжаем: возможно, notifications уже включены"));
-        } else {
-            emit logMessage(QStringLiteral("Control notifications включены"));
-        }
-        acquireWrite();
-        w->deleteLater();
-    });
+    connect(watcher, &QDBusPendingCallWatcher::finished, this,
+            [this, isControl](QDBusPendingCallWatcher* w) {
+                if (w->isError()) {
+                    emit logMessage(QStringLiteral("StartNotify(%1): %2")
+                                        .arg(isControl ? QStringLiteral("Control")
+                                                       : QStringLiteral("Data"),
+                                             w->error().message()));
+                } else if (isControl) {
+                    controlNotifyOk_ = true;
+                    emit logMessage(QStringLiteral("Control notifications включены"));
+                } else {
+                    dataNotifyOk_ = true;
+                    emit logMessage(QStringLiteral("Data notifications включены"));
+                }
+                w->deleteLater();
+                if (--pendingNotify_ <= 0) {
+                    if (!controlNotifyOk_)
+                        emit errorOccurred(QStringLiteral("Control notify недоступен"));
+                    if (!dataNotifyOk_)
+                        emit logMessage(QStringLiteral(
+                            "Data notify недоступен: peripheral→central будет недоступен"));
+                    acquireWrite();
+                }
+            });
+}
+
+void BleCentral::sendHello()
+{
+    proto::ControlMessage hello;
+    hello.type = proto::ControlType::Hello;
+    hello.transferId = QByteArray(proto::kTransferIdSize, '\0');
+    sendWriteValue(proto::encodeControl(hello), false);
+    emit logMessage(QStringLiteral("→ HELLO (central готов, MTU=%1)").arg(mtu_));
 }
 
 void BleCentral::acquireWrite()
@@ -424,6 +488,7 @@ void BleCentral::acquireWrite()
             ready_ = true;
             setState(QStringLiteral("готово (fallback WriteValue)"));
             emit transportReady(mtu_);
+            sendHello();
         } else {
             const QDBusUnixFileDescriptor desc = reply.argumentAt<0>();
             const int rawFd = desc.fileDescriptor();
@@ -435,6 +500,7 @@ void BleCentral::acquireWrite()
                 ready_ = true;
                 setState(QStringLiteral("готово (fallback WriteValue)"));
                 emit transportReady(mtu_);
+                sendHello();
             } else {
                 const int flags = ::fcntl(fd, F_GETFL, 0);
                 ::fcntl(fd, F_SETFL, flags | O_NONBLOCK);
@@ -454,6 +520,7 @@ void BleCentral::acquireWrite()
                                     .arg(mtu_)
                                     .arg(qMax<int>(1, mtu_ - 3 - 12)));
                 emit transportReady(mtu_);
+                sendHello();
             }
         }
         w->deleteLater();
@@ -615,20 +682,32 @@ void BleCentral::handleDisconnect(const QString& reason)
     connectPollTimer_.stop();
     connectTimeoutTimer_.stop();
     closeWrite();
-    if (controlSignalConnected_ && !controlPath_.isEmpty()) {
-        QDBusConnection::systemBus().disconnect(
-            QStringLiteral("org.bluez"), controlPath_,
-            QStringLiteral("org.freedesktop.DBus.Properties"),
-            QStringLiteral("PropertiesChanged"),
-            this,
-            SLOT(onControlPropertiesChanged(QString,QVariantMap,QStringList)));
-        controlSignalConnected_ = false;
-    }
+    unregisterSignals();
 
     setState(QStringLiteral("отключено"));
     emit logMessage(QStringLiteral("disconnected: %1").arg(reason));
     if (wasConnected)
         emit disconnected();
+}
+
+void BleCentral::unregisterSignals()
+{
+    if (controlSignalConnected_ && !controlPath_.isEmpty()) {
+        QDBusConnection::systemBus().disconnect(
+            QStringLiteral("org.bluez"), controlPath_,
+            QStringLiteral("org.freedesktop.DBus.Properties"),
+            QStringLiteral("PropertiesChanged"), this,
+            SLOT(onControlPropertiesChanged(QString,QVariantMap,QStringList)));
+        controlSignalConnected_ = false;
+    }
+    if (dataSignalConnected_ && !dataPath_.isEmpty()) {
+        QDBusConnection::systemBus().disconnect(
+            QStringLiteral("org.bluez"), dataPath_,
+            QStringLiteral("org.freedesktop.DBus.Properties"),
+            QStringLiteral("PropertiesChanged"), this,
+            SLOT(onDataPropertiesChanged(QString,QVariantMap,QStringList)));
+        dataSignalConnected_ = false;
+    }
 }
 
 void BleCentral::closeWrite()

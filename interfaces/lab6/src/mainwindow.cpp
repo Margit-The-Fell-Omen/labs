@@ -20,7 +20,8 @@
 #include <QHeaderView>
 #include <QLabel>
 #include <QLineEdit>
-#include <QPlainTextEdit>
+#include <QTextEdit>
+#include <QTextDocument>
 #include <QProgressBar>
 #include <QPushButton>
 #include <QSettings>
@@ -98,17 +99,25 @@ MainWindow::MainWindow(const AppConfig& cfg, QWidget* parent)
 
     sender_ = new Sender(this);
     receiver_ = new Receiver(this);
+    centralReceiver_ = new Receiver(this);
+    peripheralSender_ = new Sender(this);
     central_ = new BleCentral(this);
-    gattServer_ = new GattServer(receiver_, this);
+    gattServer_ = new GattServer(receiver_, peripheralSender_, this);
 
     central_->setAdapter(cfg_.adapter);
-    if (!cfg_.outDir.isEmpty())
+    if (!cfg_.outDir.isEmpty()) {
         receiver_->setOutDir(cfg_.outDir);
-    sender_->setWindow(cfg_.window);
-    if (cfg_.chunk > 0)
-        sender_->setChunkOverride(static_cast<quint16>(cfg_.chunk));
-    if (cfg_.corruptChunk >= 0)
-        sender_->setCorruptChunk(cfg_.corruptChunk);
+        centralReceiver_->setOutDir(cfg_.outDir);
+    } else {
+        centralReceiver_->setOutDir(receiver_->outDir());
+    }
+    for (Sender* s : {sender_, peripheralSender_}) {
+        s->setWindow(cfg_.window);
+        if (cfg_.chunk > 0)
+            s->setChunkOverride(static_cast<quint16>(cfg_.chunk));
+        if (cfg_.corruptChunk >= 0)
+            s->setCorruptChunk(cfg_.corruptChunk);
+    }
 
     reconnectTimer_.setSingleShot(true);
     reconnectTimer_.setInterval(2000);
@@ -149,6 +158,7 @@ void MainWindow::setupUi()
     deviceTable_->setSelectionBehavior(QAbstractItemView::SelectRows);
     deviceTable_->setSelectionMode(QAbstractItemView::SingleSelection);
     deviceTable_->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    deviceTable_->setAlternatingRowColors(true);
     centralLayout->addWidget(deviceTable_, 1);
 
     connectBtn_ = new QPushButton(QStringLiteral("Подключиться к выбранному"));
@@ -182,6 +192,25 @@ void MainWindow::setupUi()
     centralLayout->addWidget(txState_);
     centralLayout->addWidget(txStats_);
 
+    auto* centralRxBox = new QGroupBox(QStringLiteral("Принять от peripheral"));
+    auto* centralRxLayout = new QVBoxLayout(centralRxBox);
+    auto* centralOutRow = new QHBoxLayout;
+    centralOutDirEdit_ = new QLineEdit(centralReceiver_->outDir());
+    centralBrowseOutBtn_ = new QPushButton(QStringLiteral("Выбрать…"));
+    centralOutRow->addWidget(new QLabel(QStringLiteral("Сохранять в:")));
+    centralOutRow->addWidget(centralOutDirEdit_, 1);
+    centralOutRow->addWidget(centralBrowseOutBtn_);
+    centralRxLayout->addLayout(centralOutRow);
+    centralRxProgress_ = new QProgressBar;
+    centralRxProgress_->setRange(0, 1000);
+    centralRxLayout->addWidget(centralRxProgress_);
+    centralRxState_ = new QLabel(QStringLiteral("ожидание"));
+    centralRxStats_ = new QLabel(QStringLiteral("—"));
+    centralRxStats_->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    centralRxLayout->addWidget(centralRxState_);
+    centralRxLayout->addWidget(centralRxStats_);
+    centralLayout->addWidget(centralRxBox);
+
     // ------------------------------------------------------------- peripheral
     auto* peripheralPage = new QWidget;
     auto* peripheralLayout = new QVBoxLayout(peripheralPage);
@@ -208,19 +237,47 @@ void MainWindow::setupUi()
     rxStats_->setTextInteractionFlags(Qt::TextSelectableByMouse);
     peripheralLayout->addWidget(rxState_);
     peripheralLayout->addWidget(rxStats_);
+
+    auto* pTxBox = new QGroupBox(QStringLiteral("Отправить на central"));
+    auto* pTxLayout = new QVBoxLayout(pTxBox);
+    auto* pFileRow = new QHBoxLayout;
+    pFileEdit_ = new QLineEdit;
+    pFileEdit_->setPlaceholderText(QStringLiteral("файл для отправки"));
+    pBrowseFileBtn_ = new QPushButton(QStringLiteral("Выбрать…"));
+    pFileRow->addWidget(new QLabel(QStringLiteral("Файл:")));
+    pFileRow->addWidget(pFileEdit_, 1);
+    pFileRow->addWidget(pBrowseFileBtn_);
+    pTxLayout->addLayout(pFileRow);
+    auto* pSendRow = new QHBoxLayout;
+    pSendBtn_ = new QPushButton(QStringLiteral("Отправить"));
+    pCancelBtn_ = new QPushButton(QStringLiteral("Отменить"));
+    pCancelBtn_->setEnabled(false);
+    pSendRow->addWidget(pSendBtn_);
+    pSendRow->addWidget(pCancelBtn_);
+    pSendRow->addStretch();
+    pTxLayout->addLayout(pSendRow);
+    pTxProgress_ = new QProgressBar;
+    pTxProgress_->setRange(0, 1000);
+    pTxLayout->addWidget(pTxProgress_);
+    pTxState_ = new QLabel(QStringLiteral("ожидание"));
+    pTxStats_ = new QLabel(QStringLiteral("—"));
+    pTxStats_->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    pTxLayout->addWidget(pTxState_);
+    pTxLayout->addWidget(pTxStats_);
+    peripheralLayout->addWidget(pTxBox);
     peripheralLayout->addStretch();
 
     tabs_ = new QTabWidget;
-    tabs_->addTab(centralPage, QStringLiteral("Central — отправитель"));
-    tabs_->addTab(peripheralPage, QStringLiteral("Peripheral — приёмник"));
+    tabs_->addTab(centralPage, QStringLiteral("Central — отправка/приём"));
+    tabs_->addTab(peripheralPage, QStringLiteral("Peripheral — приём/отправка"));
     tabs_->setCurrentIndex(cfg_.role == QStringLiteral("peripheral") ? 1 : 0);
 
     // ------------------------------------------------------------------ log
     auto* logBox = new QGroupBox(QStringLiteral("Журнал событий"));
     auto* logLayout = new QVBoxLayout(logBox);
-    log_ = new QPlainTextEdit;
+    log_ = new QTextEdit;
     log_->setReadOnly(true);
-    log_->setMaximumBlockCount(10000);
+    log_->document()->setMaximumBlockCount(10000);
     log_->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     logLayout->addWidget(log_);
 
@@ -243,6 +300,8 @@ void MainWindow::setupUi()
         if (!saved.isEmpty() && QDir(saved).exists())
             outDirEdit_->setText(saved);
     }
+    if (pFileEdit_->text().isEmpty())
+        pFileEdit_->setText(settings.value(QStringLiteral("lastPeripheralFile")).toString());
 }
 
 void MainWindow::wireSignals()
@@ -259,6 +318,10 @@ void MainWindow::wireSignals()
     });
     connect(browseFileBtn_, &QPushButton::clicked, this, &MainWindow::onBrowseFile);
     connect(browseOutBtn_, &QPushButton::clicked, this, &MainWindow::onBrowseOut);
+    connect(centralBrowseOutBtn_, &QPushButton::clicked, this, &MainWindow::onCentralBrowseOut);
+    connect(pBrowseFileBtn_, &QPushButton::clicked, this, &MainWindow::onPeripheralBrowseFile);
+    connect(pSendBtn_, &QPushButton::clicked, this, &MainWindow::onPeripheralSend);
+    connect(pCancelBtn_, &QPushButton::clicked, this, &MainWindow::onPeripheralCancel);
     connect(sendBtn_, &QPushButton::clicked, this, &MainWindow::onSend);
     connect(cancelBtn_, &QPushButton::clicked, this, &MainWindow::onCancel);
     connect(advBtn_, &QPushButton::clicked, this, &MainWindow::onToggleAdvertising);
@@ -275,11 +338,20 @@ void MainWindow::wireSignals()
     connect(central_, &BleCentral::disconnected, this, &MainWindow::onCentralDisconnected);
     connect(central_, &BleCentral::controlReceived, this, [this](const QByteArray& value) {
         sender_->onControl(value);
-        // ACK открывает окно; без этого передача могла бы стоять после
-        // заполнения окна, пока не придёт следующий chunkWritable.
+        centralReceiver_->handleControl(value);
         pumpSender();
     });
+    connect(central_, &BleCentral::dataReceived, this, [this](const QByteArray& value) {
+        centralReceiver_->handleChunk(value);
+    });
     connect(central_, &BleCentral::chunkWritable, this, &MainWindow::pumpSender);
+    connect(centralReceiver_, &Receiver::controlToSend, central_, &BleCentral::sendControl);
+    connect(centralReceiver_, &Receiver::progress, this, [this](quint64, quint64) { updateCentralReceiverStats(); });
+    connect(centralReceiver_, &Receiver::stateChanged, this, [this](const QString& text) {
+        centralRxState_->setText(text);
+    });
+    connect(centralReceiver_, &Receiver::logMessage, this, &MainWindow::logInfo);
+    connect(centralReceiver_, &Receiver::finished, this, &MainWindow::onCentralReceiverFinished);
 
     connect(sender_, &Sender::controlToSend, central_, &BleCentral::sendControl);
     connect(sender_, &Sender::progress, this, [this](quint64, quint64) { updateSenderStats(); });
@@ -296,6 +368,13 @@ void MainWindow::wireSignals()
     connect(receiver_, &Receiver::logMessage, this, &MainWindow::logInfo);
     connect(receiver_, &Receiver::finished, this, &MainWindow::onReceiverFinished);
 
+    connect(peripheralSender_, &Sender::progress, this, [this](quint64, quint64) { updatePeripheralSenderStats(); });
+    connect(peripheralSender_, &Sender::stateChanged, this, [this](const QString& text) {
+        pTxState_->setText(text);
+    });
+    connect(peripheralSender_, &Sender::logMessage, this, &MainWindow::logInfo);
+    connect(peripheralSender_, &Sender::finished, this, &MainWindow::onPeripheralSenderFinished);
+
     connect(gattServer_, &GattServer::logMessage, this, &MainWindow::logInfo);
     connect(gattServer_, &GattServer::advertisingChanged, this, [this](bool) { updateButtons(); });
     connect(gattServer_, &GattServer::clientSeen, this, [this] {
@@ -304,6 +383,16 @@ void MainWindow::wireSignals()
     connect(gattServer_, &GattServer::clientGone, this, [this] {
         rxState_->setText(QStringLiteral("central отключился"));
     });
+    connect(gattServer_, &GattServer::mtuChanged, this, [this](quint16 mtu) {
+        logInfo(QStringLiteral("peripheral: MTU central = %1").arg(mtu));
+        maybeStartPeripheralSend();
+        updateButtons();
+    });
+    connect(gattServer_, &GattServer::dataNotifyChanged, this, [this](bool) {
+        maybeStartPeripheralSend();
+        updateButtons();
+    });
+    connect(gattServer_, &GattServer::controlActivity, this, &MainWindow::pumpPeripheralSender);
 
     connect(&reconnectTimer_, &QTimer::timeout, this, [this] {
         if (autoReconnect_ && !peerPath_.isEmpty() && !central_->isConnected())
@@ -315,8 +404,12 @@ void MainWindow::autoStart()
 {
     if (cfg_.role == QStringLiteral("peripheral")) {
         tabs_->setCurrentIndex(1);
+        if (!cfg_.sendFile.isEmpty())
+            pFileEdit_->setText(cfg_.sendFile);
+        pendingPeripheralSend_ = cfg_.autoStart && !cfg_.sendFile.isEmpty();
         if (cfg_.autoStart)
             startAdvertising();
+        maybeStartPeripheralSend();
         return;
     }
 
@@ -348,12 +441,15 @@ void MainWindow::closeEvent(QCloseEvent* event)
     tick_.stop();
     reconnectTimer_.stop();
     sender_->abort(QStringLiteral("приложение закрывается"));
+    peripheralSender_->abort(QStringLiteral("приложение закрывается"));
     gattServer_->stop();
     central_->disconnectFromDevice();
 
     QSettings settings;
     settings.setValue(QStringLiteral("lastFile"), fileEdit_->text());
     settings.setValue(QStringLiteral("lastOutDir"), outDirEdit_->text());
+    settings.setValue(QStringLiteral("lastPeripheralFile"), pFileEdit_->text());
+    settings.setValue(QStringLiteral("lastCentralOutDir"), centralOutDirEdit_->text());
     event->accept();
 }
 
@@ -378,7 +474,7 @@ void MainWindow::onDevicesChanged(const QList<BleDeviceInfo>& devices)
         auto* service = new QTableWidgetItem(d.hasService ? QStringLiteral("да") : QStringLiteral("нет"));
 
         if (d.hasService) {
-            const QColor bg(210, 245, 210);
+            const QColor bg(50, 60, 40);
             name->setBackground(bg);
             addr->setBackground(bg);
             rssi->setBackground(bg);
@@ -420,8 +516,17 @@ void MainWindow::onDevicesChanged(const QList<BleDeviceInfo>& devices)
 
 void MainWindow::onScan()
 {
-    pendingAutoConnect_ = false;
     reconnectTimer_.stop();
+
+    if (central_->isScanning()) {
+        pendingAutoConnect_ = false;
+        central_->stopScan();
+        logInfo(QStringLiteral("поиск остановлен"));
+        updateButtons();
+        return;
+    }
+
+    pendingAutoConnect_ = false;
     if (gattServer_->isAdvertising())
         stopAdvertising();
     central_->startScan();
@@ -459,11 +564,108 @@ void MainWindow::onBrowseOut()
     }
 }
 
+void MainWindow::onCentralBrowseOut()
+{
+    const QString dir = QFileDialog::getExistingDirectory(
+        this, QStringLiteral("Каталог сохранения для central"), centralOutDirEdit_->text());
+    if (!dir.isEmpty()) {
+        centralOutDirEdit_->setText(dir);
+        centralReceiver_->setOutDir(dir);
+    }
+}
+
+void MainWindow::onPeripheralBrowseFile()
+{
+    const QString file = QFileDialog::getOpenFileName(
+        this, QStringLiteral("Файл для отправки central"),
+        QFileInfo(pFileEdit_->text()).absolutePath());
+    if (!file.isEmpty()) {
+        pFileEdit_->setText(file);
+        updateButtons();
+    }
+}
+
+void MainWindow::onPeripheralSend()
+{
+    const QString file = pFileEdit_->text();
+    if (file.isEmpty() || !QFileInfo::exists(file)) {
+        logError(QStringLiteral("файл для отправки central не выбран"));
+        return;
+    }
+    pendingPeripheralSend_ = true;
+    peripheralWaitLogged_ = false;
+    maybeStartPeripheralSend();
+    updateButtons();
+}
+
+void MainWindow::onPeripheralCancel()
+{
+    pendingPeripheralSend_ = false;
+    peripheralWaitLogged_ = false;
+    peripheralSender_->abort(QStringLiteral("отменено пользователем"));
+    updateButtons();
+}
+
+void MainWindow::maybeStartPeripheralSend()
+{
+    if (peripheralSender_->isActive()) {
+        if (peripheralSender_->state() == Sender::State::WaitingStartAck
+            && gattServer_->isDataNotifying() && gattServer_->hasPeerMtu()) {
+            peripheralSender_->onTransportReady(gattServer_->peerMtu());
+            pumpPeripheralSender();
+        }
+        return;
+    }
+    if (!pendingPeripheralSend_)
+        return;
+    if (receiver_->isActive()) {
+        if (!peripheralWaitLogged_)
+            logInfo(QStringLiteral("peripheral sender: сначала завершится приём от central"));
+        peripheralWaitLogged_ = true;
+        return;
+    }
+    if (!gattServer_->isDataNotifying()) {
+        if (!peripheralWaitLogged_)
+            logInfo(QStringLiteral("peripheral sender: ждём подписку central на Data"));
+        peripheralWaitLogged_ = true;
+        return;
+    }
+    if (!gattServer_->hasPeerMtu()) {
+        if (!peripheralWaitLogged_)
+            logInfo(QStringLiteral("peripheral sender: MTU ещё неизвестен"));
+        peripheralWaitLogged_ = true;
+        return;
+    }
+
+    const QString file = pFileEdit_->text();
+    if (file.isEmpty() || !QFileInfo::exists(file)) {
+        pendingPeripheralSend_ = false;
+        logError(QStringLiteral("файл для peripheral sender не найден"));
+        return;
+    }
+
+    pendingPeripheralSend_ = false;
+    peripheralWaitLogged_ = false;
+    QString err;
+    if (!peripheralSender_->start(file, &err)) {
+        logError(err);
+        return;
+    }
+    peripheralSender_->onTransportReady(gattServer_->peerMtu());
+    pumpPeripheralSender();
+    updateButtons();
+}
+
 void MainWindow::onSend()
 {
     const QString file = fileEdit_->text();
     if (file.isEmpty() || !QFileInfo::exists(file)) {
         logError(QStringLiteral("файл не выбран или не существует"));
+        return;
+    }
+
+    if (centralReceiver_->isActive()) {
+        logError(QStringLiteral("сначала дождитесь окончания приёма от peripheral"));
         return;
     }
 
@@ -501,6 +703,10 @@ void MainWindow::onTransportReady(quint16 mtu)
 {
     reconnectTimer_.stop();
     logInfo(QStringLiteral("BLE-транспорт готов, MTU=%1").arg(mtu));
+    centralReceiver_->setMtu(mtu);
+    centralReceiver_->setNotifying(true);
+    if (!centralOutDirEdit_->text().isEmpty())
+        centralReceiver_->setOutDir(centralOutDirEdit_->text());
 
     if (pendingSend_ && !sender_->isActive()) {
         pendingSend_ = false;
@@ -518,10 +724,12 @@ void MainWindow::onTransportReady(quint16 mtu)
 void MainWindow::onCentralDisconnected()
 {
     logInfo(QStringLiteral("BLE-соединение потеряно"));
+    const bool hadTransfer = sender_->isActive() || centralReceiver_->isActive();
     sender_->onTransportLost();
+    centralReceiver_->onTransportLost();
     updateButtons();
 
-    if (autoReconnect_ && !cfg_.noReconnect && !peerPath_.isEmpty() && sender_->isActive())
+    if (autoReconnect_ && !cfg_.noReconnect && !peerPath_.isEmpty() && hadTransfer)
         reconnectTimer_.start();
 }
 
@@ -577,6 +785,28 @@ void MainWindow::onReceiverFinished(bool ok, const QString& message)
     updateButtons();
 }
 
+void MainWindow::onCentralReceiverFinished(bool ok, const QString& message)
+{
+    if (ok)
+        logInfo(QStringLiteral("central принял: %1").arg(message));
+    else
+        logError(QStringLiteral("central приём: %1").arg(message));
+    statusLabel_->setText(ok ? QStringLiteral("central: файл принят")
+                             : QStringLiteral("central: приём с ошибкой"));
+    updateButtons();
+}
+
+void MainWindow::onPeripheralSenderFinished(bool ok, const QString& message)
+{
+    if (ok)
+        logInfo(QStringLiteral("peripheral отправил: %1").arg(message));
+    else
+        logError(QStringLiteral("peripheral отправка: %1").arg(message));
+    statusLabel_->setText(ok ? QStringLiteral("peripheral: файл отправлен")
+                             : QStringLiteral("peripheral: отправка с ошибкой"));
+    updateButtons();
+}
+
 void MainWindow::pumpSender()
 {
     if (!central_->isReady() || !sender_->isActive())
@@ -593,6 +823,21 @@ void MainWindow::pumpSender()
     updateSenderStats();
 }
 
+void MainWindow::pumpPeripheralSender()
+{
+    if (!gattServer_->isDataNotifying() || !peripheralSender_->isActive())
+        return;
+
+    while (peripheralSender_->canSendMore()) {
+        const QByteArray frame = peripheralSender_->takeChunk();
+        if (frame.isEmpty())
+            break;
+        gattServer_->sendDataNotification(frame);
+    }
+    peripheralSender_->pump();
+    updatePeripheralSenderStats();
+}
+
 void MainWindow::updateSenderStats()
 {
     const quint64 total = sender_->totalSize();
@@ -606,6 +851,7 @@ void MainWindow::updateSenderStats()
                                formatEta(rate.etaSeconds(total, done)))
                           .arg(sender_->chunkSize()));
     txState_->setText(sender_->stateText());
+    pTxState_->setText(peripheralSender_->stateText());
 }
 
 void MainWindow::updateReceiverStats()
@@ -621,13 +867,46 @@ void MainWindow::updateReceiverStats()
                                formatEta(rate.etaSeconds(total, done))));
 }
 
+void MainWindow::updateCentralReceiverStats()
+{
+    const quint64 total = centralReceiver_->totalSize();
+    const quint64 done = centralReceiver_->received();
+    setProgressValue(centralRxProgress_, done, total);
+
+    const RateMeter& rate = centralReceiver_->rateMeter();
+    centralRxStats_->setText(QStringLiteral("%1 / %2  •  %3  •  ETA %4")
+                                 .arg(formatBytes(done), formatBytes(total),
+                                      formatSpeed(rate.bytesPerSecond()),
+                                      formatEta(rate.etaSeconds(total, done))));
+}
+
+void MainWindow::updatePeripheralSenderStats()
+{
+    const quint64 total = peripheralSender_->totalSize();
+    const quint64 done = peripheralSender_->ackedOffset();
+    setProgressValue(pTxProgress_, done, total);
+
+    const RateMeter& rate = peripheralSender_->rateMeter();
+    pTxStats_->setText(QStringLiteral("%1 / %2  •  %3  •  ETA %4  •  chunk %5 B")
+                           .arg(formatBytes(done), formatBytes(total),
+                                formatSpeed(rate.bytesPerSecond()),
+                                formatEta(rate.etaSeconds(total, done)))
+                           .arg(peripheralSender_->chunkSize()));
+    pTxState_->setText(peripheralSender_->stateText());
+}
+
 void MainWindow::updateButtons()
 {
     const bool hasSelection = deviceTable_->currentRow() >= 0;
     connectBtn_->setEnabled(hasSelection && !central_->isConnected());
     scanBtn_->setEnabled(!central_->isConnected());
+    scanBtn_->setText(central_->isScanning() ? QStringLiteral("Остановить поиск")
+                                             : QStringLiteral("Сканировать"));
     sendBtn_->setEnabled(central_->isReady() && !sender_->isActive());
     cancelBtn_->setEnabled(sender_->isActive());
+    pSendBtn_->setEnabled(!pFileEdit_->text().isEmpty() && !peripheralSender_->isActive()
+                          && !receiver_->isActive());
+    pCancelBtn_->setEnabled(peripheralSender_->isActive());
     advBtn_->setText(gattServer_->isAdvertising() ? QStringLiteral("Остановить рекламу")
                                                   : QStringLiteral("Начать рекламу"));
     txState_->setText(sender_->stateText());
@@ -637,7 +916,16 @@ void MainWindow::onTick()
 {
     updateSenderStats();
     updateReceiverStats();
+    updateCentralReceiverStats();
+    updatePeripheralSenderStats();
+    pumpPeripheralSender();
+    maybeStartPeripheralSend();
     updateButtons();
+
+    if (peripheralSender_->checkStall()) {
+        logError(QStringLiteral("peripheral sender: таймаут, отмена"));
+        peripheralSender_->abort(QStringLiteral("таймаут ACK"));
+    }
 
     if (sender_->checkStall()) {
         logError(QStringLiteral("передача зависла: переподключение"));
@@ -652,8 +940,23 @@ void MainWindow::onTick()
 
 void MainWindow::appendLog(int level, const QString& line)
 {
-    Q_UNUSED(level);
-    log_->appendPlainText(line);
+    QString color = QStringLiteral("#ebdbb2");
+    switch (static_cast<Logger::Level>(level)) {
+    case Logger::Level::Debug:
+        color = QStringLiteral("#928374");
+        break;
+    case Logger::Level::Warn:
+        color = QStringLiteral("#fabd2f");
+        break;
+    case Logger::Level::Error:
+        color = QStringLiteral("#fb4934");
+        break;
+    case Logger::Level::Info:
+        break;
+    }
+
+    log_->append(QStringLiteral("<span style=\"color:%1;\">%2</span>")
+                     .arg(color, line.toHtmlEscaped()));
     log_->verticalScrollBar()->setValue(log_->verticalScrollBar()->maximum());
 }
 

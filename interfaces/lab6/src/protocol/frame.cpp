@@ -181,6 +181,8 @@ QByteArray encodeControl(const ControlMessage& msg)
         b.u8(static_cast<quint8>(msg.status));
         b.u32(msg.crc);
         break;
+    case ControlType::Hello:
+        break;
     case ControlType::Abort: {
         const QByteArray reason = msg.reason.toUtf8();
         const int reasonLen = qMin(reason.size(), 65535);
@@ -275,6 +277,8 @@ bool decodeControl(const QByteArray& frame, ControlMessage& out, QString* error)
         m.status = static_cast<Status>(status);
         break;
     }
+    case ControlType::Hello:
+        break;
     case ControlType::Abort: {
         quint8 status = 0;
         quint16 reasonLen = 0;

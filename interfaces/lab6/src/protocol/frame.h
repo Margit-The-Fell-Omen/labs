@@ -26,6 +26,7 @@ enum class ControlType : quint8 {
     Fin = 4,
     FinAck = 5,
     Abort = 6,
+    Hello = 7,
 };
 
 enum class Status : quint8 {

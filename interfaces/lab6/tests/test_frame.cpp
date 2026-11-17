@@ -109,6 +109,18 @@ private slots:
         QCOMPARE(out.crc, 0x12345678u);
     }
 
+    void helloRoundTrip()
+    {
+        ControlMessage m;
+        m.type = ControlType::Hello;
+        m.transferId = QByteArray(kTransferIdSize, '\\0');
+        ControlMessage out;
+        QString err;
+        QVERIFY2(decodeControl(encodeControl(m), out, &err), qPrintable(err));
+        QCOMPARE(out.type, ControlType::Hello);
+        QCOMPARE(out.transferId, m.transferId);
+    }
+
     void truncatedControlRejected()
     {
         ControlMessage m;

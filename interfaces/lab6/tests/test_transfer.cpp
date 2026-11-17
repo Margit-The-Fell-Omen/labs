@@ -128,6 +128,32 @@ private slots:
         QCOMPARE(Crc32::compute(readFile(out)), Crc32::compute(data));
     }
 
+    void reversePeripheralToCentral()
+    {
+        const QByteArray data = randomData(128 * 1024);
+        const QString src = QDir(srcDir_).filePath(QStringLiteral("reverse.bin"));
+        QVERIFY(writeFile(src, data));
+
+        Receiver rx;
+        rx.setOutDir(outDir_);
+        rx.setMtu(247);
+        rx.setNotifying(true);
+
+        Sender tx;  // peripheral sender
+        tx.setWindow(32 * 1024);
+        QObject::connect(&tx, &Sender::controlToSend, &rx, &Receiver::handleControl);
+        QObject::connect(&rx, &Receiver::controlToSend, &tx, &Sender::onControl);
+
+        QString err;
+        QVERIFY2(tx.start(src, &err), qPrintable(err));
+        tx.onTransportReady(247);
+        QVERIFY(pump(tx, rx));
+
+        const QString out = firstFinalFile(outDir_);
+        QVERIFY2(!out.isEmpty(), "итоговый файл reverse не найден");
+        QCOMPARE(readFile(out), data);
+    }
+
     void disconnectAndResume()
     {
         const QByteArray data = randomData(512 * 1024);

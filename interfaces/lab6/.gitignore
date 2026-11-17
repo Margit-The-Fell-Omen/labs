@@ -4,3 +4,6 @@ build-*/
 *.user
 *.part
 *.part.json
+phone/cert.pem
+phone/key.pem
+phone/__pycache__/

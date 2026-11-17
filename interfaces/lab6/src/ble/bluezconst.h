@@ -19,6 +19,6 @@ inline QString dataPath() { return QStringLiteral("/org/lab6/ble/service0/char_d
 inline QString controlPath() { return QStringLiteral("/org/lab6/ble/service0/char_ctrl"); }
 inline QString advertPath() { return QStringLiteral("/org/lab6/ble/advert"); }
 
-inline QString localName() { return QStringLiteral("lab6-ble"); }
+inline QString localName() { return QStringLiteral("lab6"); }
 
 }  // namespace bleconst

@@ -1,0 +1,680 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lab6 BLE File Transfer</title>
+<style>
+  :root {
+    --bg0:#282828; --bg1:#3c3836; --bg2:#504945; --bg3:#665c54;
+    --fg:#ebdbb2; --gray:#928374; --yellow:#fabd2f; --orange:#fe8019;
+    --red:#fb4934; --green:#b8bb26; --aqua:#8ec07c; --blue:#83a598;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 16px; background: var(--bg0); color: var(--fg);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    line-height: 1.4;
+  }
+  h1 { color: var(--yellow); font-size: 20px; margin: 0 0 12px; }
+  h2 { color: var(--orange); font-size: 15px; margin: 0 0 8px; }
+  .card {
+    background: var(--bg1); border: 1px solid var(--bg2); border-radius: 8px;
+    padding: 12px; margin-bottom: 12px;
+  }
+  button {
+    background: var(--bg2); color: var(--fg); border: 1px solid var(--bg3);
+    border-radius: 5px; padding: 9px 12px; font: inherit;
+  }
+  button:hover { border-color: var(--yellow); }
+  button:disabled { color: #7c6f64; background: #32302f; border-color: var(--bg1); }
+  input[type=file] {
+    color: var(--fg); background: #1d2021; border: 1px solid var(--bg2);
+    border-radius: 5px; padding: 6px; max-width: 100%;
+  }
+  progress {
+    width: 100%; height: 18px; accent-color: var(--green);
+    background: #1d2021; border-radius: 4px;
+  }
+  .muted { color: var(--gray); }
+  .ok { color: var(--green); }
+  .warn { color: var(--yellow); }
+  .err { color: var(--red); }
+  #log {
+    background: #1d2021; border: 1px solid var(--bg2); border-radius: 6px;
+    padding: 8px; height: 220px; overflow: auto; white-space: pre-wrap;
+    font-size: 12px;
+  }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .row > * { flex: 0 0 auto; }
+  #device { color: var(--aqua); }
+</style>
+</head>
+<body>
+<h1>Lab6 — BLE file transfer</h1>
+
+<div class="card">
+  <div class="row">
+    <button id="connect">Подключиться к lab6</button>
+    <span id="device" class="muted">не подключено</span>
+  </div>
+  <p class="muted" style="margin-bottom:0">
+    Нужен Chrome/Edge for Android и secure context (HTTPS или file://).
+    Ноутбук должен быть в режиме Peripheral с включённой рекламой.
+  </p>
+  <p class="warn" style="margin-bottom:0">
+    Android: включите Bluetooth и Геолокацию; Chrome → Разрешения →
+    «Устройства поблизости». Если список пуст — проверьте это, подойдите
+    ближе к ноутбуку и нажмите «Подключиться» ещё раз. Имя ноутбука: lab6.
+  </p>
+</div>
+
+<div class="card">
+  <h2>Телефон → ноутбук</h2>
+  <div class="row">
+    <input type="file" id="file">
+    <button id="upload" disabled>Отправить</button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Ноутбук → телефон</h2>
+  <p class="muted" style="margin-top:0">
+    На ноутбуке откройте вкладку Peripheral и нажмите
+    «Отправить на central». Файл появится здесь для скачивания.
+  </p>
+  <div id="downState" class="muted">ожидание файла от ноутбука</div>
+</div>
+
+<div class="card">
+  <progress id="progress" max="1000" value="0"></progress>
+  <div id="status" class="muted" style="margin-top:6px">готов</div>
+</div>
+
+<div id="log" class="muted">Web Bluetooth: журнал появится здесь.</div>
+
+<script>
+"use strict";
+
+const PAGE_VERSION = "lab6-phone-v5";
+
+const SERVICE = "6c1f0001-5a3e-4b7a-9c2d-7e8f9a0b1c2d";
+const DATA    = "6c1f0002-5a3e-4b7a-9c2d-7e8f9a0b1c2d";
+const CTRL    = "6c1f0003-5a3e-4b7a-9c2d-7e8f9a0b1c2d";
+const HEADER = 12;
+
+const T_START = 1, T_START_ACK = 2, T_ACK = 3, T_FIN = 4, T_FIN_ACK = 5,
+      T_ABORT = 6, T_HELLO = 7;
+const S_OK = 0, S_RESUME = 1, S_COMPLETE = 2, S_CRC_MISMATCH = 3,
+      S_SIZE_MISMATCH = 4, S_ERROR = 5, S_ABORTED = 6;
+
+const $ = (id) => document.getElementById(id);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const CRC_TABLE = (() => {
+  const t = new Uint32Array(256);
+  for (let i = 0; i < 256; i++) {
+    let c = i;
+    for (let b = 0; b < 8; b++)
+      c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[i] = c >>> 0;
+  }
+  return t;
+})();
+
+class Crc32 {
+  constructor() { this.c = 0xFFFFFFFF; }
+  update(bytes) {
+    let c = this.c;
+    for (let i = 0; i < bytes.length; i++)
+      c = CRC_TABLE[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+    this.c = c;
+  }
+  value() { return (this.c ^ 0xFFFFFFFF) >>> 0; }
+}
+
+function crc32(bytes) {
+  const c = new Crc32();
+  c.update(bytes);
+  return c.value();
+}
+
+function u16le(dv, off, v) { dv.setUint16(off, v, true); }
+function u32le(dv, off, v) { dv.setUint32(off, v >>> 0, true); }
+function u64le(dv, off, v) { dv.setBigUint64(off, BigInt(v), true); }
+
+function makeId() {
+  const id = new Uint8Array(16);
+  crypto.getRandomValues(id);
+  return id;
+}
+
+function sameId(a, b) {
+  if (!a || !b || a.length !== 16 || b.length !== 16) return false;
+  for (let i = 0; i < 16; i++) if (a[i] !== b[i]) return false;
+  return true;
+}
+
+function idHex(id) {
+  return Array.from(id).map((x) => x.toString(16).padStart(2, "0")).join("");
+}
+
+function log(text, cls = "") {
+  const el = $("log");
+  const line = document.createElement("div");
+  if (cls) line.className = cls;
+  line.textContent = `[${new Date().toLocaleTimeString()}] ${text}`;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+
+function setStatus(text, cls = "muted") {
+  const el = $("status");
+  el.textContent = text;
+  el.className = cls;
+}
+
+function setProgress(done, total) {
+  const bar = $("progress");
+  if (!total) { bar.value = 0; return; }
+  bar.value = Math.max(0, Math.min(1000, Math.round(done * 1000 / total)));
+}
+
+function encodeControl(type, body) {
+  const out = new Uint8Array(3 + body.length);
+  out[0] = type;
+  new DataView(out.buffer).setUint16(1, body.length, true);
+  out.set(body, 3);
+  return out;
+}
+
+function encodeHello() {
+  return encodeControl(T_HELLO, new Uint8Array(16));
+}
+
+function encodeStart(id, size, chunk, crc, name) {
+  const nameBytes = new TextEncoder().encode(name || "file.bin");
+  const body = new Uint8Array(16 + 8 + 2 + 4 + 2 + nameBytes.length);
+  body.set(id, 0);
+  const dv = new DataView(body.buffer);
+  u64le(dv, 16, size);
+  u16le(dv, 24, chunk);
+  u32le(dv, 26, crc);
+  u16le(dv, 30, nameBytes.length);
+  body.set(nameBytes, 32);
+  return encodeControl(T_START, body);
+}
+
+function encodeChunk(offset, payload) {
+  const out = new Uint8Array(HEADER + payload.length);
+  const dv = new DataView(out.buffer);
+  u64le(dv, 0, offset);
+  u32le(dv, 8, crc32(payload));
+  out.set(payload, HEADER);
+  return out;
+}
+
+function encodeStartAck(id, status, offset, mtu, chunk) {
+  const body = new Uint8Array(16 + 1 + 8 + 2 + 2);
+  body.set(id, 0);
+  const dv = new DataView(body.buffer);
+  body[16] = status;
+  u64le(dv, 17, offset);
+  u16le(dv, 25, mtu);
+  u16le(dv, 27, chunk);
+  return encodeControl(T_START_ACK, body);
+}
+
+function encodeAck(id, offset, status) {
+  const body = new Uint8Array(16 + 8 + 1);
+  body.set(id, 0);
+  const dv = new DataView(body.buffer);
+  u64le(dv, 16, offset);
+  body[24] = status;
+  return encodeControl(T_ACK, body);
+}
+
+function encodeFin(id, size, crc) {
+  const body = new Uint8Array(16 + 8 + 4);
+  body.set(id, 0);
+  const dv = new DataView(body.buffer);
+  u64le(dv, 16, size);
+  u32le(dv, 24, crc);
+  return encodeControl(T_FIN, body);
+}
+
+function encodeFinAck(id, status, crc) {
+  const body = new Uint8Array(16 + 1 + 4);
+  body.set(id, 0);
+  body[16] = status;
+  new DataView(body.buffer).setUint32(17, crc >>> 0, true);
+  return encodeControl(T_FIN_ACK, body);
+}
+
+function parseControl(bytes) {
+  if (bytes.length < 3) throw new Error("короткий control");
+  const type = bytes[0];
+  const len = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint16(1, true);
+  if (3 + len > bytes.length) throw new Error("длина control не совпадает");
+  const body = bytes.subarray(3, 3 + len);
+  if (body.length < 16) throw new Error("нет transferId");
+  const id = body.slice(0, 16);
+  const dv = new DataView(body.buffer, body.byteOffset, body.byteLength);
+  const m = { type, id, status: S_ERROR, offset: 0, mtu: 0, chunk: 0, crc: 0,
+              size: 0, name: "" };
+  let o = 16;
+
+  switch (type) {
+    case T_START:
+      m.size = Number(dv.getBigUint64(o, true)); o += 8;
+      m.chunk = dv.getUint16(o, true); o += 2;
+      m.crc = dv.getUint32(o, true); o += 4;
+      {
+        const nameLen = dv.getUint16(o, true); o += 2;
+        m.name = new TextDecoder().decode(body.subarray(o, o + nameLen));
+      }
+      break;
+    case T_START_ACK:
+      m.status = body[o++];
+      m.offset = Number(dv.getBigUint64(o, true)); o += 8;
+      m.mtu = dv.getUint16(o, true); o += 2;
+      m.chunk = dv.getUint16(o, true);
+      break;
+    case T_ACK:
+      m.offset = Number(dv.getBigUint64(o, true)); o += 8;
+      m.status = body[o++];
+      break;
+    case T_FIN:
+      m.size = Number(dv.getBigUint64(o, true)); o += 8;
+      m.crc = dv.getUint32(o, true);
+      break;
+    case T_FIN_ACK:
+      m.status = body[o++];
+      m.crc = dv.getUint32(o, true);
+      break;
+    case T_ABORT:
+      m.status = body[o++];
+      break;
+    case T_HELLO:
+      break;
+    default:
+      throw new Error("неизвестный тип " + type);
+  }
+  return m;
+}
+
+let device = null;
+let server = null;
+let service = null;
+let dataChar = null;
+let ctrlChar = null;
+let connected = false;
+
+let up = null;    // upload state
+let down = null;  // download state
+
+async function writeControl(bytes) {
+  if (!ctrlChar) throw new Error("нет Control characteristic");
+  await ctrlChar.writeValueWithResponse(bytes);
+}
+
+async function writeData(bytes) {
+  if (!dataChar) throw new Error("нет Data characteristic");
+  await dataChar.writeValueWithoutResponse(bytes);
+}
+
+function onDisconnected() {
+  connected = false;
+  up = null;
+  down = null;
+  $("device").textContent = "не подключено";
+  $("device").className = "muted";
+  $("upload").disabled = true;
+  setStatus("соединение потеряно", "err");
+  log("BLE disconnected", "err");
+}
+
+async function connect() {
+  if (!navigator.bluetooth) {
+    log("Web Bluetooth недоступен. Нужен Chrome Android + HTTPS/file://", "err");
+    setStatus("Web Bluetooth недоступен", "err");
+    return;
+  }
+  try {
+    if (navigator.bluetooth.getAvailability) {
+      const available = await navigator.bluetooth.getAvailability();
+      if (!available) {
+        log("Bluetooth выключен или у Chrome нет доступа к адаптеру", "err");
+        setStatus("Bluetooth выключен/недоступен", "err");
+        return;
+      }
+    }
+    setStatus("выбор устройства...", "warn");
+    device = await navigator.bluetooth.requestDevice({
+      acceptAllDevices: true,
+      optionalServices: [SERVICE],
+    });
+    device.addEventListener("gattserverdisconnected", onDisconnected);
+    server = await device.gatt.connect();
+    service = await server.getPrimaryService(SERVICE);
+    dataChar = await service.getCharacteristic(DATA);
+    ctrlChar = await service.getCharacteristic(CTRL);
+
+    await ctrlChar.startNotifications();
+    await dataChar.startNotifications();
+    ctrlChar.addEventListener("characteristicvaluechanged", onControlNotification);
+    dataChar.addEventListener("characteristicvaluechanged", onDataNotification);
+
+    connected = true;
+    $("device").textContent = device.name || "lab6";
+    $("device").className = "ok";
+    $("upload").disabled = false;
+
+    await writeControl(encodeHello());
+    setStatus("подключено, готов к передаче", "ok");
+    log("Подключено: " + ($("device").textContent), "ok");
+  } catch (e) {
+    if (e.name === "NotFoundError") {
+      log("Устройства не найдены: включите Bluetooth и Геолокацию, дайте Chrome разрешение «Устройства поблизости», подойдите к ноутбуку и повторите.", "err");
+      setStatus("устройства не найдены", "err");
+    } else {
+      log("connect: " + e.message, "err");
+      setStatus("ошибка подключения", "err");
+    }
+  }
+}
+
+function onControlNotification(event) {
+  try {
+    const dv = event.target.value;
+    const bytes = new Uint8Array(dv.buffer, dv.byteOffset, dv.byteLength);
+    const m = parseControl(bytes);
+    switch (m.type) {
+      case T_START_ACK:
+        if (up && sameId(m.id, up.id)) up.startAck = m;
+        break;
+      case T_ACK:
+        if (up && sameId(m.id, up.id)) {
+          if (m.status === S_ERROR) {
+            log("NACK: повтор с offset=" + m.offset, "warn");
+            up.acked = m.offset;
+            up.next = m.offset;
+          } else if (m.offset > up.acked) {
+            up.acked = m.offset;
+          }
+          updateUploadUi();
+        }
+        break;
+      case T_FIN_ACK:
+        if (up && sameId(m.id, up.id)) up.finAck = m;
+        break;
+      case T_START:
+        handleIncomingStart(m);
+        break;
+      case T_FIN:
+        handleIncomingFin(m);
+        break;
+      case T_ABORT:
+        log("ABORT от ноутбука", "err");
+        break;
+      case T_HELLO:
+        break;
+    }
+  } catch (e) {
+    log("control: " + e.message, "err");
+  }
+}
+
+function onDataNotification(event) {
+  if (!down) return;
+  try {
+    const dv = event.target.value;
+    const bytes = new Uint8Array(dv.buffer, dv.byteOffset, dv.byteLength);
+    if (bytes.length < HEADER) return;
+    const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+    const offset = Number(view.getBigUint64(0, true));
+    const crc = view.getUint32(8, true);
+    const payload = bytes.slice(HEADER);
+
+    if (crc32(payload) !== crc) {
+      log("CRC чанка не совпал", "warn");
+      writeControl(encodeAck(down.id, down.received, S_ERROR)).catch(() => {});
+      return;
+    }
+    if (offset > down.received) {
+      writeControl(encodeAck(down.id, down.received, S_ERROR)).catch(() => {});
+      return;
+    }
+    if (offset < down.received) return;
+
+    down.chunks.push(payload);
+    down.crcCalc.update(payload);
+    down.received += payload.length;
+    updateDownloadUi();
+
+    const tail = down.received >= down.size || (down.size - down.received) < 8192;
+    if (tail || down.received - down.lastAck >= 8192) {
+      down.lastAck = down.received;
+      writeControl(encodeAck(down.id, down.received, S_OK)).catch((e) => {
+        log("ACK: " + e.message, "err");
+      });
+    }
+  } catch (e) {
+    log("data: " + e.message, "err");
+  }
+}
+
+function handleIncomingStart(m) {
+  if (up) {
+    log("Занято отправкой, отклоняю входящий файл", "warn");
+    writeControl(encodeStartAck(m.id, S_ERROR, 0, 23, 8)).catch(() => {});
+    return;
+  }
+  down = {
+    id: m.id.slice(0, 16),
+    name: m.name || "received.bin",
+    size: m.size,
+    crc: m.crc,
+    received: 0,
+    lastAck: 0,
+    chunks: [],
+    crcCalc: new Crc32(),
+  };
+  $("downState").textContent = `приём ${down.name} (${down.size} B)`;
+  $("downState").className = "warn";
+  setStatus("приём файла от ноутбука", "warn");
+  log(`START от ноутбука: ${down.name}, ${down.size} B, CRC32=${down.crc.toString(16)}`, "ok");
+  writeControl(encodeStartAck(down.id, S_OK, 0, 23, 8)).catch((e) => {
+    log("START_ACK: " + e.message, "err");
+  });
+  setProgress(0, down.size);
+}
+
+async function handleIncomingFin(m) {
+  if (!down || !sameId(m.id, down.id)) return;
+  const actual = down.crcCalc.value();
+  const ok = down.received === down.size && actual === m.crc;
+  try {
+    await writeControl(encodeFinAck(down.id, ok ? S_OK : S_CRC_MISMATCH, actual));
+  } catch (e) {
+    log("FIN_ACK: " + e.message, "err");
+  }
+
+  if (!ok) {
+    log(`CRC не совпал: получено ${actual.toString(16)}, ожидалось ${m.crc.toString(16)}`, "err");
+    setStatus("CRC ошибка", "err");
+    down = null;
+    return;
+  }
+
+  const blob = new Blob(down.chunks, { type: "application/octet-stream" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = down.name || "received.bin";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+  $("downState").textContent = `получен ${down.name} (${down.size} B)`;
+  $("downState").className = "ok";
+  setStatus("файл получен", "ok");
+  setProgress(down.size, down.size);
+  log("Файл сохранён: " + down.name, "ok");
+  down = null;
+}
+
+function updateUploadUi() {
+  if (!up) return;
+  setProgress(up.acked, up.size);
+  const speed = up.started ? (up.acked / ((Date.now() - up.started) / 1000)) : 0;
+  const eta = speed > 1 ? Math.round((up.size - up.acked) / speed) : -1;
+  setStatus(
+    `отправка ${up.acked}/${up.size} B • ${(speed / 1024).toFixed(1)} KiB/s` +
+    (eta >= 0 ? ` • ETA ${eta}s` : ""), "warn");
+}
+
+function updateDownloadUi() {
+  if (!down) return;
+  setProgress(down.received, down.size);
+  setStatus(`приём ${down.received}/${down.size} B`, "warn");
+}
+
+async function waitStartAck(timeoutMs) {
+  const t0 = Date.now();
+  while (!up.startAck) {
+    if (Date.now() - t0 > timeoutMs) throw new Error("START_ACK timeout");
+    await sleep(20);
+  }
+  return up.startAck;
+}
+
+async function waitFinAck(timeoutMs) {
+  const t0 = Date.now();
+  while (!up.finAck) {
+    if (Date.now() - t0 > timeoutMs) throw new Error("FIN_ACK timeout");
+    await sleep(20);
+  }
+  return up.finAck;
+}
+
+async function waitAckAdvance(before, timeoutMs) {
+  const t0 = Date.now();
+  while (up && up.acked <= before) {
+    if (Date.now() - t0 > timeoutMs) throw new Error("ACK timeout");
+    await sleep(20);
+  }
+}
+
+async function waitAckReach(target, timeoutMs) {
+  const t0 = Date.now();
+  while (up && up.acked < target) {
+    if (Date.now() - t0 > timeoutMs) throw new Error("ACK timeout");
+    await sleep(20);
+  }
+}
+
+async function uploadFile(file) {
+  if (!connected) return;
+  if (down) {
+    log("Сначала дождитесь окончания приёма", "warn");
+    return;
+  }
+  if (up) {
+    log("Отправка уже идёт", "warn");
+    return;
+  }
+
+  const data = new Uint8Array(await file.arrayBuffer());
+  if (data.length === 0) {
+    log("Пустой файл: отправьте файл с данными", "warn");
+    return;
+  }
+
+  const crc = crc32(data);
+  const id = makeId();
+  up = {
+    id, data, size: data.length, crc, name: file.name,
+    acked: 0, next: 0, chunk: 8, startAck: null, finAck: null,
+    started: Date.now(),
+  };
+
+  log(`START ${file.name} (${data.length} B), CRC32=${crc.toString(16)}, id=${idHex(id)}`, "ok");
+  setStatus("ожидание START_ACK", "warn");
+  setProgress(0, data.length);
+
+  try {
+    await writeControl(encodeStart(id, data.length, 8, crc, file.name));
+    const sa = await waitStartAck(15000);
+    if (sa.status === S_COMPLETE) {
+      log("Ноутбук уже имеет этот файл с тем же CRC", "ok");
+      setStatus("файл уже есть на ноутбуке", "ok");
+      up = null;
+      return;
+    }
+    if (sa.status !== S_OK && sa.status !== S_RESUME)
+      throw new Error("START_ACK status=" + sa.status);
+
+    up.acked = sa.offset;
+    up.next = sa.offset;
+    if (sa.mtu >= 23)
+      up.chunk = Math.max(1, Math.min(4096, sa.mtu - 3 - HEADER));
+    log(`START_ACK offset=${up.next}, MTU=${sa.mtu}, chunk=${up.chunk}`, "ok");
+
+    const windowBytes = 32 * 1024;
+    while (up.next < up.size) {
+      while (up.next < up.size && up.next - up.acked < windowBytes) {
+        const end = Math.min(up.size, up.next + up.chunk);
+        const payload = up.data.subarray(up.next, end);
+        const frame = encodeChunk(up.next, payload);
+        try {
+          await writeData(frame);
+        } catch (e) {
+          if (up.chunk > 8) {
+            up.chunk = 8;
+            log("writeValueWithoutResponse не принял chunk, уменьшаю до 8", "warn");
+            continue;
+          }
+          throw e;
+        }
+        up.next = end;
+        updateUploadUi();
+      }
+      if (up.next < up.size) {
+        const before = up.acked;
+        await waitAckAdvance(before, 20000);
+      }
+    }
+
+    await waitAckReach(up.size, 20000);
+    await writeControl(encodeFin(up.id, up.size, up.crc));
+    setStatus("ожидание FIN_ACK", "warn");
+    const fa = await waitFinAck(20000);
+    if (fa.status !== S_OK)
+      throw new Error("FIN_ACK status=" + fa.status);
+    setStatus("файл отправлен", "ok");
+    setProgress(up.size, up.size);
+    log("Передача завершена, CRC32 совпал", "ok");
+    up = null;
+  } catch (e) {
+    log("upload: " + e.message, "err");
+    setStatus("ошибка отправки", "err");
+    up = null;
+  }
+}
+
+log("UI " + PAGE_VERSION + " • имя в рекламе: lab6", "muted");
+
+if (!window.isSecureContext)
+  log("Не secure context: Web Bluetooth может быть недоступен. Откройте через HTTPS или file://", "err");
+
+$("connect").addEventListener("click", connect);
+$("upload").addEventListener("click", () => {
+  const f = $("file").files && $("file").files[0];
+  if (!f) { log("Выберите файл", "warn"); return; }
+  uploadFile(f);
+});
+</script>
+</body>
+</html>

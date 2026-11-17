@@ -3,6 +3,7 @@
 #include "ble/bluezconst.h"
 #include "protocol/frame.h"
 #include "transfer/receiver.h"
+#include "transfer/sender.h"
 
 #include <QDBusConnection>
 #include <QDBusMessage>
@@ -10,12 +11,14 @@
 #include <QDBusPendingCallWatcher>
 #include <QDBusVariant>
 
-GattServer::GattServer(Receiver* receiver, QObject* parent)
-    : QDBusVirtualObject(parent), receiver_(receiver)
+GattServer::GattServer(Receiver* receiver, Sender* sender, QObject* parent)
+    : QDBusVirtualObject(parent), receiver_(receiver), sender_(sender)
 {
     dbusutil::registerTypes();
     if (receiver_)
-        connect(receiver_, &Receiver::controlToSend, this, &GattServer::sendControlNotification);
+        connect(receiver_.data(), &Receiver::controlToSend, this, &GattServer::sendControlNotification);
+    if (sender_)
+        connect(sender_.data(), &Sender::controlToSend, this, &GattServer::sendControlNotification);
 }
 
 GattServer::~GattServer()
@@ -143,8 +146,19 @@ void GattServer::registerAdvertisementAsync()
         } else {
             advertising_ = true;
             emit advertisingChanged(true);
-            emit logMessage(QStringLiteral("LE advertising запущен, имя: %1")
-                                .arg(bleconst::localName()));
+
+            const QVariantMap adapter =
+                dbusutil::getProperties(adapterPath_, QStringLiteral("org.bluez.Adapter1"));
+            const QVariantMap adv =
+                dbusutil::getProperties(adapterPath_,
+                                        QStringLiteral("org.bluez.LEAdvertisingManager1"));
+            emit logMessage(
+                QStringLiteral("LE advertising запущен: name=%1, type=peripheral, "
+                               "powered=%2, adapterDiscoverable=%3, activeInstances=%4")
+                    .arg(bleconst::localName())
+                    .arg(dbusutil::toBool(adapter.value(QStringLiteral("Powered"))))
+                    .arg(dbusutil::toBool(adapter.value(QStringLiteral("Discoverable"))))
+                    .arg(dbusutil::toUInt16(adv.value(QStringLiteral("ActiveInstances")))));
         }
         w->deleteLater();
     });
@@ -174,9 +188,16 @@ void GattServer::stop()
 
     if (receiver_)
         receiver_->setNotifying(false);
+    const bool wasDataNotifying = dataNotifying_;
     controlNotifying_ = false;
+    dataNotifying_ = false;
     clientSeen_ = false;
     controlValue_.clear();
+    dataValue_.clear();
+    peerMtu_ = 23;
+    peerMtuKnown_ = false;
+    if (wasDataNotifying)
+        emit dataNotifyChanged(false);
 }
 
 void GattServer::sendControlNotification(const QByteArray& value)
@@ -206,6 +227,33 @@ void GattServer::sendControlNotification(const QByteArray& value)
     QDBusConnection::systemBus().send(signal);
 }
 
+void GattServer::sendDataNotification(const QByteArray& value)
+{
+    dataValue_ = value;
+
+    if (!advertising_) {
+        emit logMessage(QStringLiteral("data notification не отправлена: advertising выключен"));
+        return;
+    }
+    if (!dataNotifying_) {
+        emit logMessage(QStringLiteral("data notification не отправлена: central не подписан на Data"));
+        return;
+    }
+
+    QVariantMap changed;
+    changed.insert(QStringLiteral("Value"), QVariant::fromValue(value));
+
+    QDBusMessage signal = QDBusMessage::createSignal(
+        bleconst::dataPath(),
+        QStringLiteral("org.freedesktop.DBus.Properties"),
+        QStringLiteral("PropertiesChanged"));
+    signal << QStringLiteral("org.bluez.GattCharacteristic1");
+    signal << changed;
+    signal << QStringList();
+
+    QDBusConnection::systemBus().send(signal);
+}
+
 BluezPropertyMap GattServer::serviceProperties() const
 {
     BluezPropertyMap p;
@@ -224,8 +272,10 @@ BluezPropertyMap GattServer::dataProperties() const
     p.insert(QStringLiteral("UUID"), bleconst::dataUuid());
     p.insert(QStringLiteral("Service"), QVariant::fromValue(QDBusObjectPath(bleconst::servicePath())));
     p.insert(QStringLiteral("Flags"),
-             QStringList{QStringLiteral("write-without-response"), QStringLiteral("write")});
-    p.insert(QStringLiteral("Value"), QByteArray());
+             QStringList{QStringLiteral("write-without-response"), QStringLiteral("write"),
+                         QStringLiteral("notify")});
+    p.insert(QStringLiteral("Value"), dataValue_);
+    p.insert(QStringLiteral("Notifying"), dataNotifying_);
     return p;
 }
 
@@ -247,6 +297,7 @@ BluezPropertyMap GattServer::advertProperties() const
     p.insert(QStringLiteral("Type"), QStringLiteral("peripheral"));
     p.insert(QStringLiteral("ServiceUUIDs"), QStringList{bleconst::serviceUuid()});
     p.insert(QStringLiteral("LocalName"), bleconst::localName());
+    p.insert(QStringLiteral("Discoverable"), true);
     return p;
 }
 
@@ -363,18 +414,37 @@ void GattServer::handleWriteValue(const QDBusMessage& message, const QDBusConnec
         emit logMessage(QStringLiteral("central подключился и начал писать"));
     }
 
-    if (receiver_) {
-        const quint16 mtu = dbusutil::toUInt16(options.value(QStringLiteral("mtu")));
-        if (mtu > 0)
+    const quint16 mtu = dbusutil::toUInt16(options.value(QStringLiteral("mtu")));
+    if (mtu > 0 && mtu != peerMtu_) {
+        peerMtu_ = mtu;
+        peerMtuKnown_ = true;
+        if (receiver_)
             receiver_->setMtu(mtu);
+        emit mtuChanged(mtu);
+    } else if (mtu == 0 && message.path() == bleconst::controlPath() && !peerMtuKnown_) {
+        // Некоторые стеки не передают mtu в options; HELLO/START всё равно
+        // означает, что central готов, и можно работать с безопасным MTU=23.
+        proto::ControlMessage cm;
+        QString err;
+        if (proto::decodeControl(value, cm, &err)
+            && (cm.type == proto::ControlType::Hello || cm.type == proto::ControlType::Start)) {
+            peerMtuKnown_ = true;
+            emit mtuChanged(peerMtu_);
+        }
+    }
 
-        if (message.path() == bleconst::dataPath()) {
+    if (message.path() == bleconst::dataPath()) {
+        if (receiver_) {
             QString err;
             if (!receiver_->handleChunk(value, &err))
                 emit logMessage(QStringLiteral("chunk: %1").arg(err));
-        } else if (message.path() == bleconst::controlPath()) {
-            receiver_->handleControl(value);
         }
+    } else if (message.path() == bleconst::controlPath()) {
+        if (receiver_)
+            receiver_->handleControl(value);
+        if (sender_)
+            sender_->onControl(value);
+        emit controlActivity();
     }
 
     sendReply(conn, message);
@@ -390,7 +460,7 @@ void GattServer::handleCharacteristic(const QDBusMessage& message, const QDBusCo
     }
 
     if (message.member() == QStringLiteral("ReadValue")) {
-        const QByteArray value = (path == bleconst::controlPath()) ? controlValue_ : QByteArray();
+        const QByteArray value = (path == bleconst::controlPath()) ? controlValue_ : dataValue_;
         sendReply(conn, message, {value});
         return;
     }
@@ -401,24 +471,38 @@ void GattServer::handleCharacteristic(const QDBusMessage& message, const QDBusCo
     }
 
     if (message.member() == QStringLiteral("StartNotify")) {
-        if (path != bleconst::controlPath()) {
-            sendError(conn, message, QStringLiteral("org.bluez.Error.NotSupported"),
-                      QStringLiteral("notify поддерживается только Control"));
-            return;
+        if (path == bleconst::controlPath()) {
+            controlNotifying_ = true;
+            if (receiver_)
+                receiver_->setNotifying(true);
+            emit logMessage(QStringLiteral("central подписан на Control"));
+        } else {
+            dataNotifying_ = true;
+            emit dataNotifyChanged(true);
+            emit logMessage(QStringLiteral("central подписан на Data notifications"));
         }
-        controlNotifying_ = true;
-        if (receiver_)
-            receiver_->setNotifying(true);
         sendReply(conn, message);
         return;
     }
 
     if (message.member() == QStringLiteral("StopNotify")) {
-        controlNotifying_ = false;
-        if (receiver_)
-            receiver_->setNotifying(false);
+        if (path == bleconst::controlPath()) {
+            controlNotifying_ = false;
+            peerMtuKnown_ = false;
+            if (receiver_)
+                receiver_->setNotifying(false);
+            if (receiver_)
+                receiver_->onTransportLost();
+            if (sender_)
+                sender_->onTransportLost();
+            emit clientGone();
+        } else {
+            dataNotifying_ = false;
+            if (sender_)
+                sender_->onTransportLost();
+            emit dataNotifyChanged(false);
+        }
         sendReply(conn, message);
-        emit clientGone();
         return;
     }
 
@@ -545,6 +629,7 @@ QString GattServer::introspectObject(const QString& path) const
                               "    <property name=\"Service\" type=\"o\" access=\"read\"/>\n"
                               "    <property name=\"Flags\" type=\"as\" access=\"read\"/>\n"
                               "    <property name=\"Value\" type=\"ay\" access=\"read\"/>\n"
+                              "    <property name=\"Notifying\" type=\"b\" access=\"read\"/>\n"
                               "  </interface>\n")
                + propertiesIface + introspectable + QStringLiteral("</node>\n");
     }

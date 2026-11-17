@@ -56,6 +56,7 @@ signals:
     void disconnected();
     void transportReady(quint16 mtu);
     void controlReceived(const QByteArray& value);
+    void dataReceived(const QByteArray& value);
     void chunkWritable();
     void logMessage(const QString& text);
     void errorOccurred(const QString& text);
@@ -67,19 +68,26 @@ private slots:
     void onControlPropertiesChanged(const QString& iface,
                                     const QVariantMap& changed,
                                     const QStringList& invalidated);
+    void onDataPropertiesChanged(const QString& iface,
+                                 const QVariantMap& changed,
+                                 const QStringList& invalidated);
     void flushWriteBuffer();
 
 private:
     void ensureAdapter();
     void setupGatt();
     void acquireWrite();
-    void startNotify();
+    void startNotifications();
+    void startNotifyFor(const QString& path, bool isControl);
+    void sendHello();
     quint16 queryMtu();
     void closeWrite();
     void handleDisconnect(const QString& reason);
     void setState(const QString& text);
     void sendWriteValue(const QByteArray& value, bool withoutResponse);
     void registerControlSignal();
+    void registerDataSignal();
+    void unregisterSignals();
 
     QString adapterName_;
     QString adapterPath_;
@@ -100,6 +108,10 @@ private:
     bool ready_ = false;
     bool useAcquireWrite_ = false;
     bool controlSignalConnected_ = false;
+    bool dataSignalConnected_ = false;
+    bool controlNotifyOk_ = false;
+    bool dataNotifyOk_ = false;
+    int pendingNotify_ = 0;
     bool loggedServicesWait_ = false;
     int watchErrors_ = 0;
 
