@@ -50,6 +50,9 @@ BleCentral::BleCentral(QObject* parent) : QObject(parent)
 
     watchTimer_.setInterval(1000);
     connect(&watchTimer_, &QTimer::timeout, this, &BleCentral::onWatchPoll);
+
+    controlPollTimer_.setInterval(200);
+    connect(&controlPollTimer_, &QTimer::timeout, this, &BleCentral::onControlPoll);
 }
 
 BleCentral::~BleCentral()
@@ -58,6 +61,7 @@ BleCentral::~BleCentral()
     connectPollTimer_.stop();
     connectTimeoutTimer_.stop();
     watchTimer_.stop();
+    controlPollTimer_.stop();
     if (connected_ || !peerPath_.isEmpty()) {
         QDBusMessage msg = QDBusMessage::createMethodCall(
             QStringLiteral("org.bluez"), peerPath_,
@@ -227,9 +231,11 @@ void BleCentral::connectToDevice(const QString& path)
     connectPollTimer_.stop();
     connectTimeoutTimer_.stop();
     watchTimer_.stop();
+    controlPollTimer_.stop();
     ready_ = false;
     connected_ = false;
     loggedServicesWait_ = false;
+    connectPollTicks_ = 0;
     watchErrors_ = 0;
     peerPath_ = path;
     servicePath_.clear();
@@ -282,20 +288,29 @@ void BleCentral::onConnectPoll()
     const bool isConnected = dbusutil::toBool(props.value(QStringLiteral("Connected")));
     const bool resolved = dbusutil::toBool(props.value(QStringLiteral("ServicesResolved")));
 
-    if (isConnected && resolved) {
-        connectPollTimer_.stop();
-        connectTimeoutTimer_.stop();
-        connected_ = true;
-        watchErrors_ = 0;
-        setState(QStringLiteral("GATT discovery"));
-        emit connected(peerAddress_);
-        emit logMessage(QStringLiteral("connected, ServicesResolved=true"));
-        setupGatt();
-        watchTimer_.start();
-    } else if (isConnected && !loggedServicesWait_) {
-        loggedServicesWait_ = true;
-        setState(QStringLiteral("ожидание ServicesResolved"));
-        emit logMessage(QStringLiteral("connected, ждём ServicesResolved"));
+    if (isConnected) {
+        ++connectPollTicks_;
+        // Иногда BlueZ не поднимает ServicesResolved (кэш/гонка). Через ~3с
+        // пробуем GetManagedObjects сами, не дожидаясь 20-секундного таймаута.
+        if (resolved || connectPollTicks_ >= 12) {
+            connectPollTimer_.stop();
+            connectTimeoutTimer_.stop();
+            connected_ = true;
+            watchErrors_ = 0;
+            setState(QStringLiteral("GATT discovery"));
+            emit connected(peerAddress_);
+            if (resolved)
+                emit logMessage(QStringLiteral("connected, ServicesResolved=true"));
+            else
+                emit logMessage(QStringLiteral(
+                    "connected, ServicesResolved=false — пробуем GATT discovery"));
+            setupGatt();
+            watchTimer_.start();
+        } else if (!loggedServicesWait_) {
+            loggedServicesWait_ = true;
+            setState(QStringLiteral("ожидание ServicesResolved"));
+            emit logMessage(QStringLiteral("connected, ждём ServicesResolved"));
+        }
     }
 }
 
@@ -359,6 +374,12 @@ void BleCentral::setupGatt()
 
     registerControlSignal();
     registerDataSignal();
+    if (!controlSignalConnected_) {
+        lastControlValue_.clear();
+        controlPollTimer_.start();
+    } else {
+        controlPollTimer_.stop();
+    }
     startNotifications();
 }
 
@@ -401,8 +422,40 @@ void BleCentral::onControlPropertiesChanged(const QString& iface,
     if (!changed.contains(QStringLiteral("Value")))
         return;
     const QByteArray value = dbusutil::toByteArray(changed.value(QStringLiteral("Value")));
-    if (!value.isEmpty())
-        emit controlReceived(value);
+    if (value.isEmpty())
+        return;
+    proto::ControlMessage m;
+    QString err;
+    if (proto::decodeControl(value, m, &err))
+        emit logMessage(QStringLiteral("← Control notify type=%1 len=%2")
+                            .arg(static_cast<int>(m.type))
+                            .arg(value.size()));
+    else
+        emit logMessage(QStringLiteral("← Control notify len=%1 (decode: %2)")
+                            .arg(value.size())
+                            .arg(err));
+    emit controlReceived(value);
+}
+
+void BleCentral::onControlPoll()
+{
+    if (!connected_ || controlPath_.isEmpty())
+        return;
+    QString err;
+    const QVariantMap props =
+        dbusutil::getProperties(controlPath_, QStringLiteral("org.bluez.GattCharacteristic1"), &err);
+    if (!err.isEmpty())
+        return;
+    const QByteArray value = dbusutil::toByteArray(props.value(QStringLiteral("Value")));
+    if (value.isEmpty() || value == lastControlValue_)
+        return;
+    lastControlValue_ = value;
+    proto::ControlMessage m;
+    if (proto::decodeControl(value, m, &err))
+        emit logMessage(QStringLiteral("← Control poll type=%1 len=%2")
+                            .arg(static_cast<int>(m.type))
+                            .arg(value.size()));
+    emit controlReceived(value);
 }
 
 void BleCentral::onDataPropertiesChanged(const QString& iface,
@@ -420,11 +473,9 @@ void BleCentral::onDataPropertiesChanged(const QString& iface,
 
 void BleCentral::startNotifications()
 {
-    pendingNotify_ = 2;
     controlNotifyOk_ = false;
     dataNotifyOk_ = false;
     startNotifyFor(controlPath_, true);
-    startNotifyFor(dataPath_, false);
 }
 
 void BleCentral::startNotifyFor(const QString& path, bool isControl)
@@ -449,7 +500,9 @@ void BleCentral::startNotifyFor(const QString& path, bool isControl)
                     emit logMessage(QStringLiteral("Data notifications включены"));
                 }
                 w->deleteLater();
-                if (--pendingNotify_ <= 0) {
+                if (isControl) {
+                    startNotifyFor(dataPath_, false);
+                } else {
                     if (!controlNotifyOk_)
                         emit errorOccurred(QStringLiteral("Control notify недоступен"));
                     if (!dataNotifyOk_)
@@ -544,6 +597,16 @@ void BleCentral::sendControl(const QByteArray& message)
         emit logMessage(QStringLiteral("control не отправлен: транспорт не готов"));
         return;
     }
+    proto::ControlMessage m;
+    QString err;
+    if (proto::decodeControl(message, m, &err))
+        emit logMessage(QStringLiteral("→ Control write type=%1 len=%2")
+                            .arg(static_cast<int>(m.type))
+                            .arg(message.size()));
+    else
+        emit logMessage(QStringLiteral("→ Control write len=%1 (decode: %2)")
+                            .arg(message.size())
+                            .arg(err));
     sendWriteValue(message, false);
 }
 
@@ -681,6 +744,7 @@ void BleCentral::handleDisconnect(const QString& reason)
     watchTimer_.stop();
     connectPollTimer_.stop();
     connectTimeoutTimer_.stop();
+    controlPollTimer_.stop();
     closeWrite();
     unregisterSignals();
 

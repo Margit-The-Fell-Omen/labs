@@ -610,7 +610,7 @@ void MainWindow::maybeStartPeripheralSend()
 {
     if (peripheralSender_->isActive()) {
         if (peripheralSender_->state() == Sender::State::WaitingStartAck
-            && gattServer_->isDataNotifying() && gattServer_->hasPeerMtu()) {
+            && gattServer_->hasPeerMtu()) {
             peripheralSender_->onTransportReady(gattServer_->peerMtu());
             pumpPeripheralSender();
         }
@@ -621,12 +621,6 @@ void MainWindow::maybeStartPeripheralSend()
     if (receiver_->isActive()) {
         if (!peripheralWaitLogged_)
             logInfo(QStringLiteral("peripheral sender: сначала завершится приём от central"));
-        peripheralWaitLogged_ = true;
-        return;
-    }
-    if (!gattServer_->isDataNotifying()) {
-        if (!peripheralWaitLogged_)
-            logInfo(QStringLiteral("peripheral sender: ждём подписку central на Data"));
         peripheralWaitLogged_ = true;
         return;
     }
@@ -825,7 +819,7 @@ void MainWindow::pumpSender()
 
 void MainWindow::pumpPeripheralSender()
 {
-    if (!gattServer_->isDataNotifying() || !peripheralSender_->isActive())
+    if (!peripheralSender_->isActive())
         return;
 
     while (peripheralSender_->canSendMore()) {
@@ -928,7 +922,10 @@ void MainWindow::onTick()
     }
 
     if (sender_->checkStall()) {
-        logError(QStringLiteral("передача зависла: переподключение"));
+        logError(QStringLiteral("передача зависла: state=%1 acked=%2/%3, переподключение")
+                     .arg(sender_->stateText())
+                     .arg(sender_->ackedOffset())
+                     .arg(sender_->totalSize()));
         if (autoReconnect_ && !peerPath_.isEmpty()) {
             if (central_->isConnected())
                 central_->disconnectFromDevice();

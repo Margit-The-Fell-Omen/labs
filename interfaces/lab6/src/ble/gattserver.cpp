@@ -208,10 +208,19 @@ void GattServer::sendControlNotification(const QByteArray& value)
         emit logMessage(QStringLiteral("ACK не отправлен: advertising выключен"));
         return;
     }
-    if (!controlNotifying_) {
-        emit logMessage(QStringLiteral("ACK не отправлен: central не подписан на Control"));
-        return;
-    }
+    if (!controlNotifying_)
+        emit logMessage(QStringLiteral("Control notify flag ещё false, отправляем через CCC"));
+
+    proto::ControlMessage cm;
+    QString err;
+    if (proto::decodeControl(value, cm, &err))
+        emit logMessage(QStringLiteral("→ Control notify type=%1 len=%2")
+                            .arg(static_cast<int>(cm.type))
+                            .arg(value.size()));
+    else
+        emit logMessage(QStringLiteral("→ Control notify len=%1 (decode: %2)")
+                            .arg(value.size())
+                            .arg(err));
 
     QVariantMap changed;
     changed.insert(QStringLiteral("Value"), QVariant::fromValue(value));
@@ -235,10 +244,8 @@ void GattServer::sendDataNotification(const QByteArray& value)
         emit logMessage(QStringLiteral("data notification не отправлена: advertising выключен"));
         return;
     }
-    if (!dataNotifying_) {
-        emit logMessage(QStringLiteral("data notification не отправлена: central не подписан на Data"));
-        return;
-    }
+    if (!dataNotifying_)
+        emit logMessage(QStringLiteral("Data notify flag ещё false, отправляем через CCC"));
 
     QVariantMap changed;
     changed.insert(QStringLiteral("Value"), QVariant::fromValue(value));
@@ -440,6 +447,16 @@ void GattServer::handleWriteValue(const QDBusMessage& message, const QDBusConnec
                 emit logMessage(QStringLiteral("chunk: %1").arg(err));
         }
     } else if (message.path() == bleconst::controlPath()) {
+        proto::ControlMessage cm;
+        QString err;
+        if (proto::decodeControl(value, cm, &err))
+            emit logMessage(QStringLiteral("← Control write type=%1 len=%2")
+                                .arg(static_cast<int>(cm.type))
+                                .arg(value.size()));
+        else
+            emit logMessage(QStringLiteral("← Control write len=%1 (decode: %2)")
+                                .arg(value.size())
+                                .arg(err));
         if (receiver_)
             receiver_->handleControl(value);
         if (sender_)

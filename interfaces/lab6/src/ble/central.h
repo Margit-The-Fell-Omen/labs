@@ -65,6 +65,7 @@ private slots:
     void refreshDevices();
     void onConnectPoll();
     void onWatchPoll();
+    void onControlPoll();
     void onControlPropertiesChanged(const QString& iface,
                                     const QVariantMap& changed,
                                     const QStringList& invalidated);
@@ -101,6 +102,7 @@ private:
     QTimer connectPollTimer_;
     QTimer connectTimeoutTimer_;
     QTimer watchTimer_;
+    QTimer controlPollTimer_;
 
     QList<BleDeviceInfo> devices_;
     bool scanning_ = false;
@@ -111,8 +113,9 @@ private:
     bool dataSignalConnected_ = false;
     bool controlNotifyOk_ = false;
     bool dataNotifyOk_ = false;
-    int pendingNotify_ = 0;
+    QByteArray lastControlValue_;
     bool loggedServicesWait_ = false;
+    int connectPollTicks_ = 0;
     int watchErrors_ = 0;
 
     quint16 mtu_ = 23;

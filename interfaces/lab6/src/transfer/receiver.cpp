@@ -140,6 +140,8 @@ void Receiver::handleControl(const QByteArray& frame)
     case proto::ControlType::Fin:
         finishTransfer(m);
         break;
+    case proto::ControlType::Hello:
+        break;
     case proto::ControlType::Abort:
         if (active_ && m.transferId == transferId_) {
             saveMeta(true);
@@ -389,13 +391,10 @@ void Receiver::sendAck(proto::Status status, bool force, quint64 offset)
 {
     if (!active_)
         return;
-    if (!notifying_) {
-        if (!warnedNotNotifying_) {
-            emit logMessage(QStringLiteral(
-                "ACK не отправлен: central не подписан на Control notifications"));
-            warnedNotNotifying_ = true;
-        }
-        return;
+    if (!notifying_ && !warnedNotNotifying_) {
+        emit logMessage(QStringLiteral(
+            "Control notify flag ещё false, ACK отправляем через CCC"));
+        warnedNotNotifying_ = true;
     }
 
     const bool due = force || (expected_ - lastAck_) >= kAckInterval
@@ -427,8 +426,7 @@ void Receiver::finishTransfer(const proto::ControlMessage& msg)
         ack.transferId = msg.transferId;
         ack.status = proto::Status::Error;
         ack.crc = 0;
-        if (notifying_)
-            emit controlToSend(proto::encodeControl(ack));
+        emit controlToSend(proto::encodeControl(ack));
         return;
     }
 
@@ -476,8 +474,7 @@ void Receiver::finishTransfer(const proto::ControlMessage& msg)
         ack.transferId = transferId_;
         ack.status = proto::Status::CrcMismatch;
         ack.crc = actualCrc;
-        if (notifying_)
-            emit controlToSend(proto::encodeControl(ack));
+        emit controlToSend(proto::encodeControl(ack));
         return;
     }
 
@@ -503,8 +500,7 @@ void Receiver::finishTransfer(const proto::ControlMessage& msg)
     ack.transferId = transferId_;
     ack.status = proto::Status::Ok;
     ack.crc = actualCrc;
-    if (notifying_)
-        emit controlToSend(proto::encodeControl(ack));
+    emit controlToSend(proto::encodeControl(ack));
 }
 
 bool Receiver::verifyFileCrc(quint32& crcOut, QString& error)
