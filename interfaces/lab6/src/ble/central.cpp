@@ -89,6 +89,52 @@ void BleCentral::ensureAdapter()
     }
 }
 
+void BleCentral::forgetStaleLab6Devices()
+{
+    if (adapterPath_.isEmpty() || connected_ || connectPollTimer_.isActive())
+        return;
+
+    QDBusMessage msg = QDBusMessage::createMethodCall(
+        QStringLiteral("org.bluez"), QStringLiteral("/"),
+        QStringLiteral("org.freedesktop.DBus.ObjectManager"),
+        QStringLiteral("GetManagedObjects"));
+    const QDBusMessage reply = QDBusConnection::systemBus().call(msg, QDBus::Block, 2000);
+    if (reply.type() != QDBusMessage::ReplyMessage || reply.arguments().isEmpty())
+        return;
+
+    const BluezManagedObjects objects = qdbus_cast<BluezManagedObjects>(reply.arguments().first());
+    int removed = 0;
+    for (auto it = objects.cbegin(); it != objects.cend(); ++it) {
+        const BluezInterfaceMap& ifaces = it.value();
+        if (!ifaces.contains(QStringLiteral("org.bluez.Device1")))
+            continue;
+        const BluezPropertyMap props = ifaces.value(QStringLiteral("org.bluez.Device1"));
+        const QString adapter = dbusutil::toObjectPathString(props.value(QStringLiteral("Adapter")));
+        if (!adapter.isEmpty() && adapter != adapterPath_)
+            continue;
+        const QString name = dbusutil::toString(props.value(QStringLiteral("Name")))
+                           + dbusutil::toString(props.value(QStringLiteral("Alias")));
+        const QStringList uuids = dbusutil::toStringList(props.value(QStringLiteral("UUIDs")));
+        if (!name.contains(QStringLiteral("lab6"), Qt::CaseInsensitive)
+            && !uuids.contains(bleconst::serviceUuid(), Qt::CaseInsensitive))
+            continue;
+
+        QString err;
+        if (dbusutil::callVoid(QStringLiteral("org.bluez"), adapterPath_,
+                               QStringLiteral("org.bluez.Adapter1"),
+                               QStringLiteral("RemoveDevice"),
+                               {QVariant::fromValue(QDBusObjectPath(it.key().path()))}, &err)) {
+            ++removed;
+        } else {
+            emit logMessage(QStringLiteral("RemoveDevice %1: %2").arg(it.key().path(), err));
+        }
+    }
+    if (removed > 0) {
+        emit logMessage(QStringLiteral("Очищен кэш BlueZ для lab6: %1 устройств").arg(removed));
+        peerPath_.clear();
+    }
+}
+
 void BleCentral::startScan()
 {
     if (scanning_)
@@ -96,6 +142,8 @@ void BleCentral::startScan()
     ensureAdapter();
     if (adapterPath_.isEmpty())
         return;
+
+    forgetStaleLab6Devices();
 
     QString err;
     const QVariantMap adapterProps =
@@ -108,6 +156,7 @@ void BleCentral::startScan()
     QVariantMap filter;
     filter.insert(QStringLiteral("Transport"), QStringLiteral("le"));
     filter.insert(QStringLiteral("DuplicateData"), false);
+    filter.insert(QStringLiteral("UUIDs"), QStringList{bleconst::serviceUuid()});
 
     QString filterErr;
     if (!dbusutil::callVoid(QStringLiteral("org.bluez"), adapterPath_,
@@ -190,6 +239,10 @@ void BleCentral::refreshDevices()
         d.rssi = props.value(QStringLiteral("RSSI")).toInt();
         const QStringList uuids = dbusutil::toStringList(props.value(QStringLiteral("UUIDs")));
         d.hasService = uuids.contains(bleconst::serviceUuid(), Qt::CaseInsensitive);
+        // Не показываем старые/чужие Device1-объекты: иначе можно
+        // подключиться к устройству без нашего GATT и получить timeout.
+        if (!d.hasService && !d.name.contains(QStringLiteral("lab6"), Qt::CaseInsensitive))
+            continue;
 
         found.append(d);
     }
@@ -284,6 +337,11 @@ void BleCentral::connectToDevice(const QString& path)
             const QDBusError e = w->error();
             if (e.name() != QStringLiteral("org.bluez.Error.AlreadyConnected"))
                 emit logMessage(QStringLiteral("Device1.Connect: %1").arg(e.message()));
+            if (e.message().contains(QStringLiteral("key-missing"))
+                || e.message().contains(QStringLiteral("abort-by-local"))) {
+                emit logMessage(QStringLiteral(
+                    "похоже на старый bond/кэш BlueZ: нажмите «Забыть устройство»"));
+            }
         }
         w->deleteLater();
     });
@@ -369,7 +427,7 @@ void BleCentral::setupGatt()
     }
 
     if (servicePath_.isEmpty()) {
-        emit errorOccurred(QStringLiteral("сервис %1 не найден на %2")
+        emit errorOccurred(QStringLiteral("сервис %1 не найден на %2: peer не Peripheral? нажмите «Забыть устройство» и пересканируйте")
                                .arg(bleconst::serviceUuid(), peerAddress_));
         return;
     }

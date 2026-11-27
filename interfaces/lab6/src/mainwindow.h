@@ -126,6 +126,7 @@ private:
 
     QTextEdit* log_ = nullptr;
     QLabel* statusLabel_ = nullptr;
+    QLabel* advStatus_ = nullptr;
     QTimer tick_;
     QTimer reconnectTimer_;
 

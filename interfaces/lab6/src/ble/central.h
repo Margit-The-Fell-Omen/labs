@@ -77,6 +77,7 @@ private slots:
 
 private:
     void ensureAdapter();
+    void forgetStaleLab6Devices();
     void setupGatt();
     void acquireWrite();
     void startNotifications();

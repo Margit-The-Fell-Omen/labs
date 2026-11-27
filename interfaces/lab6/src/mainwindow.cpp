@@ -287,6 +287,9 @@ void MainWindow::setupUi()
     auto* roleRow = new QHBoxLayout;
     roleRow->addWidget(new QLabel(QStringLiteral("Роль этого ноутбука:")));
     roleRow->addWidget(roleCombo_);
+    advStatus_ = new QLabel(QStringLiteral("advertising: off"));
+    advStatus_->setStyleSheet(QStringLiteral("color:#928374;"));
+    roleRow->addWidget(advStatus_);
     roleRow->addWidget(new QLabel(QStringLiteral("(Central подключается; Peripheral рекламирует GATT)")));
     roleRow->addStretch();
 
@@ -402,7 +405,13 @@ void MainWindow::wireSignals()
     connect(peripheralSender_, &Sender::finished, this, &MainWindow::onPeripheralSenderFinished);
 
     connect(gattServer_, &GattServer::logMessage, this, &MainWindow::logInfo);
-    connect(gattServer_, &GattServer::advertisingChanged, this, [this](bool) { updateButtons(); });
+    connect(gattServer_, &GattServer::advertisingChanged, this, [this](bool on) {
+        advStatus_->setText(on ? QStringLiteral("advertising: ON")
+                               : QStringLiteral("advertising: off"));
+        advStatus_->setStyleSheet(on ? QStringLiteral("color:#b8bb26;")
+                                     : QStringLiteral("color:#928374;"));
+        updateButtons();
+    });
     connect(gattServer_, &GattServer::clientSeen, this, [this] {
         rxState_->setText(QStringLiteral("central подключился"));
     });
@@ -443,19 +452,11 @@ void MainWindow::applyRole(const QString& role)
         roleCombo_->setCurrentIndex(central ? 0 : 1);
     }
 
-    if (sender_->isActive())
-        sender_->abort(QStringLiteral("смена роли"));
-    if (peripheralSender_->isActive())
-        peripheralSender_->abort(QStringLiteral("смена роли"));
-
-    if (central) {
-        if (gattServer_->isAdvertising())
-            gattServer_->stop();
-    } else {
+    // Роль — это только выбор активной вкладки. Не останавливаем
+    // advertising/соединение при переключении: иначе вторая сторона
+    // теряет GATT и получает «сервис не найден».
+    if (!central)
         central_->stopScan();
-        if (central_->isConnected())
-            central_->disconnectFromDevice();
-    }
 
     tabs_->setTabEnabled(0, central);
     tabs_->setTabEnabled(1, !central);
@@ -1001,6 +1002,11 @@ void MainWindow::updateButtons()
     pCancelBtn_->setEnabled(peripheralSender_->isActive());
     advBtn_->setText(gattServer_->isAdvertising() ? QStringLiteral("Остановить рекламу")
                                                   : QStringLiteral("Начать рекламу"));
+    advStatus_->setText(gattServer_->isAdvertising() ? QStringLiteral("advertising: ON")
+                                                     : QStringLiteral("advertising: off"));
+    advStatus_->setStyleSheet(gattServer_->isAdvertising()
+                                  ? QStringLiteral("color:#b8bb26;")
+                                  : QStringLiteral("color:#928374;"));
     txState_->setText(sender_->stateText());
 }
 
