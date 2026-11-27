@@ -455,11 +455,8 @@ void MainWindow::applyRole(const QString& role)
     // Роль — это только выбор активной вкладки. Не останавливаем
     // advertising/соединение при переключении: иначе вторая сторона
     // теряет GATT и получает «сервис не найден».
-    if (!central)
-        central_->stopScan();
-
-    tabs_->setTabEnabled(0, central);
-    tabs_->setTabEnabled(1, !central);
+    tabs_->setTabEnabled(0, true);
+    tabs_->setTabEnabled(1, true);
     tabs_->setCurrentIndex(central ? 0 : 1);
     statusLabel_->setText(central ? QStringLiteral("роль: Central")
                                   : QStringLiteral("роль: Peripheral"));
@@ -470,13 +467,15 @@ void MainWindow::applyRole(const QString& role)
 
 void MainWindow::autoStart()
 {
+    // Каждый экземпляр поднимает GATT/advertising: тогда Central может
+    // подключиться к любому ноутбуку, а не только к «правильной» роли.
+    startAdvertising();
+
     if (cfg_.role == QStringLiteral("peripheral")) {
         tabs_->setCurrentIndex(1);
         if (!cfg_.sendFile.isEmpty())
             pFileEdit_->setText(cfg_.sendFile);
         pendingPeripheralSend_ = cfg_.autoStart && !cfg_.sendFile.isEmpty();
-        if (cfg_.autoStart)
-            startAdvertising();
         maybeStartPeripheralSend();
         return;
     }
@@ -584,10 +583,6 @@ void MainWindow::onDevicesChanged(const QList<BleDeviceInfo>& devices)
 
 void MainWindow::onScan()
 {
-    if (cfg_.role != QStringLiteral("central")) {
-        logError(QStringLiteral("этот ноутбук в режиме Peripheral — сканирование недоступно"));
-        return;
-    }
     reconnectTimer_.stop();
 
     if (central_->isScanning()) {
@@ -599,8 +594,8 @@ void MainWindow::onScan()
     }
 
     pendingAutoConnect_ = false;
-    if (gattServer_->isAdvertising())
-        stopAdvertising();
+    // Advertising не трогаем: сканирование и реклама могут работать
+    // одновременно, а остановка рекламы ломает GATT для второй стороны.
     central_->startScan();
     updateButtons();
 }
@@ -823,10 +818,6 @@ void MainWindow::onCentralDisconnected()
 
 void MainWindow::startAdvertising()
 {
-    if (cfg_.role != QStringLiteral("peripheral")) {
-        logError(QStringLiteral("этот ноутбук в режиме Central — реклама недоступна"));
-        return;
-    }
     central_->stopScan();
     receiver_->setOutDir(outDirEdit_->text());
     gattServer_->setAdapter(cfg_.adapter);

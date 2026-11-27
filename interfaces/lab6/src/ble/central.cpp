@@ -237,6 +237,10 @@ void BleCentral::refreshDevices()
         if (d.name.isEmpty())
             d.name = d.address;
         d.rssi = props.value(QStringLiteral("RSSI")).toInt();
+        const bool leAdvertising = props.contains(QStringLiteral("AdvertisingFlags"))
+                                  || props.contains(QStringLiteral("AdvertisingData"));
+        if (!leAdvertising)
+            continue;
         const QStringList uuids = dbusutil::toStringList(props.value(QStringLiteral("UUIDs")));
         d.hasService = uuids.contains(bleconst::serviceUuid(), Qt::CaseInsensitive);
         // Не показываем старые/чужие Device1-объекты: иначе можно
@@ -326,6 +330,22 @@ void BleCentral::connectToDevice(const QString& path)
     peerAddress_ = dbusutil::toString(props.value(QStringLiteral("Address")));
     if (peerAddress_.isEmpty())
         peerAddress_ = peerPath_;
+
+    // PreferredBearer меняется только для отключённого устройства.
+    dbusutil::callVoid(QStringLiteral("org.bluez"), peerPath_,
+                       QStringLiteral("org.bluez.Device1"),
+                       QStringLiteral("Disconnect"), {});
+
+    // Ноутбуки dual-mode: без PreferredBearer BlueZ может пойти BR/EDR,
+    // получить br-connection-key-missing и не увидеть LE GATT.
+    QString bearerErr;
+    if (dbusutil::setProperty(peerPath_, QStringLiteral("org.bluez.Device1"),
+                              QStringLiteral("PreferredBearer"), QStringLiteral("le"),
+                              &bearerErr)) {
+        emit logMessage(QStringLiteral("PreferredBearer=le (только LE) для %1").arg(peerAddress_));
+    } else {
+        emit logMessage(QStringLiteral("PreferredBearer=le недоступен: %1").arg(bearerErr));
+    }
 
     QDBusMessage msg = QDBusMessage::createMethodCall(
         QStringLiteral("org.bluez"), peerPath_,

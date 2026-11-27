@@ -33,11 +33,19 @@ void onUnixSignal(int)
 
 int main(int argc, char** argv)
 {
+    constexpr const char* kBuildTag = "lab6-2026-11-27-le-pref";
+
     AppConfig cfg;
     QString err;
     QStringList args;
     for (int i = 0; i < argc; ++i)
         args.append(QString::fromLocal8Bit(argv[i]));
+
+    if (args.contains(QStringLiteral("--version"))) {
+        std::fputs(kBuildTag, stdout);
+        std::fputc('\n', stdout);
+        return 0;
+    }
 
     if (args.contains(QStringLiteral("-h")) || args.contains(QStringLiteral("--help"))) {
         std::fputs(usageText(args.value(0)).toLocal8Bit().constData(), stdout);
@@ -73,6 +81,7 @@ int main(int argc, char** argv)
 
     if (!cfg.logFile.isEmpty())
         Logger::instance().setLogFile(cfg.logFile);
+    Logger::instance().info(QStringLiteral("build: %1").arg(QString::fromLatin1(kBuildTag)));
     if (cfg.verbose)
         Logger::instance().info(QStringLiteral("запуск в режиме %1").arg(cfg.role));
 
