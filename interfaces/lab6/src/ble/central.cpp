@@ -221,6 +221,31 @@ void BleCentral::refreshDevices()
     }
 }
 
+bool BleCentral::forgetDevice(const QString& path, QString* error)
+{
+    ensureAdapter();
+    if (adapterPath_.isEmpty()) {
+        if (error)
+            *error = QStringLiteral("нет Bluetooth-адаптера");
+        return false;
+    }
+    if (path == peerPath_ && connected_)
+        disconnectFromDevice();
+
+    QString err;
+    const bool ok = dbusutil::callVoid(
+        QStringLiteral("org.bluez"), adapterPath_, QStringLiteral("org.bluez.Adapter1"),
+        QStringLiteral("RemoveDevice"),
+        {QVariant::fromValue(QDBusObjectPath(path))}, &err);
+    if (!ok) {
+        if (error)
+            *error = err;
+        return false;
+    }
+    emit logMessage(QStringLiteral("устройство удалено из BlueZ (кэш/bond): %1").arg(path));
+    return true;
+}
+
 void BleCentral::connectToDevice(const QString& path)
 {
     if (path.isEmpty())

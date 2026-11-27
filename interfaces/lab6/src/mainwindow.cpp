@@ -6,6 +6,8 @@
 #include "transfer/sender.h"
 
 #include <QCheckBox>
+#include <QSignalBlocker>
+#include <QComboBox>
 #include <QCloseEvent>
 #include <QDateTime>
 #include <QDir>
@@ -126,6 +128,7 @@ MainWindow::MainWindow(const AppConfig& cfg, QWidget* parent)
     wireSignals();
     tick_.setInterval(500);
     tick_.start();
+    applyRole(cfg_.role);
     updateButtons();
 }
 
@@ -162,7 +165,12 @@ void MainWindow::setupUi()
     centralLayout->addWidget(deviceTable_, 1);
 
     connectBtn_ = new QPushButton(QStringLiteral("Подключиться к выбранному"));
-    centralLayout->addWidget(connectBtn_);
+    forgetBtn_ = new QPushButton(QStringLiteral("Забыть устройство"));
+    auto* connectRow = new QHBoxLayout;
+    connectRow->addWidget(connectBtn_);
+    connectRow->addWidget(forgetBtn_);
+    connectRow->addStretch();
+    centralLayout->addLayout(connectRow);
 
     auto* fileRow = new QHBoxLayout;
     fileEdit_ = new QLineEdit;
@@ -270,7 +278,23 @@ void MainWindow::setupUi()
     tabs_ = new QTabWidget;
     tabs_->addTab(centralPage, QStringLiteral("Central — отправка/приём"));
     tabs_->addTab(peripheralPage, QStringLiteral("Peripheral — приём/отправка"));
-    tabs_->setCurrentIndex(cfg_.role == QStringLiteral("peripheral") ? 1 : 0);
+
+    roleCombo_ = new QComboBox;
+    roleCombo_->addItem(QStringLiteral("Central"), QStringLiteral("central"));
+    roleCombo_->addItem(QStringLiteral("Peripheral"), QStringLiteral("peripheral"));
+    roleCombo_->setCurrentIndex(cfg_.role == QStringLiteral("peripheral") ? 1 : 0);
+
+    auto* roleRow = new QHBoxLayout;
+    roleRow->addWidget(new QLabel(QStringLiteral("Роль этого ноутбука:")));
+    roleRow->addWidget(roleCombo_);
+    roleRow->addWidget(new QLabel(QStringLiteral("(Central подключается; Peripheral рекламирует GATT)")));
+    roleRow->addStretch();
+
+    auto* tabsContainer = new QWidget;
+    auto* tabsLayout = new QVBoxLayout(tabsContainer);
+    tabsLayout->setContentsMargins(0, 0, 0, 0);
+    tabsLayout->addLayout(roleRow);
+    tabsLayout->addWidget(tabs_);
 
     // ------------------------------------------------------------------ log
     auto* logBox = new QGroupBox(QStringLiteral("Журнал событий"));
@@ -282,7 +306,7 @@ void MainWindow::setupUi()
     logLayout->addWidget(log_);
 
     auto* splitter = new QSplitter(Qt::Vertical);
-    splitter->addWidget(tabs_);
+    splitter->addWidget(tabsContainer);
     splitter->addWidget(logBox);
     splitter->setStretchFactor(0, 3);
     splitter->setStretchFactor(1, 2);
@@ -310,6 +334,7 @@ void MainWindow::wireSignals()
 
     connect(scanBtn_, &QPushButton::clicked, this, &MainWindow::onScan);
     connect(connectBtn_, &QPushButton::clicked, this, &MainWindow::onConnect);
+    connect(forgetBtn_, &QPushButton::clicked, this, &MainWindow::onForget);
     connect(deviceTable_, &QTableWidget::doubleClicked, this, &MainWindow::onConnect);
     connect(deviceTable_, &QTableWidget::itemSelectionChanged, this, [this] {
         if (central_->isScanning())
@@ -325,6 +350,7 @@ void MainWindow::wireSignals()
     connect(sendBtn_, &QPushButton::clicked, this, &MainWindow::onSend);
     connect(cancelBtn_, &QPushButton::clicked, this, &MainWindow::onCancel);
     connect(advBtn_, &QPushButton::clicked, this, &MainWindow::onToggleAdvertising);
+    connect(roleCombo_, &QComboBox::currentIndexChanged, this, &MainWindow::onRoleChanged);
     connect(autoReconnectBox_, &QCheckBox::toggled, this, [this](bool on) { autoReconnect_ = on; });
     connect(&tick_, &QTimer::timeout, this, &MainWindow::onTick);
 
@@ -398,6 +424,47 @@ void MainWindow::wireSignals()
         if (autoReconnect_ && !peerPath_.isEmpty() && !central_->isConnected())
             central_->connectToDevice(peerPath_);
     });
+}
+
+void MainWindow::onRoleChanged(int index)
+{
+    Q_UNUSED(index);
+    const QString role = roleCombo_->currentData().toString();
+    cfg_.role = role;
+    applyRole(role);
+}
+
+void MainWindow::applyRole(const QString& role)
+{
+    const bool central = role == QStringLiteral("central");
+
+    if (roleCombo_ && roleCombo_->currentData().toString() != role) {
+        const QSignalBlocker blocker(roleCombo_);
+        roleCombo_->setCurrentIndex(central ? 0 : 1);
+    }
+
+    if (sender_->isActive())
+        sender_->abort(QStringLiteral("смена роли"));
+    if (peripheralSender_->isActive())
+        peripheralSender_->abort(QStringLiteral("смена роли"));
+
+    if (central) {
+        if (gattServer_->isAdvertising())
+            gattServer_->stop();
+    } else {
+        central_->stopScan();
+        if (central_->isConnected())
+            central_->disconnectFromDevice();
+    }
+
+    tabs_->setTabEnabled(0, central);
+    tabs_->setTabEnabled(1, !central);
+    tabs_->setCurrentIndex(central ? 0 : 1);
+    statusLabel_->setText(central ? QStringLiteral("роль: Central")
+                                  : QStringLiteral("роль: Peripheral"));
+    logInfo(central ? QStringLiteral("роль этого ноутбука: Central (подключение к peripheral)")
+                    : QStringLiteral("роль этого ноутбука: Peripheral (GATT advertising)"));
+    updateButtons();
 }
 
 void MainWindow::autoStart()
@@ -516,6 +583,10 @@ void MainWindow::onDevicesChanged(const QList<BleDeviceInfo>& devices)
 
 void MainWindow::onScan()
 {
+    if (cfg_.role != QStringLiteral("central")) {
+        logError(QStringLiteral("этот ноутбук в режиме Peripheral — сканирование недоступно"));
+        return;
+    }
     reconnectTimer_.stop();
 
     if (central_->isScanning()) {
@@ -543,6 +614,26 @@ void MainWindow::onConnect()
     }
     peerPath_ = path;
     central_->connectToDevice(path);
+    updateButtons();
+}
+
+void MainWindow::onForget()
+{
+    const QString path = selectedDevicePath();
+    if (path.isEmpty()) {
+        logError(QStringLiteral("выберите устройство для удаления из BlueZ"));
+        return;
+    }
+    central_->stopScan();
+    QString err;
+    if (!central_->forgetDevice(path, &err)) {
+        logError(QStringLiteral("RemoveDevice: %1").arg(err));
+        return;
+    }
+    const int row = deviceTable_->currentRow();
+    if (row >= 0)
+        deviceTable_->removeRow(row);
+    logInfo(QStringLiteral("устройство забыто; теперь снова нажмите «Сканировать»"));
     updateButtons();
 }
 
@@ -723,12 +814,18 @@ void MainWindow::onCentralDisconnected()
     centralReceiver_->onTransportLost();
     updateButtons();
 
-    if (autoReconnect_ && !cfg_.noReconnect && !peerPath_.isEmpty() && hadTransfer)
+    if (cfg_.role == QStringLiteral("central") && autoReconnect_
+        && !cfg_.noReconnect && !peerPath_.isEmpty() && hadTransfer) {
         reconnectTimer_.start();
+    }
 }
 
 void MainWindow::startAdvertising()
 {
+    if (cfg_.role != QStringLiteral("peripheral")) {
+        logError(QStringLiteral("этот ноутбук в режиме Central — реклама недоступна"));
+        return;
+    }
     central_->stopScan();
     receiver_->setOutDir(outDirEdit_->text());
     gattServer_->setAdapter(cfg_.adapter);
@@ -893,6 +990,7 @@ void MainWindow::updateButtons()
 {
     const bool hasSelection = deviceTable_->currentRow() >= 0;
     connectBtn_->setEnabled(hasSelection && !central_->isConnected());
+    forgetBtn_->setEnabled(hasSelection);
     scanBtn_->setEnabled(!central_->isConnected());
     scanBtn_->setText(central_->isScanning() ? QStringLiteral("Остановить поиск")
                                              : QStringLiteral("Сканировать"));

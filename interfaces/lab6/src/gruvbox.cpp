@@ -79,6 +79,23 @@ void applyGruvbox(QApplication& app)
         QPushButton:focus {
             border-color: #fabd2f;
         }
+        QComboBox {
+            background-color: #3c3836;
+            color: #ebdbb2;
+            border: 1px solid #504945;
+            border-radius: 4px;
+            padding: 4px 8px;
+        }
+        QComboBox:hover, QComboBox:focus {
+            border-color: #fabd2f;
+        }
+        QComboBox QAbstractItemView {
+            background: #1d2021;
+            color: #ebdbb2;
+            selection-background-color: #458588;
+            selection-color: #fbf1c7;
+            border: 1px solid #504945;
+        }
         QPushButton:disabled {
             background-color: #32302f;
             color: #7c6f64;

@@ -7,6 +7,7 @@
 #include "ble/central.h"
 
 class QCheckBox;
+class QComboBox;
 class QLabel;
 class QLineEdit;
 class QTextEdit;
@@ -34,6 +35,7 @@ protected:
 private slots:
     void onScan();
     void onConnect();
+    void onForget();
     void onSend();
     void onCancel();
     void onBrowseFile();
@@ -43,6 +45,7 @@ private slots:
     void onPeripheralSend();
     void onPeripheralCancel();
     void onToggleAdvertising();
+    void onRoleChanged(int index);
     void onDevicesChanged(const QList<BleDeviceInfo>& devices);
     void onTransportReady(quint16 mtu);
     void onCentralDisconnected();
@@ -55,6 +58,7 @@ private slots:
 
 private:
     void setupUi();
+    void applyRole(const QString& role);
     void wireSignals();
     void logInfo(const QString& text);
     void logError(const QString& text);
@@ -79,10 +83,12 @@ private:
     GattServer* gattServer_ = nullptr;
 
     QTabWidget* tabs_ = nullptr;
+    QComboBox* roleCombo_ = nullptr;
 
     QPushButton* scanBtn_ = nullptr;
     QTableWidget* deviceTable_ = nullptr;
     QPushButton* connectBtn_ = nullptr;
+    QPushButton* forgetBtn_ = nullptr;
     QCheckBox* autoReconnectBox_ = nullptr;
 
     // Central: отправка файла на peripheral.

@@ -36,6 +36,7 @@ public:
 
     QList<BleDeviceInfo> devices() const { return devices_; }
     void connectToDevice(const QString& path);
+    bool forgetDevice(const QString& path, QString* error = nullptr);
     void disconnectFromDevice();
     void reconnect();
 

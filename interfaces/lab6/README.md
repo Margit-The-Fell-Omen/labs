@@ -356,6 +356,34 @@ Loopback-тесты не требуют Bluetooth-адаптера.
 - Если сеть недоступна, скопируйте `phone/web-bluetooth.html` на телефон
   и откройте `file://` — для BLE IP не нужен.
 
+**Оба ноутбука пишут `Connect ...`, а сервис не найден**
+- Это значит, что **оба экземпляра запущены в роли Central**. На одном
+  ноутбуке обязательно выберите роль **Peripheral** (комбобокс «Роль этого
+  ноутбука») или запустите `--role peripheral`.
+- На Peripheral в журнале должно быть:
+  `LE advertising запущен: name=lab6, type=peripheral, activeInstances=1`.
+  Строки `Connect ...` на этой стороне быть не должно.
+- На Central после подключения в журнале должны появиться пути
+  `GATT: service=...`, `GATT: data=...`, `GATT: control=...`.
+- Если на Central всё ещё `сервис ... не найден`, нажмите
+  **«Забыть устройство»** (или `bluetoothctl remove <ADDR>`), затем снова
+  «Сканировать» и подключитесь.
+
+**`br-connection-key-missing` / `le-connection-abort-by-local`**
+- Обычно это старый bond/кэш BlueZ от предыдущих попыток.
+- На Central: выберите устройство и нажмите **«Забыть устройство»**.
+- Или вручную:
+  ```bash
+  bluetoothctl remove 14:AC:60:56:D9:5E
+  sudo systemctl restart bluetooth
+  ```
+- На Peripheral удалите адрес Central:
+  ```bash
+  bluetoothctl remove B8:1E:A4:2D:6C:28
+  ```
+- После этого заново запустите Peripheral (advertising), затем Central
+  (scan → connect). Не запускайте два экземпляра `lab6ble` на одной машине.
+
 **Телефон не видит lab6 в списке Web Bluetooth**
 - Перезапустите приложение после обновления. В журнале должно быть:
   `LE advertising запущен: name=lab6, type=peripheral, ... activeInstances=1`.
