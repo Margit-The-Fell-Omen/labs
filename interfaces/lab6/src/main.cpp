@@ -1,4 +1,6 @@
 #include <QApplication>
+#include <QMessageBox>
+#include <QPushButton>
 #include <QCoreApplication>
 #include <QDebug>
 #include <QSocketNotifier>
@@ -33,7 +35,7 @@ void onUnixSignal(int)
 
 int main(int argc, char** argv)
 {
-    constexpr const char* kBuildTag = "lab6-2026-11-27-le-pref";
+    constexpr const char* kBuildTag = "lab6-2026-11-27-singleinit";
 
     AppConfig cfg;
     QString err;
@@ -84,6 +86,34 @@ int main(int argc, char** argv)
     Logger::instance().info(QStringLiteral("build: %1").arg(QString::fromLatin1(kBuildTag)));
     if (cfg.verbose)
         Logger::instance().info(QStringLiteral("запуск в режиме %1").arg(cfg.role));
+
+    if (cfg.headless && !cfg.roleExplicit) {
+        std::fprintf(stderr, "--role central|peripheral обязателен в headless-режиме\n");
+        return 2;
+    }
+    if (!cfg.headless && !cfg.roleExplicit) {
+        QMessageBox box;
+        box.setWindowTitle(QStringLiteral("Lab6 — роль ноутбука"));
+        box.setIcon(QMessageBox::Question);
+        box.setText(QStringLiteral(
+            "Выберите роль ЭТОГО ноутбука.\n\n"
+            "Central — на ОДНОМ ноутбуке: он сканирует и подключается.\n"
+            "Peripheral — на ДРУГОМ: он рекламирует GATT и принимает.\n\n"
+            "Не выбирайте Central на обоих ноутбуках."));
+        QPushButton* centralBtn = box.addButton(QStringLiteral("Central — подключиться"),
+                                                QMessageBox::AcceptRole);
+        QPushButton* periphBtn = box.addButton(QStringLiteral("Peripheral — реклама/приём"),
+                                               QMessageBox::RejectRole);
+        box.exec();
+        if (box.clickedButton() == centralBtn)
+            cfg.role = QStringLiteral("central");
+        else if (box.clickedButton() == periphBtn)
+            cfg.role = QStringLiteral("peripheral");
+        else {
+            std::fprintf(stderr, "роль не выбрана\n");
+            return 1;
+        }
+    }
 
     MainWindow window(cfg);
     if (!cfg.headless)

@@ -12,6 +12,7 @@ struct AppConfig {
     QString logFile;
 
     bool headless = false;
+    bool roleExplicit = false;
     bool autoStart = false;
     bool noReconnect = false;
     bool verbose = false;

@@ -455,9 +455,12 @@ void MainWindow::applyRole(const QString& role)
     // Роль — это только выбор активной вкладки. Не останавливаем
     // advertising/соединение при переключении: иначе вторая сторона
     // теряет GATT и получает «сервис не найден».
-    tabs_->setTabEnabled(0, true);
-    tabs_->setTabEnabled(1, true);
+    if (!central)
+        central_->stopScan();
+    tabs_->setTabEnabled(0, central);
+    tabs_->setTabEnabled(1, !central);
     tabs_->setCurrentIndex(central ? 0 : 1);
+    roleCombo_->setEnabled(false);
     statusLabel_->setText(central ? QStringLiteral("роль: Central")
                                   : QStringLiteral("роль: Peripheral"));
     logInfo(central ? QStringLiteral("роль этого ноутбука: Central (подключение к peripheral)")
@@ -583,6 +586,10 @@ void MainWindow::onDevicesChanged(const QList<BleDeviceInfo>& devices)
 
 void MainWindow::onScan()
 {
+    if (cfg_.role != QStringLiteral("central")) {
+        logError(QStringLiteral("Central-вкладка доступна только в роли Central"));
+        return;
+    }
     reconnectTimer_.stop();
 
     if (central_->isScanning()) {
@@ -621,6 +628,12 @@ void MainWindow::onForget()
         return;
     }
     central_->stopScan();
+    reconnectTimer_.stop();
+    pendingSend_ = false;
+    if (sender_->isActive())
+        sender_->abort(QStringLiteral("устройство забыто"));
+    if (centralReceiver_->isActive())
+        centralReceiver_->abort(QStringLiteral("устройство забыто"));
     QString err;
     if (!central_->forgetDevice(path, &err)) {
         logError(QStringLiteral("RemoveDevice: %1").arg(err));

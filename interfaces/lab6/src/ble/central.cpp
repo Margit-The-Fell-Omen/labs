@@ -286,8 +286,15 @@ bool BleCentral::forgetDevice(const QString& path, QString* error)
             *error = QStringLiteral("нет Bluetooth-адаптера");
         return false;
     }
+    connectPollTimer_.stop();
+    connectTimeoutTimer_.stop();
+    watchTimer_.stop();
+    controlPollTimer_.stop();
+    closeWrite();
     if (path == peerPath_ && connected_)
         disconnectFromDevice();
+    connected_ = false;
+    ready_ = false;
 
     QString err;
     const bool ok = dbusutil::callVoid(
@@ -344,7 +351,9 @@ void BleCentral::connectToDevice(const QString& path)
                               &bearerErr)) {
         emit logMessage(QStringLiteral("PreferredBearer=le (только LE) для %1").arg(peerAddress_));
     } else {
-        emit logMessage(QStringLiteral("PreferredBearer=le недоступен: %1").arg(bearerErr));
+        emit logMessage(QStringLiteral(
+            "PreferredBearer недоступен (BlueZ experimental off), продолжаем: %1")
+                            .arg(bearerErr));
     }
 
     QDBusMessage msg = QDBusMessage::createMethodCall(

@@ -54,6 +54,7 @@ bool parseArgs(const QStringList& args, AppConfig& cfg, QString& error)
         } else if (a == QStringLiteral("--role")) {
             if (!takeValue(args, i, cfg.role, error))
                 return false;
+            cfg.roleExplicit = true;
             if (cfg.role != QStringLiteral("central") && cfg.role != QStringLiteral("peripheral")) {
                 error = QStringLiteral("--role должен быть central или peripheral");
                 return false;
